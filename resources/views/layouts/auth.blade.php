@@ -7,7 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Pontual - @yield('title')</title>
-        <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
+        <link href="{{ asset('plugins/start-bootstrap/css/styles.css')}}" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary">
@@ -77,9 +77,9 @@
         </div>
 
         <!-- Scripts -->
-        <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('js/scripts.js') }}"></script>
+        <script src="{{ asset('plugins/jquery/jquery-3.5.1.min.js') }}"></script>
+        <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('plugins/start-bootstrap/js/scripts.js') }}"></script>
 
         @yield('js')
     </body>
