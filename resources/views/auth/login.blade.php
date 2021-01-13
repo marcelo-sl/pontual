@@ -11,14 +11,16 @@
                       <h3 class="text-center font-weight-light my-4">Entre com seu usuário</h3>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form action="{{ route('auth.login') }}" method="POST">
+                            @csrf
+
                             <div class="form-group">
                                 <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                <input class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Digite seu e-mail" />
+                                <input class="form-control py-4" id="inputEmailAddress" type="email" name="email" placeholder="Digite seu e-mail" />
                             </div>
                             <div class="form-group">
                                 <label class="small mb-1" for="inputPassword">Senha</label>
-                                <input class="form-control py-4" id="inputPassword" type="password" placeholder="Digite sua senha" />
+                                <input class="form-control py-4" id="inputPassword" type="password" name="password" placeholder="Digite sua senha" />
                             </div>
                             <!-- <div class="form-group">
                                 <div class="custom-control custom-checkbox">
@@ -28,7 +30,7 @@
                             </div> -->
                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                                 <a class="small" href="password.html">Esqueci minha senha</a>
-                                <a class="btn btn-primary" href="index.html">Entrar</a>
+                                <button type="submit" class="btn btn-primary" href="index.html">Entrar</button>
                             </div>
                         </form>
                     </div>

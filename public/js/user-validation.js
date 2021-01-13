@@ -14,7 +14,7 @@ $(document).ready(function() {
       },
       password_confirmation: {
         required: true,
-        equalTo: "#inputConfirmPassword"
+        equalTo: "#inputPassword"
       }
     },
     messages: {
@@ -27,7 +27,28 @@ $(document).ready(function() {
       password_confirmation: {
         equalTo: "As senhas não conferem"
       }
+    },
+
+    errorPlacement: function (error, element) {
+      if (element.is(':radio') || element.is(':checkbox')) {       
+        error.appendTo(element.parents('div.form-group').first());
+      } else{
+        error.insertAfter(element).parents('.collapse').collapse('show');
+      }
+    },
+
+    highlight: function(element, errorClass, validClass){ 
+      $(element).parents('.form-group').addClass('has-error');
+    },
+
+    unhighlight: function(element, errorClass, validClass) {
+      if ($.trim(element.value)) {
+        $(element).parents('.form-group').removeClass('has-error');
+      }
     }
   });
 
+  
+
 });
+

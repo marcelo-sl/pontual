@@ -1,5 +1,10 @@
 @extends('layouts.auth')
+
 @section('title', 'Cadastro')
+
+@section('css')
+	<link href="{{ asset('css/validation-styles.css')}}" rel="stylesheet" />
+@endsection
 
 @section('main')
   <main>
@@ -23,6 +28,12 @@
 										</div>
 									</div>
 								</div>
+								
+								<div class="form-group">
+									<label class="small mb-1" for="inputEmail">Email</label>
+									<input class="form-control py-4" id="inputEmail" type="email" name="email" aria-describedby="emailHelp" placeholder="Digite seu e-mail" />
+								</div>
+
 								<div class="form-row">
 									<div class="col-md-12">
 										<div class="form-group">
@@ -44,10 +55,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="small mb-1" for="inputEmail">Email</label>
-									<input class="form-control py-4" id="inputEmail" type="email" name="email" aria-describedby="emailHelp" placeholder="Digite seu e-mail" />
-								</div>
+
 								<div class="form-row">
 									<div class="col-md-6">
 										<div class="form-group">
@@ -62,6 +70,7 @@
 										</div>
 									</div>
 								</div>
+								
 								<div class="form-group mt-4 mb-0"><button type="submit" class="btn btn-primary btn-block">Criar conta</button></div>
 							</form>
 						</div>

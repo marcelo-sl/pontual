@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 use App\User;
 use App\Http\Requests\UserRequest;
-use Illuminate\Http\Request;
 
 use DB;
 
@@ -41,8 +43,14 @@ class UserController extends Controller
         DB::beginTransaction();
         
         try {
-        
-            User::create($request->except('confirm_password'));
+            $user = new User;
+
+            $user->name = strtoupper($request->name);
+            $user->email = $request->email;
+            $user->gender = $request->gender;
+            $user->password = Hash::make($request->password);
+                    
+            $user->save();
 
             DB::commit();
 

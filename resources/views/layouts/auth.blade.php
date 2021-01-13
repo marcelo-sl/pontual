@@ -6,8 +6,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+
         <title>Pontual - @yield('title')</title>
+        
         <link href="{{ asset('plugins/start-bootstrap/css/styles.css')}}" rel="stylesheet" />
+        
+        @yield('css')
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary">
@@ -28,18 +33,7 @@
                     </div>
                 @endif
 
-                @if(session()->has('msg_success'))
-                    <div class="row mb-2">
-                        <div class="col-12">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                {{ session()->get('msg_success') }}
-                            </div>
-                        </div>
-                    </div>
-                @endif
+                
 
                 @if(session()->has('msg_error'))
                     <div class="row mb-2">
@@ -60,7 +54,7 @@
               @yield('main')
 
             </div>
-            <div id="layoutAuthentication_footer">
+            <div class="mt-3" id="layoutAuthentication_footer">
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between small">
@@ -80,7 +74,8 @@
         <script src="{{ asset('plugins/jquery/jquery-3.5.1.min.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('plugins/start-bootstrap/js/scripts.js') }}"></script>
-
+        
         @yield('js')
+        
     </body>
 </html>
