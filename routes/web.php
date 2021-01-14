@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', 'AuthenticateController@index')->name('auth.index');
 
 Route::post('/login', 'AuthenticateController@login')->name('auth.login');
-
+Route::get('/logout', 'AuthenticateController@logout')->name('auth.logout');
 
 Route::get('/register', function () {
     return view('auth.register');
 })->name('auth.register');
 
 Route::post('user', 'UserController@store')->name('user.store');
+
+Route::view('/home', 'layouts.app')->name('home');
