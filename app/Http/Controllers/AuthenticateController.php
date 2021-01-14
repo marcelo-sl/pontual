@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticateController extends Controller
 {
-    public function index() {
+    public function index() {      
       return view('auth.login');
     }
 
@@ -22,10 +22,6 @@ class AuthenticateController extends Controller
       if (Auth::attempt($credentials)) {
         return view('welcome');
       }
-
-
-      print_r('não logou');
-      exit();
 
       return redirect()->route('auth.login')->with('msg_error', 'Autenticação falhou.'); 
     }

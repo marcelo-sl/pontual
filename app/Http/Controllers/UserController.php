@@ -40,29 +40,31 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {   
-        DB::beginTransaction();
-        
-        try {
-            $user = new User;
+      DB::beginTransaction();
+      
+      try {
+          $user = new User;
 
-            $user->name = strtoupper($request->name);
-            $user->email = $request->email;
-            $user->gender = $request->gender;
-            $user->password = Hash::make($request->password);
-                    
-            $user->save();
+          $user->name = strtoupper($request->name);
+          $user->email = $request->email;
+          $user->gender = $request->gender;
+          $user->password = Hash::make($request->password);
+                  
+          $user->save();
 
-            DB::commit();
+          DB::commit();
 
-        } catch (\Exception $exception) {
-            DB::rollback();
-            return back()->with('msg_error', 'Erro no servidor ao cadastrar cliente.');
-        }
+      } catch (\Exception $exception) {
+          DB::rollback();
 
+          connectify('error', 'Erro no servidor', 'Erro ao cadastrar cliente.');
+          
+          return redirect()->back();
+      }
 
-        return redirect()
-            ->route('auth.login')
-            ->with('msg_success', 'Usuário cadastrado com sucesso!');
+      notify()->success('Usuário cadastrado com sucesso!');
+
+      return redirect()->route('auth.login');
     }
 
     /**

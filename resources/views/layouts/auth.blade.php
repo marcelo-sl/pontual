@@ -10,6 +10,7 @@
         <title>Pontual - @yield('title')</title>
         
         <link href="{{ asset('plugins/start-bootstrap/css/styles.css')}}" rel="stylesheet" />
+        @notifyCss
         
         @yield('css')
         
@@ -32,8 +33,6 @@
                         </div>
                     </div>
                 @endif
-
-                
 
                 @if(session()->has('msg_error'))
                     <div class="row mb-2">
@@ -74,7 +73,9 @@
         <script src="{{ asset('plugins/jquery/jquery-3.5.1.min.js') }}"></script>
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('plugins/start-bootstrap/js/scripts.js') }}"></script>
-        
+        @notifyJs
+        <x:notify-messages />
+
         @yield('js')
         
     </body>
