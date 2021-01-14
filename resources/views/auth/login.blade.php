@@ -29,7 +29,7 @@
                                 </div>
                             </div> -->
                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                <a class="small" href="password.html">Esqueci minha senha</a>
+                                {{-- <a class="small" href="password.html">Esqueci minha senha</a> --}}
                                 <button type="submit" class="btn btn-primary" href="index.html">Entrar</button>
                             </div>
                         </form>
