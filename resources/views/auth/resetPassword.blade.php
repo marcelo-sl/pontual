@@ -14,7 +14,7 @@
                       <span class="text-secondary">Nós enviaremos um código de alteração de senha para o e-mail informado.</span>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="POST">
+                        <form id="userForm" action="#" method="POST">
                             @csrf
 
                             <div class="form-group">
@@ -35,3 +35,9 @@
     </div>
   </main>
 @stop
+
+@section('js')
+    <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/user-validation.js') }}"></script>
+    <script src="{{ asset('js/validation-messages.js') }}"></script>
+@endsection

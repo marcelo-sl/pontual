@@ -1,6 +1,10 @@
 @extends('layouts.auth')
 @section('title', 'Login')
 
+@section('css')
+	<link href="{{ asset('css/auth-styles.css')}}" rel="stylesheet" />
+@endsection
+
 @section('main')
   <main>
     <div class="container">
@@ -11,12 +15,12 @@
                       <h3 class="text-center font-weight-light my-4" style="font-size: 24px">Entre com seu usuário</h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('auth.login') }}" method="POST">
+                        <form id="userForm" action="{{ route('auth.login') }}" method="POST">
                             @csrf
 
                             <div class="form-group">
                                 <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                <input class="form-control py-4" id="inputEmailAddress" type="email" name="email" placeholder="Digite seu e-mail" />
+                                <input class="form-control py-4" id="inputEmailAddress" type="email" name="email" value="{{old('email')}}" placeholder="Digite seu e-mail" />
                             </div>
                             <div class="form-group">
                                 <label class="small mb-1" for="inputPassword">Senha</label>
@@ -43,3 +47,9 @@
     </div>
   </main>
 @stop
+
+@section('js')
+    <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/user-validation.js') }}"></script>
+    <script src="{{ asset('js/validation-messages.js') }}"></script>
+@endsection
