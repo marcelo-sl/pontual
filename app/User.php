@@ -6,7 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use App\Role;
+// use App\Role;
 
 class User extends Authenticatable
 {
@@ -35,6 +35,6 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany('Role', 'role_user', 'user_id', 'role_id');
+        return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
     }
 }

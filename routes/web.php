@@ -22,6 +22,6 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('auth.register');
 
-Route::post('user', 'UserController@store')->name('user.store');
+Route::resource('user', 'UserController');
 
 Route::view('/home', 'layouts.app')->name('home');

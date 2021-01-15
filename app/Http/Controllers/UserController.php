@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-use App\User;
 use App\Http\Requests\UserRequest;
+use App\User;
 
 use DB;
 
@@ -49,8 +49,10 @@ class UserController extends Controller
           $user->email = $request->email;
           $user->gender = $request->gender;
           $user->password = Hash::make($request->password);
-                  
+          
           $user->save();
+
+          $user->roles()->attach(6);
 
           DB::commit();
 
@@ -59,7 +61,7 @@ class UserController extends Controller
 
           connectify('error', 'Erro no servidor', 'Erro ao cadastrar cliente.');
           
-          return redirect()->back();
+          return redirect()->back()->withInput();
       }
 
       notify()->success('Usuário cadastrado com sucesso!');

@@ -3,7 +3,7 @@
 @section('title', 'Cadastro')
 
 @section('css')
-	<link href="{{ asset('css/validation-styles.css')}}" rel="stylesheet" />
+	<link href="{{ asset('css/auth-styles.css')}}" rel="stylesheet" />
 @endsection
 
 @section('main')

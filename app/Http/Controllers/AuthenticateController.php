@@ -22,9 +22,10 @@ class AuthenticateController extends Controller
 
 
     if (Auth::attempt($credentials)) {
-      return redirect()->route('home');
+      return redirect()->route('user.index');
     } else {
-      return redirect()->route('auth.index')->with('msg_error', 'Falha na autenticação!');
+      connectify('error', 'Falha na autenticação!', 'Usuário ou senha incorreto.');
+      return redirect()->route('auth.index');
     }
   }
 
