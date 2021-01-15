@@ -8,7 +8,6 @@
         <meta name="author" content="" />
         <title>Pontual - @yield('title')</title>
         <link href="{{ asset('plugins/start-bootstrap/css/styles.css') }}" rel="stylesheet" />
-        <link href="{{ asset('plugins/datatables/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" crossorigin="anonymous" />
         <link href="{{ asset('css/app-styles.css') }}" rel="stylesheet" />
         
         @yield('css')
@@ -107,8 +106,8 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                        <div class="small">Logado como:</div>
+                        {{ Auth::user()->name }}
                     </div>
                 </nav>
             </div>
@@ -119,11 +118,11 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2020</div>
+                            <div class="text-muted">Copyright &copy; Pontual 2021</div>
                             <div>
-                                <a href="#">Privacy Policy</a>
+                                <a href="#">Política de Privacidade</a>
                                 &middot;
-                                <a href="#">Terms &amp; Conditions</a>
+                                <a href="#">Termos &amp; Condições</a>
                             </div>
                         </div>
                     </div>
