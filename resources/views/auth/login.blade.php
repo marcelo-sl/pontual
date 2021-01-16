@@ -34,7 +34,7 @@
                             </div> -->
                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                                 <a class="small" href={{ route('auth.resetPass') }}>Esqueci minha senha</a>
-                                <button type="submit" class="btn btn-primary" href="index.html">Entrar</button>
+                                <button type="submit" class="btn btn-primary">Entrar</button>
                             </div>
                         </form>
                     </div>
