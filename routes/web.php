@@ -18,6 +18,7 @@ Route::get('/login', 'AuthenticateController@index')->name('auth.index');
 Route::post('/login', 'AuthenticateController@login')->name('auth.login');
 Route::get('/logout', 'AuthenticateController@logout')->name('auth.logout');
 Route::view('/reset/password', 'auth.resetPassword')->name('auth.resetPass');
+Route::post('/reset/password', 'AuthenticateController@resetPassword')->name('auth.resetLink');
 
 Route::get('/register', function () {
     return view('auth.register');

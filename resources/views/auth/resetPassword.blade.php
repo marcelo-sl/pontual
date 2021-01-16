@@ -14,12 +14,12 @@
                       <span class="text-secondary">Nós enviaremos um código de alteração de senha para o e-mail informado.</span>
                     </div>
                     <div class="card-body">
-                        <form id="userForm" action="#" method="POST">
+                        <form id="userForm" action="{{ route('auth.resetLink') }}" method="POST">
                             @csrf
 
                             <div class="form-group">
                                 <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                <input class="form-control py-4" id="inputEmailAddress" type="email" name="email" placeholder="Digite seu e-mail" required />
+                                <input class="form-control py-4" id="inputEmailAddress" type="email" name="email" value="{{ old('email') }}" placeholder="Digite seu e-mail" required />
                             </div>
                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                                 <button type="submit" class="btn btn-primary" href="#">Enviar código</button>
