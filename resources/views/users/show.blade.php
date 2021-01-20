@@ -40,7 +40,7 @@
                 </p>
               </li>
               <li class="list-group-item d-flex justify-content-between">
-                <h6>Nível:</h6>
+                <h6>Tipo:</h6>
                 <p>{{ $user->roles()->orderBy('role_id')->first()->role_name ?? 'Não possui' }}</p>
               </li>
               <li class="list-group-item d-flex justify-content-between">

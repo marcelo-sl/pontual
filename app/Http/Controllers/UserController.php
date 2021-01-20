@@ -108,6 +108,21 @@ class UserController extends Controller
     }
 
     /**
+     * Inactivate the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function inactivate($id)
+    {
+      $user = User::find($id);
+      $user->inactive = 1;
+      $user->save();
+
+      return back();
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -115,6 +130,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $user = User::find($id);
+      $user->inactive = 1;
+      $user->delete();
+
+      return back();
     }
 }

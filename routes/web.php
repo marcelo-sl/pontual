@@ -24,6 +24,9 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('auth.register');
 
-Route::resource('user', 'UserController');
+Route::middleware('auth')->group(function() {
+    Route::resource('user', 'UserController');
+    Route::post('/user/{id}/inactivate', 'UserController@inactivate')->name('user.inactivate');
+});
 
 Route::view('/home', 'layouts.app')->name('home');
