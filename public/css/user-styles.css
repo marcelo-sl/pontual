@@ -1,0 +1,29 @@
+a.card {
+  text-decoration: none;
+  height: 380px;
+}
+
+#owner-card {
+  background-color:#FFF;
+  transition: 0.4s;
+}
+
+#owner-card:hover {
+  transform: scale(1.1);
+}
+
+#customer-card {
+  background-color: #039BE5;
+  transition: 0.4s;
+}
+
+#customer-card:hover {
+  transform: scale(1.1);
+}
+
+.card-img {
+  height: 300px;
+  height: 180px;
+}
+
+

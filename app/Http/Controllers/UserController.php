@@ -25,6 +25,16 @@ class UserController extends Controller
     }
 
     /**
+     * Show the view to choose the user's type.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function choose()
+    {
+        return view('users.choose');
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -119,6 +129,8 @@ class UserController extends Controller
       $user->inactive = 1;
       $user->save();
 
+      notify()->success('Usuário inativado com sucesso!');
+
       return back();
     }
 
@@ -133,6 +145,8 @@ class UserController extends Controller
       $user = User::find($id);
       $user->inactive = 1;
       $user->delete();
+
+      notify()->success('Usuário apagado com sucesso!');
 
       return back();
     }
