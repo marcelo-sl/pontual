@@ -31,7 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -41,34 +41,33 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(UserRequest $request)
-    {   
-      DB::beginTransaction();
-      
-      try {
-          $user = new User;
+    {
+        DB::beginTransaction();
 
-          $user->name = strtoupper($request->name);
-          $user->email = $request->email;
-          $user->gender = $request->gender;
-          $user->password = Hash::make($request->password);
-          
-          $user->save();
+        try {
+            $user = new User;
 
-          $user->roles()->attach(6);
+            $user->name = strtoupper($request->name);
+            $user->email = $request->email;
+            $user->gender = $request->gender;
+            $user->password = Hash::make($request->password);
 
-          DB::commit();
+            $user->save();
 
-      } catch (\Exception $exception) {
-          DB::rollback();
+            $user->roles()->attach(6);
 
-          connectify('error', 'Erro no servidor', 'Erro ao cadastrar cliente.');
-          
-          return redirect()->back()->withInput();
-      }
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollback();
 
-      notify()->success('Usuário cadastrado com sucesso!');
+            connectify('error', 'Erro no servidor', 'Erro ao cadastrar cliente.');
 
-      return redirect()->route('auth.login');
+            return redirect()->back()->withInput();
+        }
+
+        notify()->success('Usuário cadastrado com sucesso!');
+
+        return redirect()->route('auth.login');
     }
 
     /**
@@ -115,11 +114,11 @@ class UserController extends Controller
      */
     public function inactivate($id)
     {
-      $user = User::find($id);
-      $user->inactive = 1;
-      $user->save();
+        $user = User::find($id);
+        $user->inactive = 1;
+        $user->save();
 
-      return back();
+        return back();
     }
 
     /**
@@ -130,10 +129,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-      $user = User::find($id);
-      $user->inactive = 1;
-      $user->delete();
+        $user = User::find($id);
+        $user->inactive = 1;
+        $user->delete();
 
-      return back();
+        return back();
     }
 }

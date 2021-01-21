@@ -16,7 +16,7 @@
 							<h3 class="text-center font-weight-light my-4">Crie sua conta</h3>
 						</div>
 						<div class="card-body">
-							<form id="userForm" action="{{ route('auth.store') }}" method="POST">
+							<form id="userForm" action="{{ route('user.store') }}" method="POST">
 								
 								@csrf
 
@@ -73,9 +73,6 @@
 								
 								<div class="form-group mt-4 mb-0"><button type="submit" class="btn btn-primary btn-block">Criar conta</button></div>
 							</form>
-						</div>
-						<div class="card-footer text-center">
-							<div class="small"><a href="{{ asset('/login') }}">Já possui uma conta? Entre já</a></div>
 						</div>
 					</div>
 				</div>

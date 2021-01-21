@@ -24,9 +24,17 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('auth.register');
 
-Route::middleware('auth')->group(function() {
-    Route::resource('user', 'UserController');
-    Route::post('/user/{id}/inactivate', 'UserController@inactivate')->name('user.inactivate');
-});
+Route::post('/register', 'AuthenticateController@store')->name('auth.store');
 
-Route::view('/home', 'layouts.app')->name('home');
+Route::middleware('auth')->group(function () {
+    Route::middleware('checkRole:Admin')->group(function () {
+        Route::get('/user', 'UserController@index')->name('user.index');
+        Route::post('/user', 'UserController@store')->name('user.store');
+        Route::get('/user/create', 'UserController@create')->name('user.create');
+        Route::delete('/user/{id}', 'UserController@destroy')->name('user.destroy');
+        Route::post('/user/{id}/inactivate', 'UserController@inactivate')->name('user.inactivate');
+    });
+    Route::get('/user/{id}', 'UserController@show')->name('user.show');
+    Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
+    Route::put('/user/{id}', 'UserController@update')->name('user.update');
+});

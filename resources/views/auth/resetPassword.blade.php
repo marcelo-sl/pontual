@@ -22,7 +22,7 @@
                                 <input class="form-control py-4" id="inputEmailAddress" type="email" name="email" value="{{ old('email') }}" placeholder="Digite seu e-mail" required />
                             </div>
                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                <button type="submit" class="btn btn-primary" href="#">Enviar código</button>
+                                <button type="submit" class="btn btn-primary" href="#">Redefinir senha</button>
                             </div>
                         </form>
                     </div>
