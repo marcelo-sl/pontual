@@ -13,20 +13,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/login', 'AuthenticateController@index')->name('auth.index');
+Route::middleware('guest')->group(function() {
+    Route::get('/login', 'AuthenticateController@index')->name('auth.index');
 
-Route::post('/login', 'AuthenticateController@login')->name('auth.login');
+    Route::post('/login', 'AuthenticateController@login')->name('auth.login');
+    Route::view('/reset/password', 'auth.resetPassword')->name('auth.resetPass');
+    Route::post('/reset/password', 'AuthenticateController@resetPassword')->name('auth.resetLink');
+    
+    Route::get('/register', function () {
+        return view('auth.register');
+    })->name('auth.register');
+    
+});
+
 Route::get('/logout', 'AuthenticateController@logout')->name('auth.logout');
-Route::view('/reset/password', 'auth.resetPassword')->name('auth.resetPass');
-Route::post('/reset/password', 'AuthenticateController@resetPassword')->name('auth.resetLink');
-
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('auth.register');
 
 Route::post('/register', 'AuthenticateController@store')->name('auth.store');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/user/choose', 'UserController@choose')->name('user.choose');
+    Route::get('/user/{id}', 'UserController@show')->name('user.show');
+    Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
+    Route::put('/user/{id}', 'UserController@update')->name('user.update');
     Route::middleware('checkRole:Admin')->group(function () {
         Route::get('/user', 'UserController@index')->name('user.index');
         Route::post('/user', 'UserController@store')->name('user.store');
@@ -34,7 +42,4 @@ Route::middleware('auth')->group(function () {
         Route::delete('/user/{id}', 'UserController@destroy')->name('user.destroy');
         Route::post('/user/{id}/inactivate', 'UserController@inactivate')->name('user.inactivate');
     });
-    Route::get('/user/{id}', 'UserController@show')->name('user.show');
-    Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
-    Route::put('/user/{id}', 'UserController@update')->name('user.update');
 });
