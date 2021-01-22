@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/{id}', 'UserController@show')->name('user.show');
     Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
     Route::put('/user/{id}', 'UserController@update')->name('user.update');
+    
     Route::middleware('checkRole:Admin')->group(function () {
         Route::get('/user', 'UserController@index')->name('user.index');
         Route::post('/user', 'UserController@store')->name('user.store');

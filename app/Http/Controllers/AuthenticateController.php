@@ -64,10 +64,12 @@ class AuthenticateController extends Controller
     ];
 
     if (Auth::attempt($credentials)) {
-      return redirect()->route('user.show', $request->user()->id);
+      return redirect()->route('user.choose', $request->user()->id);
     } else {
       $request->flashOnly(['email']);
+      
       connectify('error', 'Falha na autenticação!', 'Usuário ou senha incorreto.');
+      
       return redirect()->route('auth.index');
     }
   }

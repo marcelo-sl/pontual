@@ -1,7 +1,9 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark" id="topnav">
   <!-- <a class="navbar-brand" href="index.html">Pontual</a> -->
   <img src="{{ asset('img/logo-pontual-titulo.png') }}" alt="Pontual"id="logoPontual">
-  <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+  @if(Auth::user()->hasRole('Customer'))
+    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+  @endif
   <!-- Navbar Search-->
   <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
       <!-- <div class="input-group">
