@@ -12,8 +12,20 @@
       <div class="card-body d-flex justify-content-center">
 
         <div class="card" style="width: 38rem;">
+          <div class="text-center my-3">
+            @if ($user->avatar_url == '')
+              <i class="fas fa-user-circle fa-9x"></i>
+            @else 
+              <img class="rounded-circle w-50 border" src="{{ $user->avatar_url }}" alt="{{ $user->name }}">
+            @endif                
+          </div>
           <div class="card-body">
-            <h5 class="card-title d-flex justify-content-center">{{ $user->name }}</h5>
+            <div class="row justify-content-center">
+              <h5 class="card-title">{{ $user->name }}</h5>
+              <div>
+                <a class="ml-2 text-dark" href="#"><i class="fas fa-user-edit"></i></a>
+              </div>
+            </div>
             <ul class="list-group list-group-flush mt-5">
               <li class="list-group-item d-flex justify-content-between">
                 <h6>E-mail:</h6> {{ $user->email }}
