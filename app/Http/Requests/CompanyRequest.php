@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class CompanyRequest extends FormRequest
 {
    
     public function authorize()
@@ -17,10 +17,10 @@ class UserRequest extends FormRequest
         return [
             'company.trade_name' => ['required', 'max:45'],
             'company.company_name' => ['required', 'max:80'],
-            'company.cnpj' => ['required', 'max:14'],
+            'company.cnpj' => ['required', 'max:18'],
             'company.description' => ['max:65530'],
             'company.user_id' => ['required', 'numeric'],
-            'localization.cep' => ['required', 'max:8'],
+            'localization.cep' => ['required', 'max:9'],
             'localization.address' => ['required', 'max:255'],
             'localization.house_number' => ['required', 'max:5'],
             'localization.district' => ['required', 'max:60'],

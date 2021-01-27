@@ -17,7 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->string('trade_name', 45);
             $table->string('company_name', 80);
-            $table->string('cnpj', 14);
+            $table->string('cnpj', 18);
             $table->string('logo_url', 60)->nullable();
             $table->text('description')->nullable();
             

@@ -15,8 +15,13 @@
       </ol>
       <div class="card-body">
         <form id="companyForm" action="{{ route('company.store') }}" method="POST">
-          
           @csrf
+
+          <div class="form-row my-2">
+            <div class="col-md-12">
+              <span class="advise"> Campos obrigatórios</span><sup>*</sup>
+            </div>
+          </div>
 
           <input type="hidden" name="company[user_id]" value="{{ Auth::user()->id }}" />
 
@@ -25,7 +30,7 @@
           <div class="form-row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="inputCompanyName">Razão social</label>
+                <label for="inputCompanyName">Razão social<sup>*</sup></label>
                 <input class="form-control" id="inputCompanyName" type="text" name="company[company_name]" />
               </div>
             </div>
@@ -34,13 +39,13 @@
           <div class="form-row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="inputCnpj">CNPJ</label>
-                <input class="form-control" id="inputCnpj" type="text" name="company[cnpj]" />
+                <label for="inputCnpj">CNPJ<sup>*</sup></label>
+                <input class="form-control cnpj" id="inputCnpj" type="text" name="company[cnpj]" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="inputTradeName">Nome fantasia</label>
+                <label for="inputTradeName">Nome fantasia<sup>*</sup></label>
                 <input class="form-control" id="inputTradeName" type="text" name="company[trade_name]" />
               </div>
             </div>
@@ -62,19 +67,19 @@
           <div class="form-row">
             <div class="col-md-2">
               <div class="form-group">
-                <label for="inputCep">CEP</label>
-                <input class="form-control" id="inputCep" type="text" name="localization[cep]" />
+                <label for="inputCep">CEP<sup>*</sup></label>
+                <input class="form-control cep" id="inputCep" type="text" name="localization[cep]" />
               </div>
             </div>
             <div class="col-md-9">
               <div class="form-group">
-                <label for="inputAddress">Logradouro</label>
+                <label for="inputAddress">Logradouro<sup>*</sup></label>
                 <input class="form-control" id="inputAddress" type="text" name="localization[address]" />
               </div>
             </div>
             <div class="col-md-1">
               <div class="form-group">
-                <label for="inputNumber">Nº</label>
+                <label for="inputNumber">Nº<sup>*</sup></label>
                 <input class="form-control" id="inputNumber" type="text" name="localization[house_number]" />
               </div>
             </div>
@@ -83,7 +88,7 @@
           <div class="form-row">
             <div class="col-md-7">
               <div class="form-group">
-                <label for="inputDistrict">Bairro</label>
+                <label for="inputDistrict">Bairro<sup>*</sup></label>
                 <input class="form-control" id="inputDistrict" type="text" name="localization[district]" />
               </div>
             </div>
@@ -98,7 +103,7 @@
           <div class="form-row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="inputState">Estado</label>
+                <label for="inputState">Estado<sup>*</sup></label>
                 <select class="form-control" id="inputState" name="localization[state_id]">
                   <option disabled selected value="">Selecione o estado...</option>
                   @foreach($states as $state)
@@ -109,7 +114,7 @@
             </div>
             <div class="col-md-8">
               <div class="form-group">
-                <label for="inputCity">Cidade</label>
+                <label for="inputCity">Cidade<sup>*</sup></label>
                 <select class="form-control" id="inputCity" name="localization[city_id]">
                   <option disabled selected value="">Selecione a cidade...</option>
                   @foreach($cities as $city)
@@ -128,9 +133,12 @@
 @endsection
 
 @section('js')
-
-	<script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+  <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+  <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js') }}"></script>
+  
 	<script src="{{ asset('js/company-validation.js') }}"></script>
 	<script src="{{ asset('js/validation-messages.js') }}"></script>
+	<script src="{{ asset('js/mask-format.js') }}"></script>
+	<script src="{{ asset('js/address.js') }}"></script>
 
 @endsection

@@ -10,10 +10,10 @@ jQuery.extend(jQuery.validator.messages, {
   creditcard: "Insira um cartão de crédito válido.",
   equalTo: "Insira o mesmo valor novamente.",
   accept: "Please enter a value with a valid extension.",
-  maxlength: jQuery.validator.format("Please enter no more than {0} characters."),
-  minlength: jQuery.validator.format("Please enter at least {0} characters."),
-  rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
+  maxlength: jQuery.validator.format("Insira um valor menor ou igual a {0} caracteres."),
+  minlength: jQuery.validator.format("Insira um valor maior ou igual a {0} caracteres."),
+  rangelength: jQuery.validator.format("Insira um valor entre {0} e {1} caracteres."),
   range: jQuery.validator.format("Insira um valor entre {0} e {1}."),
-  max: jQuery.validator.format("Insira com um valor menor ou igual a {0}."),
-  min: jQuery.validator.format("Insira com um valor maior ou igual a {0}.")
+  max: jQuery.validator.format("Insira um valor menor ou igual a {0}."),
+  min: jQuery.validator.format("Insira um valor maior ou igual a {0}.")
 });

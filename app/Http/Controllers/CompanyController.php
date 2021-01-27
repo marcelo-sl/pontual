@@ -9,6 +9,7 @@ use App\Company;
 use App\Address;
 use App\State;
 use App\City;
+use App\User;
 
 use DB;
 
@@ -71,6 +72,10 @@ class CompanyController extends Controller
         $address->company_id = $company->id;
         
         $address->save();
+        
+        $user = User::find($request->input('company.user_id'));
+        
+        $user->roles()->sync([2, 3, 4, 5, 6]);
 
         DB::commit();
 
@@ -97,7 +102,9 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        //
+        $company = Company::find($id);
+
+        return view('companies.show', compact('company'));
     }
 
     /**

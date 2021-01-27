@@ -2,10 +2,19 @@ label.error {
   color: #ff0000;
 }
 
-div.has-error input {
+input.error, select.error {
   border: 1px solid #ff0000;
 }
 
 div.has-error {
   color: #ff0000;
+}
+
+span.advise {
+  font-size: 12px;
+}
+
+sup {
+  color: #ff0000;
+  font-weight: 500;
 }

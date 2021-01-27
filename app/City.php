@@ -10,7 +10,7 @@ class City extends Model
         'code', 'city', 'state_id'
     ];
 
-    public function states()
+    public function state()
     {
         return $this->belongsTo('App\State');
     }

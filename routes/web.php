@@ -36,10 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/{id}', 'UserController@show')->name('user.show');
     Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
     Route::put('/user/{id}', 'UserController@update')->name('user.update');
-
+    
     /** Companies routes  */
     Route::get('/company/create', 'CompanyController@create')->name('company.create');
     Route::post('/company', 'CompanyController@store')->name('company.store');
+    Route::get('/company/{id}', 'CompanyController@show')->name('company.show');
     
     Route::middleware('checkRole:Admin')->group(function () {
         Route::get('/user', 'UserController@index')->name('user.index');
@@ -49,3 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/user/{id}/inactivate', 'UserController@inactivate')->name('user.inactivate');
     });
 });
+
+
+Route::get('/findCityByName/{uf}/{city}', 'FindCityByName');
+Route::get('/filterCitiesByUf/{uf}', 'FilterCitiesByUf');

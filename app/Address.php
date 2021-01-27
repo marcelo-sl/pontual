@@ -13,12 +13,12 @@ class Address extends Model
       'city_id', 'company_id'
     ];
 
-    public function cities()
+    public function city()
     {
       return $this->belongsTo('App\City');
     }
 
-    public function companies()
+    public function company()
     {
       return $this->belongsTo('App\Company');
     }

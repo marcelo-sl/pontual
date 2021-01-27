@@ -13,7 +13,7 @@ class Company extends Model
       'trade_name', 'company_name', 'cnpj', 'logo_url', 'description', 'user_id'
     ];
 
-    public function companies()
+    public function fieldsActivity()
     {
       return $this->belongsToMany(
         'App\FieldActivity',
@@ -21,5 +21,10 @@ class Company extends Model
         'field_activity_id',
         'company_id'
       );
+    }
+
+    public function address()
+    {
+        return $this->hasOne('App\Address');
     }
 }

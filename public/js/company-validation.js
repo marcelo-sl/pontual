@@ -5,12 +5,12 @@ $(document).ready(function() {
       "company[company_name]": "required",
       "company[cnpj]": {
         required: true,
-        maxlength: 14
+        maxlength: 18
       },
       "company[trade_name]": "required",      
       "localization[cep]": {
         required: true,
-        maxlength: 8
+        maxlength: 9
       },
       "localization[address]": {
         required: true,
