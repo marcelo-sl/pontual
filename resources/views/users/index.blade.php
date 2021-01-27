@@ -29,16 +29,6 @@
                   <th>Opções</th>
               </tr>
             </thead>
-            <tfoot>
-              <tr>
-                  <th>Nome</th>
-                  <th>E-mail</th>
-                  <th>Tipo</th>
-                  <th>Status</th>
-                  <th>Data de criação</th>
-                  <th>Opções</th>
-              </tr>
-            </tfoot>
             <tbody>
               @foreach($users as $user)
                 <tr>

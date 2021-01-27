@@ -7,9 +7,9 @@
       <meta name="description" content="" />
       <meta name="author" content="" />
       <title>Pontual - @yield('title')</title>
+      @notifyCss
       <link href="{{ asset('plugins/start-bootstrap/css/styles.css') }}" rel="stylesheet" />
       <link href="{{ asset('css/app-styles.css') }}" rel="stylesheet" />
-      
       @yield('css')
       
       <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>

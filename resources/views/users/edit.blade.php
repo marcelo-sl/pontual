@@ -56,7 +56,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<div class="custom-control custom-switch">
-												<input id="checkChangePass" type="checkbox" aria-label="Alterar senha" class="custom-control-input">
+												<input id="checkChangePass" type="checkbox" aria-label="Alterar senha" class="custom-control-input" name="changePassword">
 												<label class="custom-control-label" for="checkChangePass"><i class="fas fa-key"></i> Alterar senha</label>
 											</div>
 										</div>
@@ -68,7 +68,7 @@
 										<div class="col-md-12">
 											<div class="form-group">
 												<label class="small mb-1" for="inputCurrentlyPassword">Senha atual</label>
-												<input class="form-control py-4" id="inputCurrentlyPassword" name="password" type="password" placeholder="Digite sua senha atual" />
+												<input class="form-control py-4" id="inputCurrentlyPassword" name="currentlyPassword" type="password" placeholder="Digite sua senha atual" />
 											</div>
 										</div>
 									</div>

@@ -42,7 +42,7 @@ class AuthenticateController extends Controller
       $user->roles()->attach(6);
 
       DB::commit();
-    } catch (\Exception $exception) {
+    } catch (Exception $exception) {
       DB::rollback();
 
       connectify('error', 'Erro no servidor', 'Erro ao cadastrar cliente.');

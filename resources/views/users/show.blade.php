@@ -6,13 +6,13 @@
 <main>
   <div class="container-fluid">
       <h1 class="mt-4">Usuários</h1>
-      <ol class="breadcrumb mb-4">
+      <ol class="breadcrumb">
           <li class="breadcrumb-item active">Usuários</li>
       </ol>
       <div class="card-body d-flex justify-content-center">
 
         <div class="card" style="width: 38rem;">
-          <div class="text-center my-3">
+          <div class="d-flex justify-content-center my-3">
             @if ($user->avatar_url == '')
               <i class="fas fa-user-circle fa-9x"></i>
             @else 

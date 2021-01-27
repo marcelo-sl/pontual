@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use App\Http\Requests\UserRequest;
@@ -115,7 +116,49 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($id);
+        $user = User::find($id);
+
+        if (isset($user)) {
+            DB::beginTransaction();
+
+            try {
+                $user->name = strtoupper($request->name);
+                $user->gender = $request->gender;
+
+                if ($request->changePassword == "on") {
+                    $credentials = [
+                        'email' => $request->email,
+                        'password' => $request->currentlyPassword,
+                        'inactive' => 0
+                    ];
+                    if (Auth::attempt($credentials)) {
+                        $user->password = Hash::make($request->password);
+                    } else {
+                        connectify('error', 'Falha na Edição!', 'Senha atual incorreta');
+                        return redirect()->back()->withInput();
+                    }
+                }
+
+                $user->save();
+
+                DB::commit();
+            } catch (Exception $ex) {
+                DB::rollback();
+
+                connectify('error', 'Falha na Edição!', 'Falha ao registrar valores');
+
+                return redirect()->back()->withInput();
+            }
+            
+            notify()->success('Usuário editado com sucesso!');
+
+            return redirect()->route('user.show', $user->id);
+
+        } else {
+            connectify('error', 'Falha na Edição!', 'Usuário não encontrado');
+            return redirect()->back();
+        }
+
     }
 
     /**
