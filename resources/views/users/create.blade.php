@@ -57,13 +57,13 @@
 								</div>
 
 								<div class="form-row">
-									<div class="col-md-6">
+									<div class="col-md-12">
 										<div class="form-group">
 											<label class="small mb-1" for="inputPassword">Senha</label>
 											<input class="form-control py-4" id="inputPassword" name="password" type="password" placeholder="Digite sua senha" />
 										</div>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-12">
 										<div class="form-group">
 											<label class="small mb-1" for="password_confirmation">Confirmar senha</label>
 											<input class="form-control py-4" id="password_confirmation" name="password_confirmation" type="password" placeholder="Confirme sua senha" />
