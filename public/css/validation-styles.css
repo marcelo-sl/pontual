@@ -1,0 +1,11 @@
+label.error {
+  color: #ff0000;
+}
+
+div.has-error input {
+  border: 1px solid #ff0000;
+}
+
+div.has-error {
+  color: #ff0000;
+}

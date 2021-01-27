@@ -15,6 +15,11 @@ class Company extends Model
 
     public function companies()
     {
-      return $this->belongsToMany('FieldActivity', 'field_activity_company', 'field_activity_id', 'company_id');
+      return $this->belongsToMany(
+        'App\FieldActivity',
+        'field_activity_company',
+        'field_activity_id',
+        'company_id'
+      );
     }
 }

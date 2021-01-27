@@ -12,6 +12,11 @@ class FieldActivity extends Model
 
   public function companies()
   {
-    return $this->belongsToMany('Company', 'field_activity_company', 'company_id', 'field_activity_id');
+    return $this->belongsToMany(
+      'App\Company',
+      'field_activity_company', 
+      'company_id', 
+      'field_activity_id'
+    );
   }
 }
