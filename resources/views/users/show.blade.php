@@ -23,7 +23,7 @@
             <div class="row justify-content-center">
               <h5 class="card-title">{{ $user->name }}</h5>
               <div>
-                <a class="ml-2 text-dark" href="#"><i class="fas fa-user-edit"></i></a>
+                <a class="ml-2 text-dark" href="{{ route('user.edit', Auth::user()->id) }}"><i class="fas fa-user-edit"></i></a>
               </div>
             </div>
             <ul class="list-group list-group-flush mt-5">
