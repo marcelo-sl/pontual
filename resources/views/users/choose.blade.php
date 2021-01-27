@@ -22,7 +22,7 @@
         </div>
       </a>
 
-      <a href="#" class="card p-4 col-5" id="owner-card">
+      <a href="{{ route('company.create') }}" class="card p-4 col-5" id="owner-card">
         <img src="{{ asset('img/choose-owner.svg') }}" class="card-img" alt="Owner">
         <div class="card-content mt-4">
           <h3 class="card-title">Sou um proprietário</h3>

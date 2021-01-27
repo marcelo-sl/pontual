@@ -44,6 +44,8 @@
       <script src="{{ asset('plugins/jquery/jquery-3.5.1.min.js') }}"></script>
       <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
       <script src="{{ asset('plugins/start-bootstrap/js/scripts.js') }}"></script>
+      @notifyJs
+      <x:notify-messages />
       
       @yield('js')
     </body>

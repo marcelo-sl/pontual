@@ -19,15 +19,16 @@ class CreateAddressTable extends Migration
             $table->string('address');
             $table->string('house_number', 5);
             $table->string('district', 60);
-            $table->string('address_complement', 45);
-            $table->timestamps();
-            $table->softDeletes('deleted_at', 0);
-
+            $table->string('address_complement', 45)->nullable();
+            
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('company_id')->nullable();
             
             $table->foreign('city_id')->references('id')->on('cities');
             $table->foreign('company_id')->references('id')->on('companies');
+            
+            $table->timestamps();
+            $table->softDeletes('deleted_at', 0);
 
         });
     }

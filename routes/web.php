@@ -31,10 +31,15 @@ Route::get('/logout', 'AuthenticateController@logout')->name('auth.logout');
 Route::post('/register', 'AuthenticateController@store')->name('auth.store');
 
 Route::middleware('auth')->group(function () {
+    /** Users routes  */
     Route::get('/user/choose', 'UserController@choose')->name('user.choose');
     Route::get('/user/{id}', 'UserController@show')->name('user.show');
     Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
     Route::put('/user/{id}', 'UserController@update')->name('user.update');
+
+    /** Companies routes  */
+    Route::get('/company/create', 'CompanyController@create')->name('company.create');
+    Route::post('/company', 'CompanyController@store')->name('company.store');
     
     Route::middleware('checkRole:Admin')->group(function () {
         Route::get('/user', 'UserController@index')->name('user.index');
