@@ -43,11 +43,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/company/{id}', 'CompanyController@show')->name('company.show');
     
     Route::middleware('checkRole:Admin')->group(function () {
+        /** Users routes  */
         Route::get('/user', 'UserController@index')->name('user.index');
         Route::post('/user', 'UserController@store')->name('user.store');
         Route::get('/user/create', 'UserController@create')->name('user.create');
         Route::delete('/user/{id}', 'UserController@destroy')->name('user.destroy');
         Route::post('/user/{id}/inactivate', 'UserController@inactivate')->name('user.inactivate');
+
+        /** Companies routes  */
+        Route::get('/company', 'CompanyController@index')->name('company.index');
     });
 });
 

@@ -65,11 +65,11 @@
               </li>
               <li class="list-group-item d-flex justify-content-between">
                 <h6>Data de criação:</h6>
-                <p>{{ $user->created_at }}</p>
+                <p>{{ $user->created_at->format('d/m/Y H:i:s') }}</p>
               </li>
               <li class="list-group-item d-flex justify-content-between">
                 <h6>Última atualização:</h6>
-                <p>{{ $user->updated_at }}</p>
+                <p>{{ $user->updated_at->format('d/m/Y H:i:s') }}</p>
               </li>
             </ul>
           </div>

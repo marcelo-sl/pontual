@@ -11,7 +11,7 @@
           <div id="logo-company" class="col-3">
             <img 
               src="https://image.freepik.com/free-vector/generic-arrow-premium-logo-template_9569-147.jpg"
-              class="border border-primary rounded"
+              class="border border-secondary rounded"
               alt="Company Logo"
               width="200"
               height="200"

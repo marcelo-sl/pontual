@@ -22,7 +22,9 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $companies = Company::all();
+
+        return view('companies.index', compact('companies'));
     }
 
     /**
@@ -82,12 +84,12 @@ class CompanyController extends Controller
       } catch (\Exception $exception) {
         DB::rollback();
 
-        connectify('error', 'Erro no servidor', 'Erro ao cadastrar cliente.');
+        connectify('error', 'Erro no servidor', 'Erro ao cadastrar empresa.');
 
         return redirect()->back()->withInput();
       }
 
-      notify()->success('Usuário cadastrado com sucesso!');
+      notify()->success('Empresa cadastrada com sucesso!');
 
       return redirect()->back();
 
