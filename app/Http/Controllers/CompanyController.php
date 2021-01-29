@@ -140,6 +140,23 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $company = Company::find($id);
+        $company->inactive = 1;
+        $company->delete();
+
+        notify()->success('Empresa apagado com sucesso!');
+
+        return back();
+    }
+
+    public function inactivate($id)
+    {
+      $company = Company::find($id);
+      $company->inactive = 1;
+      $company->save();
+
+      notify()->success('Empresa inativada com sucesso!');
+
+      return back();
     }
 }

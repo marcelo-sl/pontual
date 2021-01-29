@@ -52,9 +52,10 @@ Route::middleware('auth')->group(function () {
 
         /** Companies routes  */
         Route::get('/company', 'CompanyController@index')->name('company.index');
+        Route::post('/company/{id}/inactivate', 'CompanyController@inactivate')->name('company.inactivate');
+        Route::delete('/company/{id}', 'CompanyController@destroy')->name('company.destroy');
     });
 });
-
 
 Route::get('/findCityByName/{uf}/{city}', 'FindCityByName');
 Route::get('/filterCitiesByUf/{uf}', 'FilterCitiesByUf');

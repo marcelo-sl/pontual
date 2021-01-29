@@ -9,14 +9,14 @@
       </div>
       <div class="modal-body">
         <b>Nome:</b>
-        <p>{{ $company->name }}</p>
+        <p>{{ $company->company_name }}</p>
         <hr>
-        <b>Email:</b>
-        <p>{{ $company->email }}</p>
+        <b>CNPJ:</b>
+        <p>{{ $company->cnpj }}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <form action="" method="POST">
+        <form action="{{ route('company.inactivate', $company->id) }}" method="POST">
           @csrf
           <button type="submit" class="btn btn-warning">Inativar</button>
         </form>

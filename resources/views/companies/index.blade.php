@@ -46,7 +46,7 @@
                   <td>
                     <a href="{{ route('company.show', $company->id) }}" class="btn btn-info" title="Perfil"><i class="fas fa-id-card"></i></a>
                     <a href="{{-- route('company.edit', $company->id) --}}" class="btn btn-primary" title="Editar"><i class="fas fa-user-edit"></i></a>
-                    {{-- 
+                    
                     @if(!$company->inactive)
                       <a 
                         href="#modalInactivate_{{ $company->id }}"
@@ -54,7 +54,7 @@
                         data-toggle="modal"
                         data-tooltip="tooltip" data-placement="top" title="Inativar"                        
                       >
-                        <i class="fas fa-user-slash"></i>
+                        <i class="fas fa-store-slash"></i>
                       </a>
                     @else
                       <a 
@@ -86,7 +86,7 @@
                         <i class="fas fa-trash-restore"></i>
                       </a>
                     @endif
-                    --}}
+                   
                   </td>
                 </tr>
               @endforeach

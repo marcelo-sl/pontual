@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
+    use SoftDeletes;
+
     public $timestamps = true;
     
     protected $fillable = [
-      'trade_name', 'company_name', 'cnpj', 'logo_url', 'description', 'user_id'
+      'trade_name', 'company_name', 'cnpj', 'logo_url', 'description', 'user_id', 'inactive'
     ];
 
     public function fieldsActivity()
