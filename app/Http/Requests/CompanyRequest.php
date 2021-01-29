@@ -19,7 +19,7 @@ class CompanyRequest extends FormRequest
             'company.company_name' => ['required', 'max:80'],
             'company.cnpj' => ['required', 'max:18'],
             'company.description' => ['max:65530'],
-            'company.user_id' => ['required', 'numeric'],
+            'company.user_id' => ['numeric'],
             'localization.cep' => ['required', 'max:9'],
             'localization.address' => ['required', 'max:255'],
             'localization.house_number' => ['required', 'max:5'],

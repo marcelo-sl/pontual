@@ -45,7 +45,7 @@
                   <td>{{ $company->created_at->format('d/m/Y H:i:s') }}</td>
                   <td>
                     <a href="{{ route('company.show', $company->id) }}" class="btn btn-info" title="Perfil"><i class="fas fa-id-card"></i></a>
-                    <a href="{{-- route('company.edit', $company->id) --}}" class="btn btn-primary" title="Editar"><i class="fas fa-user-edit"></i></a>
+                    <a href="{{ route('company.edit', $company->id) }}" class="btn btn-primary" title="Editar"><i class="fas fa-user-edit"></i></a>
                     
                     @if(!$company->inactive)
                       <a 

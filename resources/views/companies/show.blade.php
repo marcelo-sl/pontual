@@ -41,7 +41,7 @@
                   <label class="font-weight-bold">Endereço</label>
                   <p class="text-justify">
                     {{ $company->address->address }}, 
-                    Nº {{$company->address->house_number}} - 
+                    Nº {{$company->address->house_number}}  
                     {{ $company->address->address_complement ?? ''}} -  
                     {{$company->address->district}} - 
                     {{$company->address->city->city}}/{{$company->address->city->state->uf}} - 
