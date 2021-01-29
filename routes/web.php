@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/company/create', 'CompanyController@create')->name('company.create');
     Route::post('/company', 'CompanyController@store')->name('company.store');
     Route::get('/company/{id}', 'CompanyController@show')->name('company.show');
+    Route::get('/company/{id}/edit', 'CompanyController@edit')->name('company.edit');
+    Route::put('/company/{id}', 'CompanyController@update')->name('company.update');
     
     Route::middleware('checkRole:Admin')->group(function () {
         /** Users routes  */

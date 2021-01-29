@@ -117,7 +117,11 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $company = Company::findOrFail($id);
+        $states = State::orderBy('state')->get();
+        $cities = City::orderBy('city')->get();
+
+        return view('companies.edit', compact('company', 'states', 'cities'));
     }
 
     /**
@@ -127,9 +131,49 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CompanyRequest $request, $id)
     {
-        //
+        $company = Company::find($id);
+
+        if (isset($company)) {
+            DB::beginTransaction();
+
+            try {
+                $company->trade_name = $request->input('company.trade_name');
+                $company->company_name = $request->input('company.company_name');
+                $company->cnpj = $request->input('company.cnpj');
+                $company->description = $request->input('company.description');
+                    
+                $company->save();
+
+                $company->address->cep = $request->input('localization.cep');
+                $company->address->address = $request->input('localization.address');
+                $company->address->house_number = $request->input('localization.house_number');
+                $company->address->district = $request->input('localization.district');
+                $company->address->address_complement = $request->input('localization.address_complement');
+                $company->address->city_id = $request->input('localization.city_id');
+                
+                $company->address->save();
+
+                DB::commit();
+
+            } catch (Exception $ex) {
+                DB::rollback();
+
+                connectify('error', 'Falha na Edição!', 'Falha ao registrar valores');
+
+                return redirect()->back()->withInput();
+            }
+            
+            notify()->success('Dados da empresa alterados com sucesso!');
+
+            return redirect()->route('company.show', $id);
+
+        } else {
+            connectify('error', 'Falha na Edição!', 'Empresa não encontrada');
+
+            return redirect()->back();
+        }
     }
 
     /**
