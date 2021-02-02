@@ -14,11 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('guest')->group(function() {
+    Route::view('/reset/password', 'auth.resetPassword')->name('auth.resetPass');
+
     Route::get('/login', 'AuthenticateController@index')->name('auth.index');
+    // Route::get('reset/password/fill/token', 'auth.fillToken')->name('auth.fillToken');
 
     Route::post('/login', 'AuthenticateController@login')->name('auth.login');
-    Route::view('/reset/password', 'auth.resetPassword')->name('auth.resetPass');
     Route::post('/reset/password', 'AuthenticateController@resetPassword')->name('auth.resetLink');
+    Route::post('/check/user/{id}/token', 'AuthenticateController@checkToken')->name('auth.checkToken');
+    Route::post('/change/password/user/{id}', 'AuthenticateController@changePassword')->name('auth.changePassword');
     
     Route::get('/register', function () {
         return view('auth.register');

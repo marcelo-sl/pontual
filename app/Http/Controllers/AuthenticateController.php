@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserRequest;
 use App\User;
+use App\Token;
 
 use DB;
 
@@ -87,15 +88,55 @@ class AuthenticateController extends Controller
 
     $user = User::firstWhere('email', $credentials['email']);
     if (isset($user)) {
-      print('E agora José?');
-      exit();
-      Password::sendResetLink($credentials);
-      connectify('success', 'Código enviado', 'Check seu e-mail para ter acesso ao código.');
-      return redirect()->route('auth.index');
+      $this->generateToken($user);
+      connectify('success', 'Código criado!', 'Criamos um código de redefinição de senha e enviamos ao seu e-mail');
+      return view('auth.fillToken', compact('user'));
     } else {
       request()->flashOnly(['email']);
       connectify('error', 'Falha no reset!', 'O e-mail informado não está vinculado a uma conta');
       return redirect()->route('auth.resetPass');
+    }
+  }
+
+  public function generateToken($user) {
+    $tkn = Token::firstWhere('user_id', $user->id);
+    
+    if (isset($tkn)) {
+      $tkn->token = rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9);
+      $tkn->save();
+    } else {
+      $newToken = new Token;
+      $newToken->user_id = $user->id;
+      $newToken->email = $user->email;
+      $newToken->token = rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9);
+      $newToken->save();
+    }
+
+    // Chamar função de enviar email!
+  }
+
+  public function checkToken(Request $request) {
+    $user = User::firstWhere('id', $request->id);
+    $tkn = Token::firstWhere('user_id', $request->id);
+    if ($tkn->token == $request->token) {
+      return view('auth.changePassword', compact('user'));
+    } else {
+      $request->flashOnly(['token']);
+      connectify('error', 'Falha na validação!', 'O código informado não está correto');
+      return view('auth.fillToken', compact('user'));
+    }
+  }
+
+  public function changePassword(Request $request) {
+    $user = User::find($request->id);
+    if (isset($user)) {
+      $user->password = Hash::make($request->password);
+      $user->save();
+      connectify('success', 'Senha alterada!', 'Agora você pode acessar sua conta normalmente');
+      return redirect()->route('auth.login');
+    } else {
+      connectify('error', 'Falha na alteração!', 'O usuário não existe');
+      return redirect()->back()->withInput();
     }
   }
 }

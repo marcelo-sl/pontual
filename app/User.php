@@ -45,4 +45,9 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function token()
+    {
+        return $this->hasOne('App\Token');
+    }
 }
