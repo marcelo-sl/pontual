@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+
 use App\Http\Requests\UserRequest;
+use App\Mail\ResetPasswordMail;
 use App\User;
 use App\Token;
 
@@ -112,8 +115,8 @@ class AuthenticateController extends Controller
       $newToken->token = rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9);
       $newToken->save();
     }
-
-    // Chamar função de enviar email!
+    $email = new ResetPasswordMail($user);
+    Mail::send($email);
   }
 
   public function generateNewToken(Request $request) {
