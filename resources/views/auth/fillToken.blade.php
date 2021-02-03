@@ -24,7 +24,7 @@
                             </div>
                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                                 <button type="submit" class="btn btn-primary" href="#">Validar Código</button>
-                                <button type="submit" class="btn btn-secondary disabled" disabled href="#">Gerar um novo Código</button>
+                                <a class="btn btn-secondary" href="{{ route('auth.generateNewToken', $user->id)}}">Gerar um novo Código</a>
                             </div>
                         </form>
                     </div>

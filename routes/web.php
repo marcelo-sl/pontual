@@ -17,7 +17,7 @@ Route::middleware('guest')->group(function() {
     Route::view('/reset/password', 'auth.resetPassword')->name('auth.resetPass');
 
     Route::get('/login', 'AuthenticateController@index')->name('auth.index');
-    // Route::get('reset/password/fill/token', 'auth.fillToken')->name('auth.fillToken');
+    Route::get('/generate/new/token/{id}', 'AuthenticateController@generateNewToken')->name('auth.generateNewToken');
 
     Route::post('/login', 'AuthenticateController@login')->name('auth.login');
     Route::post('/reset/password', 'AuthenticateController@resetPassword')->name('auth.resetLink');

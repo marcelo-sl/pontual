@@ -21,6 +21,8 @@
 								
 								@csrf
 
+                                <input type="hidden" name="token" value="{{ $tkn }}" />
+
                                 <div class="form-group">
                                     <label class="small mb-1" for="inputPassword">Senha</label>
                                     <input class="form-control py-4" id="inputPassword" name="password" type="password" placeholder="Digite sua senha" />

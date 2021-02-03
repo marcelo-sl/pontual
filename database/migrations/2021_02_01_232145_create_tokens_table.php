@@ -17,7 +17,7 @@ class CreateTokensTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('email')->unique();
-            $table->integer('token');
+            $table->string('token');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

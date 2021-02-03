@@ -12,6 +12,7 @@ use App\User;
 use App\Token;
 
 use DB;
+use DateTime;
 
 class AuthenticateController extends Controller
 {
@@ -115,28 +116,60 @@ class AuthenticateController extends Controller
     // Chamar função de enviar email!
   }
 
+  public function generateNewToken(Request $request) {
+    $user = User::find($request->id);
+
+    if (isset($user)) {
+      $this->generateToken($user);
+      connectify('success', 'Código criado!', 'Criamos um código de redefinição de senha e enviamos ao seu e-mail');
+      return view('auth.fillToken', compact('user'));
+    } else {
+      connectify('error', 'Falha na criação do código!', 'O usuário informado não existe');
+      return redirect()->route('auth.resetPass');
+    }
+  }
+
   public function checkToken(Request $request) {
     $user = User::firstWhere('id', $request->id);
     $tkn = Token::firstWhere('user_id', $request->id);
-    if ($tkn->token == $request->token) {
-      return view('auth.changePassword', compact('user'));
+
+    $time = new DateTime($tkn->updated_at);
+    $time->add(date_interval_create_from_date_string('10 minutes'));
+    if ($time >= new DateTime("now")) {
+      if ($tkn->token == $request->token) {
+        $tkn = $tkn->token;
+        return view('auth.changePassword', compact(['user', 'tkn']));
+      } else {
+        $request->flashOnly(['token']);
+        connectify('error', 'Falha na validação!', 'O código informado não está correto');
+        return view('auth.fillToken', compact('user'));
+      }
     } else {
       $request->flashOnly(['token']);
-      connectify('error', 'Falha na validação!', 'O código informado não está correto');
+      connectify('error', 'Falha na validação!', 'O código informado expirou, gere um novo código');
       return view('auth.fillToken', compact('user'));
     }
+
   }
 
   public function changePassword(Request $request) {
     $user = User::find($request->id);
+    $tkn = $request->token;
+
     if (isset($user)) {
+
+      if ($user->token->token != $tkn) {
+        connectify('error', 'Falha na alteração de senha!', 'Solicitação de troca de senha não condiz com esse usuário!');
+        return redirect()->route('auth.index');
+      }
+
       $user->password = Hash::make($request->password);
       $user->save();
       connectify('success', 'Senha alterada!', 'Agora você pode acessar sua conta normalmente');
       return redirect()->route('auth.login');
     } else {
       connectify('error', 'Falha na alteração!', 'O usuário não existe');
-      return redirect()->back()->withInput();
+      return redirect()->route('auth.index');
     }
   }
 }
