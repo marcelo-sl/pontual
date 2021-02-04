@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CompanyRequest;
 
 use App\Company;
+use App\WorkingHour;
 use App\Address;
 use App\State;
 use App\City;
@@ -74,14 +75,46 @@ class CompanyController extends Controller
         $address->company_id = $company->id;
         
         $address->save();
+
+        /** Horário de Funcionamento */
+        $hasBreakTime = $request->input('hours.has_break_time');
+        $rangeHour = sprintf('%02d:%02d:00', floor($request->input('hours.range_hour') / 60), ($request->input('hours.range_hour') % 60));
+        
+        if ($hasBreakTime === "on") {
+          $startBreak = date("H:i:s", strtotime($request->input('hours.start_break')));
+          $endBreak = date("H:i:s", strtotime($request->input('hours.end_break')));
+        }
+        
+        foreach ($request->input('day_hours') as $weekday => $day_hours) 
+        {
+          if (!isset($day_hours['is_closed'])) {
+            $workingHour = new WorkingHour;
+            
+            $workingHour->week_day = $weekday;
+            $workingHour->range_hour = $rangeHour;
+            $workingHour->start_hour = date("H:i:s", strtotime($day_hours['start_hour']));
+            $workingHour->end_hour = date("H:i:s", strtotime($day_hours['end_hour']));
+
+            if ($hasBreakTime === "on") {
+              $workingHour->start_break = $startBreak;
+              $workingHour->end_break = $endBreak;
+            }
+            
+            $workingHour->company_id = $company->id;
+            $workingHour->save();
+          }
+        }
         
         $user = User::find($request->input('company.user_id'));
-        
-        $user->roles()->sync([2, 3, 4, 5, 6]);
+
+        if(!$user->hasRole('Owner')) {
+          $user->roles()->sync([2, 3, 4, 5, 6]);
+        }
 
         DB::commit();
 
-      } catch (\Exception $exception) {
+      } catch (Exception $exception) {
+        dd($exception);
         DB::rollback();
 
         connectify('error', 'Erro no servidor', 'Erro ao cadastrar empresa.');

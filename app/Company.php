@@ -27,6 +27,11 @@ class Company extends Model
 
     public function address()
     {
-        return $this->hasOne('App\Address');
+      return $this->hasOne('App\Address');
+    }
+
+    public function workingHours()
+    {
+      return $this->hasMany('App\WorkingHour');
     }
 }

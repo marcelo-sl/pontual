@@ -1,0 +1,9 @@
+.week-days {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px 12px;
+}
+
+.break-time-content {
+  display: none;
+}
