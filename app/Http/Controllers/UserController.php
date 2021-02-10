@@ -27,6 +27,20 @@ class UserController extends Controller
 
     /**
      * Show the view to choose the user's type.
+    *
+     * @param  string  $email
+     * @return \Illuminate\Http\Response
+     */
+    public function findByEmail($email)
+    {
+        $user = User::where('email', $email)->first();
+
+        return $user;
+    }
+    
+
+    /**
+     * Show the view to choose the user's type.
      *
      * @return \Illuminate\Http\Response
      */

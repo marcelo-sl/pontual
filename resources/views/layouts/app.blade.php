@@ -15,6 +15,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed {{ Auth::user()->hasRole('Customer') ? '' : 'sb-sidenav-toggled' }}">
+     
       
       @include('layouts/parts/_navbar')
 
@@ -22,7 +23,16 @@
         @include('layouts/parts/_sidebar')
         
         <div id="layoutSidenav_content">
-            
+          @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div>
+          @endif
+          
           @yield('main')
 
           <footer class="py-4 bg-light mt-4">

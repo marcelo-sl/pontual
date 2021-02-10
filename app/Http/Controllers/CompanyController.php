@@ -50,7 +50,8 @@ class CompanyController extends Controller
     public function store(CompanyRequest $request)
     {
       DB::beginTransaction();
-
+      
+      // dd($request->input());
       try {
         /** Dados da Empresa */
         $company = new Company;
@@ -114,7 +115,6 @@ class CompanyController extends Controller
         DB::commit();
 
       } catch (Exception $exception) {
-        dd($exception);
         DB::rollback();
 
         connectify('error', 'Erro no servidor', 'Erro ao cadastrar empresa.');

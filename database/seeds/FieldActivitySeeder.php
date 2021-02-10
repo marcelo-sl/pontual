@@ -12,10 +12,9 @@ class FieldActivitySeeder extends Seeder
     public function run()
     {
         DB::table('fields_activity')->insert([
-            [ 'field' => 'Barbearia' ],
-            [ 'field' => 'Cabeleireiro' ],
-            [ 'field' => 'Salão de beleza' ],
-            [ 'field' => 'Design de sombrancelhas' ],
+            [ 'field' => 'Barbeiro' ],
+            [ 'field' => 'Cabeleireiro(a)' ],
+            [ 'field' => 'Designer de sombrancelhas' ],
             [ 'field' => 'Manicure' ],
             [ 'field' => 'Pedicure' ],
         ]);

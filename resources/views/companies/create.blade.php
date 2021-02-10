@@ -105,7 +105,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="inputState">Estado<sup>*</sup></label>
-                <select class="form-control" id="inputState" name="localization[state_id]">
+                <select class="form-control" id="inputState" name="localization[uf]">
                   <option disabled selected value="">Selecione o estado...</option>
                   @foreach($states as $state)
                     <option value="{{$state->uf}}" {{ old('localization.uf') == $state->uf ? 'selected' : '' }}>{{$state->state}}</option>
@@ -130,10 +130,22 @@
 
           <h3 class="my-4">Horário de Funcionamento</h3>
 
+          @php
+            $day = [
+              'Domingo', 
+              'Segunda-feira', 
+              'Terça-feira', 
+              'Quarta-feira',
+              'Quinta-feira',
+              'Sexta-feira',
+              'Sábado',
+            ];
+          @endphp
+
           @for ($i = 0; $i < 7; $i++)
             <div class="form-inline d-flex justify-content-around week-days my-1">
-              <div class="col-1 d-flex justify-center">
-                <b>{{ jddayofweek($i, 1) }}</b>
+              <div class="col-2 d-flex justify-center">
+                <b>{{ $day[$i] }}</b>
               </div>
 
               <div class="form-check">
@@ -145,23 +157,23 @@
 
               <div class="form-group working-hour hour-day-{{$i}}">
                 <label class="my-1 mr-2" for="startHour">Entrada:</label>
-                <input type="time" name="day_hours[{{$i}}][start_hour]" class="form-control" id="startHour">
+                <input type="time" name="day_hours[{{$i}}][start_hour]" class="form-control workHour" id="startHour">
               </div>
               <div class="form-group working-hour hour-day-{{$i}}">
                 <label class="my-1 mr-2" for="endHour">Saída:</label>
-                <input type="time" name="day_hours[{{$i}}][end_hour]" class="form-control" id="endHour">
+                <input type="time" name="day_hours[{{$i}}][end_hour]" class="form-control workHour" id="endHour" >
               </div>
               
             </div>
           @endfor
 
-          <div class="row my-2">
-            <div class="col-md-3">
+          <div class="row mt-3">
+            <div class="col-6">
               <div class="form-group">
                 <label class="my-1 mr-2" for="rangeHour">
                   Tempo entre atendimentos (em minutos): 
                 </label>
-                <input type="number" name="hours[range_hour]" class="form-control" min="15" max="120" id="rangeHour">
+                <input type="number" name="hours[range_hour]" class="form-control col-3" min="15" max="120" id="rangeHour" value="{{ old('hours.range_hour') }}">
               </div>
             </div>
           </div>
@@ -170,26 +182,28 @@
             <div class="col-md-12">
               <div class="form-check">
                 <input class="form-check-input" name="hours[has_break_time]" id="hasBreakTime" type="checkbox">
-                <label class="form-check-label mr-1" for="hasBreakTime">
-                  Horário de almoço:
+                <label class="form-check-label mr-1" for="hasBreakTime" value="{{ old('hours.has_break_time') }}">
+                  Possui parada de almoço
                 </label>
               </div>
 
               <div class="form-row break-time-content">
-                <div class="col-md-2">
+                <div class="col-2">
                   <label class="my-1 mr-2" for="startBreak">Início</label>
-                  <input type="time" name="hours[start_break]" class="form-control my-1 mr-sm-2" id="startBreak">
+                  <input type="time" name="hours[start_break]" class="form-control my-1 mr-sm-2" id="startBreak" value="{{ old('hours.start_break') }}">
                 </div>
 
-                <div class="col-md-2">                
+                <div class="col-2">                
                   <label class="my-1 mr-2" for="endBreak">Fim</label>
-                  <input type="time" name="hours[end_break]" class="form-control my-1 mr-sm-2" id="endBreak">
+                  <input type="time" name="hours[end_break]" class="form-control my-1 mr-sm-2" id="endBreak" value="{{ old('hours.end_break') }}">
                 </div>
               </div>
             </div>
           </div>
           
-          <div class="form-group mt-4 mb-0"><button type="submit" class="btn btn-primary">Cadastrar empresa</button></div>
+          <div class="form-group mt-4 mb-0 d-flex justify-center">
+            <button type="submit" class="btn btn-primary">Cadastrar empresa</button>
+          </div>
         </form>
       </div>
     </div>				

@@ -15,6 +15,11 @@ class Company extends Model
       'trade_name', 'company_name', 'cnpj', 'logo_url', 'description', 'user_id', 'inactive'
     ];
 
+    public function user()
+    {
+      return $this->belongsTo('App\User');
+    }
+
     public function fieldsActivity()
     {
       return $this->belongsToMany(

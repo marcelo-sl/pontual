@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class FieldActivity extends Model
 {
+  protected $table = 'fields_activity';
+  
   protected $fillable = [
     'field',
   ];
@@ -15,8 +17,18 @@ class FieldActivity extends Model
     return $this->belongsToMany(
       'App\Company',
       'field_activity_company', 
-      'company_id', 
-      'field_activity_id'
+      'field_activity_id',
+      'company_id'
+    );
+  }
+
+  public function providers()
+  {
+    return $this->belongsToMany(
+      'App\Provider',
+      'provider_activity', 
+      'field_activity_id',
+      'provider_id'
     );
   }
 }

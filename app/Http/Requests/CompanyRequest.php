@@ -14,7 +14,7 @@ class CompanyRequest extends FormRequest
 
     public function rules()
     {
-        return [
+        $rules = [
             'company.trade_name' => ['required', 'max:45'],
             'company.company_name' => ['required', 'max:80'],
             'company.cnpj' => ['required', 'max:18'],
@@ -26,7 +26,20 @@ class CompanyRequest extends FormRequest
             'localization.district' => ['required', 'max:60'],
             'localization.address_complement' => ['max:45'],
             'localization.city_id' => ['required', 'numeric'],
+            'hours.range_hour' => ['required', 'numeric'],
+            'hours.start_break' => ['required_with:hours.has_break_time', 'nullable', 'regex:/([01]?[0-9]|2[0-3]):[0-5][0-9]/'],
+            'hours.end_break' => ['required_with:hours.has_break_time', 'nullable', 'regex:/([01]?[0-9]|2[0-3]):[0-5][0-9]/'],
         ];
+
+        if ($this->request->get('day_hours')) {
+            foreach($this->request->get('day_hours') as $key => $dayHour)
+            {
+              $rules['day_hours.'.$key.'.start_hour'] = 'required_without:day_hours.'.$key.'.is_closed';
+              $rules['day_hours.'.$key.'.end_hour'] = 'required_without:day_hours.'.$key.'.is_closed';
+            }
+        }
+
+        return $rules;
     }
 
     public function attributes()
@@ -43,6 +56,9 @@ class CompanyRequest extends FormRequest
             'localization.district' => 'Bairro',
             'localization.address_complement' => 'Complemento',
             'localization.city_id' => 'Cidade',
+            'hours.range_hour' => 'Tempo de atendimento',
+            'hours.start_break' => 'Início do almoço',
+            'hours.end_break' => 'Fim do almoço',
         ];
     }
 
@@ -50,10 +66,13 @@ class CompanyRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute é obrigatório.',
+            'required_with' => 'O campo :attribute é obrigatório se o "Parada de almoço" estiver preenchido.',
+            'required_without' => 'O campo :attribute é obrigatório se o campo "Fechado" não estiver preenchido.',
             'unique' => 'Já existe um registro com o valor informado em :attribute.',
             'min' => 'O campo :attribute deve possuir no mínimo :min caracteres.',
             'max' => 'O campo :attribute deve possuir no máximo :max caracteres.',
-            'confirmed' => 'A confirmação do campo :attribute não é válida.'
+            'confirmed' => 'A confirmação do campo :attribute não é válida.',
+            'regex' => 'O formato do campo :attribute é inválido.'
         ];
     }
 }

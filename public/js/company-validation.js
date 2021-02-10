@@ -27,6 +27,13 @@ $(document).ready(function() {
       "localization[city_id]": {
         required: true,
       },
+      "hours[range_hour]": "required",
+      "hours[start_break]": {
+        required: "#hasBreakTime:checked",
+      },
+      "hours[end_break]": {
+        required: "#hasBreakTime:checked",
+      },
     },
     messages: {
       email: {
@@ -37,7 +44,7 @@ $(document).ready(function() {
       },
       password_confirmation: {
         equalTo: "As senhas não conferem"
-      }
+      },
     },
   });
 

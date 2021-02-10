@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Token');
     }
+
+    public function provider()
+    {
+        return $this->hasOne('App\Provider');
+    }
 }
