@@ -75,14 +75,20 @@ class ProviderController extends Controller
         } catch (Exception $exception) {
             DB::rollback();
 
-            connectify('error', 'Erro no servidor', 'Erro ao cadastrar prestador de serviço.');
+            $error = [
+                'msg_title' => 'Erro no servidor',
+                'msg_error' => 'Erro ao cadastrar prestador de serviço.'
+            ];
 
-            return redirect()->back()->withInput();
+            return redirect()->back()->with($error)->withInput();
         }
 
-        notify()->success('Prestador de serviço cadastrado com sucesso!');
+        $success = [
+            'msg_title' => 'Sucesso ao cadastrar',
+            'msg_success' => 'Prestador de serviço cadastrado com sucesso!'
+        ];
 
-        return redirect()->route('provider.create');
+        return redirect()->route('provider.create')->with($success);
     }
 
     /**

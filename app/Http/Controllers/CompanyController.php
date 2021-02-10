@@ -117,14 +117,19 @@ class CompanyController extends Controller
       } catch (Exception $exception) {
         DB::rollback();
 
-        connectify('error', 'Erro no servidor', 'Erro ao cadastrar empresa.');
-
-        return redirect()->back()->withInput();
+        $error = [
+          'msg_title' => 'Erro no servidor',
+          'msg_error' => 'Erro ao cadastrar empresa.'
+        ];
+        return redirect()->back()->with($error)->withInput();
       }
 
-      notify()->success('Empresa cadastrada com sucesso!');
+      $success = [
+        'msg_title' => 'Empresa cadastrada!',
+        'msg_success' => 'Empresa cadastrada com sucesso'
+      ];
 
-      return redirect()->back();
+      return redirect()->back()->with($success);
 
 
     }
@@ -193,19 +198,28 @@ class CompanyController extends Controller
             } catch (Exception $ex) {
                 DB::rollback();
 
-                connectify('error', 'Falha na Edição!', 'Falha ao registrar valores');
+                $error = [
+                  'msg_title' => 'Falha na Edição!',
+                  'msg_error' => 'Falha ao registrar valores'
+                ];
 
-                return redirect()->back()->withInput();
+                return redirect()->back()->with($error)->withInput();
             }
             
-            notify()->success('Dados da empresa alterados com sucesso!');
+            $success = [
+              'msg_title' => 'Sucesso na alteração!',
+              'msg_success' => 'Dados da empresa alterados com sucesso!'
+            ];
 
-            return redirect()->route('company.show', $id);
+            return redirect()->route('company.show', $id)->with($success);
 
         } else {
-            connectify('error', 'Falha na Edição!', 'Empresa não encontrada');
+            $error = [
+              'msg_title' => 'Falha na Edição!',
+              'msg_error' => 'Empresa não encontrada'
+            ];
 
-            return redirect()->back();
+            return redirect()->back()->with($error);
         }
     }
 
@@ -221,9 +235,12 @@ class CompanyController extends Controller
         $company->inactive = 1;
         $company->delete();
 
-        notify()->success('Empresa apagado com sucesso!');
+        $success = [
+          'msg_title' => 'Sucesso ao excluir',
+          'msg_success' => 'Empresa apagado com sucesso!'
+        ];
 
-        return back();
+        return back()->with($success);
     }
 
     public function inactivate($id)
@@ -232,8 +249,11 @@ class CompanyController extends Controller
       $company->inactive = 1;
       $company->save();
 
-      notify()->success('Empresa inativada com sucesso!');
+      $success = [
+        'msg_title' => 'Sucesso ao inativar',
+        'msg_success' => 'Empresa inativada com sucesso!'
+      ];
 
-      return back();
+      return back()->with($success);
     }
 }

@@ -32,6 +32,34 @@
               </ul>
           </div>
           @endif
+
+          @if(session()->has('msg_error'))
+              
+            <div class="alert alert-danger alert-dismissible fade show w-50 mt-3 mx-auto" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <i class="fas fa-exclamation-circle"></i>
+                <strong>{{ session()->get('msg_title') }}</strong>
+                <hr>
+                <p>{{ session()->get('msg_error') }}</p>
+            </div>
+                  
+          @endif
+
+          @if(session()->has('msg_success'))
+              
+            <div class="alert alert-success alert-dismissible fade show w-50 mt-3 mx-auto" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <i class="fas fa-check-circle"></i>
+                <strong>{{ session()->get('msg_title') }}</strong>
+                <hr>
+                <p>{{ session()->get('msg_success') }}</p>
+            </div>
+                  
+          @endif
           
           @yield('main')
 
