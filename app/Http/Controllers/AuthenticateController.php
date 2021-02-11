@@ -50,14 +50,22 @@ class AuthenticateController extends Controller
     } catch (Exception $exception) {
       DB::rollback();
 
-      connectify('error', 'Erro no servidor', 'Erro ao cadastrar cliente.');
+      $request->flash();
 
-      return redirect()->back()->withInput();
+      $error = [
+        'msg_title' => 'Erro no servidor',
+        'msg_error' => 'Erro ao cadastrar cliente.'
+      ];
+
+      return redirect()->back()->with($error);
     }
 
-    notify()->success('Usuário cadastrado com sucesso!');
+    $success = [
+      'msg_title' => 'Sucesso!',
+      'msg_success' => 'Usuário criado com sucesso!'
+    ];
 
-    return redirect()->route('auth.login');
+    return redirect()->route('auth.login')->with($success);
   }
 
   public function login(Request $request)
@@ -73,9 +81,12 @@ class AuthenticateController extends Controller
     } else {
       $request->flashOnly(['email']);
       
-      connectify('error', 'Falha na autenticação!', 'Usuário ou senha incorreto.');
+      $error = [
+        'msg_title' => 'Falha na autenticação!',
+        'msg_error' => 'Usuário ou senha incorreto.'
+      ];
       
-      return redirect()->route('auth.index');
+      return redirect()->route('auth.index')->with($error);
     }
   }
 
@@ -93,12 +104,18 @@ class AuthenticateController extends Controller
     $user = User::firstWhere('email', $credentials['email']);
     if (isset($user)) {
       $this->generateToken($user);
-      connectify('success', 'Código criado!', 'Criamos um código de redefinição de senha e enviamos ao seu e-mail');
-      return view('auth.fillToken', compact('user'));
+      $success = [
+        'msg_title' => 'Código criado!',
+        'msg_success' => 'Criamos um código de redefinição de senha e enviamos ao seu e-mail'
+      ];
+      return view('auth.fillToken', compact('user', 'success'));
     } else {
       request()->flashOnly(['email']);
-      connectify('error', 'Falha no reset!', 'O e-mail informado não está vinculado a uma conta');
-      return redirect()->route('auth.resetPass');
+      $error = [
+        'msg_title' => 'Falha no reset!',
+        'msg_error' => 'O e-mail informado não está vinculado a uma conta'
+      ];
+      return redirect()->route('auth.resetPass')->with($error);
     }
   }
 
@@ -124,11 +141,17 @@ class AuthenticateController extends Controller
 
     if (isset($user)) {
       $this->generateToken($user);
-      connectify('success', 'Código criado!', 'Criamos um código de redefinição de senha e enviamos ao seu e-mail');
-      return view('auth.fillToken', compact('user'));
+      $success = [
+        'msg_title' => 'Código criado!',
+        'msg_success' => 'Criamos um código de redefinição de senha e enviamos ao seu e-mail'
+      ];
+      return view('auth.fillToken', compact('user', 'success'));
     } else {
-      connectify('error', 'Falha na criação do código!', 'O usuário informado não existe');
-      return redirect()->route('auth.resetPass');
+      $error = [
+        'msg_title' => 'Falha na criação do código!',
+        'msg_error' => 'O usuário informado não existe'
+      ];
+      return redirect()->route('auth.resetPass')->with($error);
     }
   }
 
@@ -144,13 +167,19 @@ class AuthenticateController extends Controller
         return view('auth.changePassword', compact(['user', 'tkn']));
       } else {
         $request->flashOnly(['token']);
-        connectify('error', 'Falha na validação!', 'O código informado não está correto');
-        return view('auth.fillToken', compact('user'));
+        $error = [
+          'msg_title' => 'Falha na validação!',
+          'msg_error' => 'O código informado não está correto'
+        ];
+        return view('auth.fillToken', compact('user', 'error'));
       }
     } else {
       $request->flashOnly(['token']);
-      connectify('error', 'Falha na validação!', 'O código informado expirou, gere um novo código');
-      return view('auth.fillToken', compact('user'));
+      $error = [
+        'msg_title' => 'Falha na validação!',
+        'msg_error' => 'O código informado expirou, gere um novo código'
+      ];
+      return view('auth.fillToken', compact('user', 'error'));
     }
 
   }
@@ -162,17 +191,26 @@ class AuthenticateController extends Controller
     if (isset($user)) {
 
       if ($user->token->token != $tkn) {
-        connectify('error', 'Falha na alteração de senha!', 'Solicitação de troca de senha não condiz com esse usuário!');
-        return redirect()->route('auth.index');
+        $error = [
+          'msg_title' => 'Falha na alteração de senha!',
+          'msg_error' => 'Solicitação de troca de senha não condiz com esse usuário!'
+        ];
+        return redirect()->route('auth.index')->with($error);
       }
 
       $user->password = Hash::make($request->password);
       $user->save();
-      connectify('success', 'Senha alterada!', 'Agora você pode acessar sua conta normalmente');
-      return redirect()->route('auth.login');
+      $success = [
+        'msg_title' => 'Senha alterada!',
+        'msg_success' => 'Agora você pode acessar sua conta normalmente'
+      ];
+      return redirect()->route('auth.login')->with($success);
     } else {
-      connectify('error', 'Falha na alteração!', 'O usuário não existe');
-      return redirect()->route('auth.index');
+      $error = [
+        'msg_title' => 'Falha na alteração!',
+        'msg_error' => 'O usuário não existe'
+      ];
+      return redirect()->route('auth.index')->with($error);
     }
   }
 }

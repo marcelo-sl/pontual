@@ -35,13 +35,32 @@
                 @endif
 
                 @if(session()->has('msg_error'))
-                    <div class="row mb-2">
-                        <div class="col-12">
+                    <div class="row mt-4">
+                        <div class="col-6 m-auto">
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                                {{ session()->get('msg_error') }}
+                                <i class="fas fa-exclamation-circle"></i>
+                                <strong>{{ session()->get('msg_title') }}</strong>
+                                <hr>
+                                <p>{{ session()->get('msg_error') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                @if(session()->has('msg_success'))
+                    <div class="row mt-4">
+                        <div class="col-6 m-auto">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <i class="fas fa-check-circle"></i>
+                                <strong>{{ session()->get('msg_title') }}</strong>
+                                <hr>
+                                <p>{{ session()->get('msg_success') }}</p>
                             </div>
                         </div>
                     </div>

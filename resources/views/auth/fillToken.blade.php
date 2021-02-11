@@ -5,6 +5,39 @@
 @endsection
 @section('main')
   <main>
+
+    @if(isset($error))
+        <div class="row mt-4">
+            <div class="col-6 m-auto">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <strong>{{ $error['msg_title'] }}</strong>
+                    <hr>
+                    <p>{{ $error['msg_error'] }}</p>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if(isset($success))
+        <div class="row mt-4">
+            <div class="col-6 m-auto">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <i class="fas fa-check-circle"></i>
+                    <strong>{{ $success['msg_title'] }}</strong>
+                    <hr>
+                    <p>{{ $success['msg_success'] }}</p>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-5">

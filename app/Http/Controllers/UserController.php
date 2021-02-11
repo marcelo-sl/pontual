@@ -85,14 +85,20 @@ class UserController extends Controller
         } catch (\Exception $exception) {
             DB::rollback();
 
-            connectify('error', 'Erro no servidor', 'Erro ao cadastrar cliente.');
+            $error = [
+                'msg_title' => 'Erro no servidor',
+                'msg_error' => 'Erro ao cadastrar cliente.'
+            ];
 
-            return redirect()->back()->withInput();
+            return redirect()->back()->with($error)->withInput();
         }
 
-        notify()->success('Usuário cadastrado com sucesso!');
+        $success = [
+            'msg_title' => 'Sucesso ao cadastrar',
+            'msg_success' => 'Usuário cadastrado com sucesso!'
+        ];
 
-        return redirect()->route('auth.login');
+        return redirect()->route('auth.login')->with($success);
     }
 
     /**
@@ -148,8 +154,11 @@ class UserController extends Controller
                     if (Auth::attempt($credentials)) {
                         $user->password = Hash::make($request->password);
                     } else {
-                        connectify('error', 'Falha na Edição!', 'Senha atual incorreta');
-                        return redirect()->back()->withInput();
+                        $error =  [
+                            'msg_title' => 'Falha na Edição!',
+                            'msg_error' => 'Senha atual incorreta'
+                        ];
+                        return redirect()->back()->with($error)->withInput();
                     }
                 }
 
@@ -159,18 +168,27 @@ class UserController extends Controller
             } catch (Exception $ex) {
                 DB::rollback();
 
-                connectify('error', 'Falha na Edição!', 'Falha ao registrar valores');
+                $error =  [
+                    'msg_title' => 'Falha na Edição!',
+                    'msg_error' => 'Falha ao registrar valores'
+                ];
 
-                return redirect()->back()->withInput();
+                return redirect()->back()->with($error)->withInput();
             }
             
-            notify()->success('Usuário editado com sucesso!');
+            $success = [
+                'msg_title' => 'Sucesso ao editar',
+                'msg_success' => 'Usuário editado com sucesso!'
+            ];
 
-            return redirect()->route('user.show', $user->id);
+            return redirect()->route('user.show', $user->id)->with($success);
 
         } else {
-            connectify('error', 'Falha na Edição!', 'Usuário não encontrado');
-            return redirect()->back();
+            $error = [
+                'msg_title' => 'Falha na Edição!',
+                'msg_error' => 'Usuário não encontrado'
+            ];
+            return redirect()->back()->with($error);
         }
 
     }
@@ -187,9 +205,12 @@ class UserController extends Controller
       $user->inactive = 1;
       $user->save();
 
-      notify()->success('Usuário inativado com sucesso!');
+      $success = [
+        'msg_title' => 'Sucesso ao inativar',
+        'msg_success' => 'Usuário inativado com sucesso!'
+      ];
 
-      return back();
+      return back()->with($success);
     }
 
     /**
@@ -203,9 +224,12 @@ class UserController extends Controller
       $user = User::find($id);
       $user->inactive = 1;
       $user->delete();
+    
+      $success = [
+        'msg_title' => 'Sucesso ao excluir',
+        'msg_success' => 'Usuário apagado com sucesso!'
+      ];
 
-      notify()->success('Usuário apagado com sucesso!');
-
-      return back();
+      return back()->with($success);
     }
 }
