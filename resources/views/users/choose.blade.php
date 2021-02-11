@@ -22,7 +22,7 @@
         </div>
       </a>
       
-      <a href="{{ route('provider.create') }}" class="card text-white p-4" id="provider-card">
+      <a href="{{ route('provider.create') }}" class="card text-dark p-4" id="provider-card">
         <img src="{{ asset('img/choose-provider.svg') }}" class="card-img" alt="Prestador de serviços">
         <div class="card-content mt-4">
           <h3 class="card-title">Sou um prestador de serviços</h3>

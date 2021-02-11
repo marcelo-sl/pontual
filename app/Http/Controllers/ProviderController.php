@@ -8,6 +8,7 @@ use App\Http\Requests\ProviderRequest;
 use DB;
 
 use App\Provider;
+use App\User;
 use App\FieldActivity;
 use App\WorkingHour;
 use App\Address;
@@ -60,18 +61,65 @@ class ProviderController extends Controller
         DB::beginTransaction();
 
         try {
-            $provider = new Provider;
-            
-            $provider->cpf = $request->input('provider.cpf');
-            $provider->nickname = $request->input('provider.nickname');
-            $provider->user_id = $request->input('provider.user_id');
-            
-            $provider->save();
-            
-            
-            $provider->fieldsActivities()->attach($request->input('provider.activities'));
+          $provider = new Provider;
+          
+          $provider->cpf = $request->input('provider.cpf');
+          $provider->nickname = $request->input('provider.nickname');
+          $provider->user_id = $request->input('provider.user_id');
+          
+          $provider->save();
+          
+          $provider->fieldsActivities()->attach($request->input('provider.activities'));
+          
+          /** Localização do comércio */
+          $address = new Address;
+          
+          $address->cep = $request->input('localization.cep');
+          $address->address = $request->input('localization.address');
+          $address->house_number = $request->input('localization.house_number');
+          $address->district = $request->input('localization.district');
+          $address->address_complement = $request->input('localization.address_complement');
+          $address->city_id = $request->input('localization.city_id');
+          $address->provider_id = $provider->id;
+          
+          $address->save();
 
-            DB::commit();
+          /** Horário de Funcionamento */
+          $hasBreakTime = $request->input('hours.has_break_time');
+          $rangeHour = sprintf('%02d:%02d:00', floor($request->input('hours.range_hour') / 60), ($request->input('hours.range_hour') % 60));
+          
+          if ($hasBreakTime === "on") {
+            $startBreak = date("H:i:s", strtotime($request->input('hours.start_break')));
+            $endBreak = date("H:i:s", strtotime($request->input('hours.end_break')));
+          }
+          
+          foreach ($request->input('day_hours') as $weekday => $day_hours) 
+          {
+            if (!isset($day_hours['is_closed'])) {
+              $workingHour = new WorkingHour;
+              
+              $workingHour->week_day = $weekday;
+              $workingHour->range_hour = $rangeHour;
+              $workingHour->start_hour = date("H:i:s", strtotime($day_hours['start_hour']));
+              $workingHour->end_hour = date("H:i:s", strtotime($day_hours['end_hour']));
+
+              if ($hasBreakTime === "on") {
+                $workingHour->start_break = $startBreak;
+                $workingHour->end_break = $endBreak;
+              }
+              
+              $workingHour->provider_id = $provider->id;
+              $workingHour->save();
+            }
+          }
+          
+          $user = User::find($request->input('provider.user_id'));
+
+          if(!$user->hasRole('Employee')) {
+            $user->roles()->sync([2, 3, 4, 5, 6]);
+          }
+
+          DB::commit();
         } catch (Exception $exception) {
             DB::rollback();
 

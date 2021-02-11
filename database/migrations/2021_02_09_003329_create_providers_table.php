@@ -36,6 +36,11 @@ class CreateProvidersTable extends Migration
      */
     public function down()
     {
+        Schema::table('providers', function (Blueprint $table) {
+            $table->removeColumn('company_id');
+            $table->removeColumn('user_id');
+        });
+
         Schema::dropIfExists('providers');
     }
 }

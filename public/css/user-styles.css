@@ -27,10 +27,6 @@ a.card {
   transition: 0.4s;
 }
 
-#provider-card > .card-content {
-  color: #3F3D56;
-}
-
 #provider-card:hover {
   transform: scale(1.1);
 }
