@@ -24,7 +24,9 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        //
+      $providers = Provider::all();
+
+      return view('providers.index', compact('providers'));
     }
 
     /**
@@ -174,6 +176,26 @@ class ProviderController extends Controller
     }
 
     /**
+     * Inactivate the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function inactivate($id)
+    {
+      $provider = Provider::find($id);
+      $provider->inactive = 1;
+      $provider->save();
+
+      $success = [
+        'msg_title' => 'Sucesso ao inativar',
+        'msg_success' => 'Prestador de serviços inativado com sucesso!'
+      ];
+
+      return back()->with($success);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -181,6 +203,15 @@ class ProviderController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $provider = Provider::find($id);
+      $provider->inactive = 1;
+      $provider->delete();
+    
+      $success = [
+        'msg_title' => 'Sucesso ao excluir',
+        'msg_success' => 'Prestador de serviços apagado com sucesso!'
+      ];
+
+      return back()->with($success);
     }
 }

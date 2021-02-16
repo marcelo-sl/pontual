@@ -153,16 +153,18 @@
                 <label class="form-check-label mr-1">
                   Fechado:
                 </label>
-                <input class="form-check-input" type="checkbox" name="day_hours[{{$i}}][is_closed]" id="isClosed">
+                <input class="form-check-input" type="checkbox" name="day_hours[{{$i}}][is_closed]" id="isClosed" {{ old('day_hours.'.$i.'.is_closed') == 'on' ? 'checked' : '' }}>
               </div>
+
+              
 
               <div class="form-group working-hour hour-day-{{$i}}">
                 <label class="my-1 mr-2" for="startHour">Entrada:<sup>*</sup></label>
-                <input type="time" name="day_hours[{{$i}}][start_hour]" class="form-control workHour" id="startHour">
+                <input type="time" name="day_hours[{{$i}}][start_hour]" class="form-control workHour" id="startHour" value={{ old('day_hours.'.$i.'.start_hour') }} >
               </div>
               <div class="form-group working-hour hour-day-{{$i}}">
                 <label class="my-1 mr-2" for="endHour">Saída:<sup>*</sup></label>
-                <input type="time" name="day_hours[{{$i}}][end_hour]" class="form-control workHour" id="endHour" >
+                <input type="time" name="day_hours[{{$i}}][end_hour]" class="form-control workHour" id="endHour" value={{ old('day_hours.'.$i.'.end_hour') }} >
               </div>
               
             </div>

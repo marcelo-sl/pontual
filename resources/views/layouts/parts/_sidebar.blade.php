@@ -55,6 +55,10 @@
           <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
           Usuários
         </a>
+        <a class="nav-link" href="{{ route('provider.index') }}">
+          <div class="sb-nav-link-icon"><i class="fas fa-male"></i></div>
+          Prestadores de serviços
+        </a>
         <a class="nav-link" href="{{ route('company.index') }}">
           <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
           Empresas

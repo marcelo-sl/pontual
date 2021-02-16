@@ -49,8 +49,14 @@ Route::middleware('auth')->group(function () {
     Route::put('/company/{id}', 'CompanyController@update')->name('company.update');
 
     /** Providers routes  */
+    Route::get('/provider', 'ProviderController@index')->name('provider.index'); //mudar para admin
     Route::get('/provider/create', 'ProviderController@create')->name('provider.create');
     Route::post('/provider', 'ProviderController@store')->name('provider.store');
+    Route::get('/provider/{id}', 'ProviderController@show')->name('provider.show');
+    Route::get('/provider/{id}/edit', 'ProviderController@edit')->name('provider.edit');
+    Route::put('/provider/{id}', 'ProviderController@update')->name('provider.update');
+    Route::post('/provider/{id}/inactivate', 'ProviderController@inactivate')->name('provider.inactivate');
+    Route::delete('/provider/{id}', 'ProviderController@destroy')->name('provider.destroy');
     
     Route::middleware('checkRole:Admin')->group(function () {
         /** Users routes  */
