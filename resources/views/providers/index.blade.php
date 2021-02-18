@@ -44,8 +44,8 @@
                   </td>
                   <td>{{ $provider->created_at->format('d/m/Y H:i:s') }}</td>
                   <td>
-                    <a href="{{ route('user.show', $provider->id) }}" class="btn btn-info" title="Perfil"><i class="fas fa-id-card"></i></a>
-                    <a href="{{ route('user.edit', $provider->id) }}" class="btn btn-primary" title="Editar"><i class="fas fa-user-edit"></i></a>
+                    <a href="{{ route('provider.show', $provider->id) }}" class="btn btn-info" title="Perfil"><i class="fas fa-id-card"></i></a>
+                    <a href="{{ route('provider.edit', $provider->id) }}" class="btn btn-primary" title="Editar"><i class="fas fa-user-edit"></i></a>
 
                     @if(!$provider->inactive)
                       <a 

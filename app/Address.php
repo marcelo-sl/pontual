@@ -22,4 +22,9 @@ class Address extends Model
     {
       return $this->belongsTo('App\Company');
     }
+
+    public function provider()
+    {
+      return $this->belongsTo('App\Provider');
+    }
 }

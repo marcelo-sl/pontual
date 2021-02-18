@@ -60,6 +60,36 @@
               </div>
             </div>
           </div>
+          
+          <hr>
+
+          <h3 class="my-4">Contatos</h3>
+          
+          <div id="contacts">
+
+            <div id="contacts-place">
+              <div class="row contact-row">
+                <div class="col-4">
+                  <div class="form-inline d-flex justify-content-between week-days my-1">
+                    <label>Telefone</label>
+                    <div>
+                      <input type="text" name="contacts[]" class="form-control sp_celphones">
+                      <a class="btn btn-danger ml-2 removePhone"><i class="fas fa-trash"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row mt-2" id="addContactDiv">
+              <div class="col-4 d-flex justify-content-center">
+                <a class="btn btn-success" id="addPhone">
+                  <i class="fas fa-plus"></i>
+                  Adicionar contato
+                </a>
+              </div>
+            </div>
+          </div>
 
           <hr>
 
@@ -219,5 +249,6 @@
 	<script src="{{ asset('js/mask-format.js') }}"></script>
 	<script src="{{ asset('js/address.js') }}"></script>
 	<script src="{{ asset('js/company.js') }}"></script>
+	<script src="{{ asset('js/multiple-contacts.js') }}"></script>
 
 @endsection
