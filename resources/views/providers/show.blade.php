@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', "Company Name")
+@section('title', "Provider Name")
 
 @section('css')
   <link href="{{ asset('css/company-styles.css')}}" rel="stylesheet" />
@@ -12,28 +12,37 @@
     <div class="row justify-content-center">
       <div class="col-lg-10">
         <div class="card shadow-lg border-0 rounded mt-5 d-flex flex-row p-4">
-          <div id="logo-company" class="col-3">
+          <div id="logo-provider" class="col-3">
             <img 
-              src="https://image.freepik.com/free-vector/generic-arrow-premium-logo-template_9569-147.jpg"
+              src="{{ $provider->user->avatar_url }}"
               class="border border-secondary rounded"
-              alt="Company Logo"
+              alt="Prestador de Serviços Logo"
               width="200"
               height="200"
             >
           </div>
-          <div id="main-company" class="col-8 ml-4">
-            <h2>{{ $company->trade_name }}</h2>
+          <div id="main-provider" class="col-8 ml-4">
+            <h2>{{ $provider->nickname }}</h2>
             <hr>
+            <h6>Avaliações</h6>
+            <p>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              4.5/5
+            </p>
             <h6>Descrição</h6>
             <p class="text-justify">
-              {{ $company->description }}
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-2">
 
       <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -66,7 +75,7 @@
     <div class="row justify-content-center">
       <div class="col-lg-10">
         <div class="card shadow-lg border-0 rounded mt-4 d-flex flex-row p-4">
-          <div id="localization-company" class="col-11 ml-4">
+          <div id="localization-provider" class="col-11 ml-4">
             <h4>Informações</h4>
             <hr>
             <div class="form-row">
@@ -74,34 +83,28 @@
                 <div class="form-group">
                   <label class="font-weight-bold">Endereço</label>
                   <p class="text-justify">
-                    {{ $company->address->address }}, 
-                    Nº {{$company->address->house_number}}  
-                    {{ $company->address->address_complement ?? ''}} -  
-                    {{$company->address->district}} - 
-                    {{$company->address->city->city}}/{{$company->address->city->state->uf}} - 
-                    {{ $company->address->cep }}
+                    {{ $provider->address->address }}, 
+                    Nº {{$provider->address->house_number}}  
+                    {{ $provider->address->address_complement ?? ''}} -  
+                    {{$provider->address->district}} - 
+                    {{$provider->address->city->city}}/{{$provider->address->city->state->uf}} - 
+                    {{ $provider->address->cep }}
                   </p>
                 </div>
               </div>
             </div>
 
             <div class="form-row mt-3">
-              <div class="col-md-3">
+              <div class="col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold">CNPJ</label>
-                  <p>{{$company->cnpj}}</p>
+                  <label class="font-weight-bold">Nome Comercial</label>
+                  <p>{{$provider->nickname}}</p>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="font-weight-bold">Razão Social</label>
-                  <p>{{$company->company_name}}</p>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="font-weight-bold">Cadastrada em</label>
-                  <p>{{$company->created_at->format('d/m/Y')}}</p>
+                  <label class="font-weight-bold">Cadastrado em</label>
+                  <p>{{$provider->created_at->format('d/m/Y')}}</p>
                 </div>
               </div>
             </div>

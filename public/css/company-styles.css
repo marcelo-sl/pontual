@@ -7,3 +7,13 @@
 .break-time-content {
   display: none;
 }
+
+#carouselExampleFade {
+  width: 900px;
+  height: 510px;
+}
+
+#carouselExampleFade img {
+  width: 900px;
+  height: 510px;
+}

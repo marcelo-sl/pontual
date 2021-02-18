@@ -149,7 +149,9 @@ class ProviderController extends Controller
      */
     public function show($id)
     {
-        //
+      $provider = Provider::findOrFail($id);
+
+      return view('providers.show', compact('provider'));
     }
 
     /**
