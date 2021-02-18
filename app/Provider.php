@@ -43,14 +43,4 @@ class Provider extends Model
           'field_activity_id'
         );
     }
-
-    public function address()
-    {
-      return $this->hasOne('App\Address');
-    }
-
-    public function workingHours()
-    {
-      return $this->hasMany('App\WorkingHour');
-    }
 }
