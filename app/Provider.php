@@ -24,6 +24,16 @@ class Provider extends Model
       return $this->belongsTo('App\User');
     }
 
+    public function address()
+    {
+      return $this->hasOne('App\Address');
+    }
+
+    public function workingHours()
+    {
+      return $this->hasMany('App\WorkingHour');
+    }
+
     public function fieldsActivities()
     {
         return $this->belongsToMany(

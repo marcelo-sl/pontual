@@ -88,7 +88,7 @@ class ProviderController extends Controller
 
           /** Horário de Funcionamento */
           $hasBreakTime = $request->input('hours.has_break_time');
-          $rangeHour = sprintf('%02d:%02d:00', floor($request->input('hours.range_hour') / 60), ($request->input('hours.range_hour') % 60));
+          $rangeHour = $request->input('hours.range_hour');
           
           if ($hasBreakTime === "on") {
             $startBreak = date("H:i:s", strtotime($request->input('hours.start_break')));
@@ -160,7 +160,22 @@ class ProviderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $provider = Provider::findOrFail($id);
+
+        $fields_activity = FieldActivity::all();
+        $states = State::orderBy('state')->get();
+        $cities = City::orderBy('city')->get();
+        $days = [
+          'Domingo', 
+          'Segunda-feira', 
+          'Terça-feira', 
+          'Quarta-feira',
+          'Quinta-feira',
+          'Sexta-feira',
+          'Sábado',
+        ];
+
+        return view('providers.edit', compact('provider', 'fields_activity', 'states', 'cities', 'days'));
     }
 
     /**
@@ -172,7 +187,7 @@ class ProviderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return redirect()->back()->withInput();
     }
 
     /**
