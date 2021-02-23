@@ -160,22 +160,10 @@
 
           <h3 class="my-4">Horário de Funcionamento</h3>
 
-          @php
-            $day = [
-              'Domingo', 
-              'Segunda-feira', 
-              'Terça-feira', 
-              'Quarta-feira',
-              'Quinta-feira',
-              'Sexta-feira',
-              'Sábado',
-            ];
-          @endphp
-
           @for ($i = 0; $i < 7; $i++)
             <div class="form-inline d-flex justify-content-around week-days my-1">
               <div class="col-2 d-flex justify-center">
-                <b>{{ $day[$i] }}</b>
+                <b>{{ $days[$i] }}</b>
               </div>
 
               <div class="form-check">

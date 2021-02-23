@@ -55,8 +55,8 @@ jQuery.validator.addMethod("telefone", function (value, element) {
 }, "Insira um telefone válido");
 
 jQuery.validator.addMethod("celular", function (value, element) {
-    return this.optional(element) || /\([0-9]{2}\) [0-9]{5}-[0-9]{4}/.test(value);
-}, "Insira um celular válido ");
+    return this.optional(element) || /\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}/.test(value);
+}, "Insira um celular/telefone válido ");
 
 jQuery.validator.addMethod("letras", function(value, element) {
   return this.optional(element) || /^[a-z-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/i.test(value);

@@ -138,6 +138,133 @@
               </div>
             </div>
           </div>
+
+          <hr>
+
+          <h3 class="my-4">Contatos</h3>
+          
+          <div id="contacts">
+
+            <div id="contacts-place">
+              @forelse($contacts as $i => $contact)
+                <div class="row contact-row">
+                  <div class="col-4">
+                    <div class="form-inline d-flex justify-content-between week-days my-1">
+                      <label>Telefone</label>
+                      <div>
+                        <input type="hidden" name="contacts[{{$i}}][id]" value="{{$contact->id}}">
+                        <input type="text" name="contacts[{{$i}}][phone_number]" class="form-control sp_celphones" value="{{$contact->phone_number}}">
+                        <a class="btn btn-danger ml-2 removePhone"><i class="fas fa-trash"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              @empty
+                <div class="row contact-row">
+                  <div class="col-4">
+                    <div class="form-inline d-flex justify-content-between week-days my-1">
+                      <label>Telefone</label>
+                      <div>
+                        <input type="text" name="contacts[]" class="form-control sp_celphones">
+                        <a class="btn btn-danger ml-2 removePhone"><i class="fas fa-trash"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              @endforelse
+            </div>
+            
+            <div class="row mt-2" id="addContactDiv">
+              <div class="col-4 d-flex justify-content-center">
+                <a class="btn btn-success" id="addPhone">
+                  <i class="fas fa-plus"></i>
+                  Adicionar contato
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {{--
+          <hr>
+
+          <h3 class="my-4">Horário de Funcionamento</h3>
+
+          @for ($i = 0; $i < 7; $i++)
+            <div class="form-inline d-flex justify-content-around week-days my-1">
+              <div class="col-2 d-flex justify-center">
+                <b>{{ $days[$i] }}</b>
+              </div>
+
+              <div class="form-check">
+                <label class="form-check-label mr-1" for="isClosed">
+                  Fechado:
+                </label>
+                <input 
+                  class="form-check-input" 
+                  type="checkbox" 
+                  name="day_hours[{{$i}}][is_closed]" 
+                  id="isClosed" 
+                >
+              </div>
+
+              <div class="form-group working-hour hour-day-{{$i}}">
+                <label class="my-1 mr-2" for="startHour">Entrada:</label>
+                <input 
+                  type="time" 
+                  name="day_hours[{{$i}}][start_hour]" 
+                  class="form-control workHour" 
+                  id="startHour"
+                  value=""
+                >
+              </div>
+              <div class="form-group working-hour hour-day-{{$i}}">
+                <label class="my-1 mr-2" for="endHour">Saída:</label>
+                <input 
+                  type="time" 
+                  name="day_hours[{{$i}}][end_hour]" 
+                  class="form-control workHour" 
+                  id="endHour" 
+                  value=""
+                >
+              </div>
+              
+            </div>
+          @endfor
+
+          <div class="row mt-3">
+            <div class="col-6">
+              <div class="form-group">
+                <label class="my-1 mr-2" for="rangeHour">
+                  Tempo entre atendimentos (em minutos): 
+                </label>
+                <input type="number" name="hours[range_hour]" class="form-control col-3" min="15" max="120" id="rangeHour" value="{{ old('hours.range_hour') }}">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-check">
+                <input class="form-check-input" name="hours[has_break_time]" id="hasBreakTime" type="checkbox">
+                <label class="form-check-label mr-1" for="hasBreakTime" value="{{ old('hours.has_break_time') }}">
+                  Possui parada de almoço
+                </label>
+              </div>
+
+              <div class="form-row break-time-content">
+                <div class="col-2">
+                  <label class="my-1 mr-2" for="startBreak">Início</label>
+                  <input type="time" name="hours[start_break]" class="form-control my-1 mr-sm-2" id="startBreak" value="{{ old('hours.start_break') }}">
+                </div>
+
+                <div class="col-2">                
+                  <label class="my-1 mr-2" for="endBreak">Fim</label>
+                  <input type="time" name="hours[end_break]" class="form-control my-1 mr-sm-2" id="endBreak" value="{{ old('hours.end_break') }}">
+                </div>
+              </div>
+            </div>
+          </div>
+          --}}
           
           <div class="row">
             <div class="col-12 d-flex justify-content-center">
@@ -156,9 +283,11 @@
   <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
   <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js') }}"></script>
   
+	<script src="{{ asset('js/validate-methods.js') }}"></script>
 	<script src="{{ asset('js/company-validation.js') }}"></script>
 	<script src="{{ asset('js/validation-messages.js') }}"></script>
 	<script src="{{ asset('js/mask-format.js') }}"></script>
 	<script src="{{ asset('js/address.js') }}"></script>
+	<script src="{{ asset('js/multiple-contacts.js') }}"></script>
 
 @endsection

@@ -39,4 +39,9 @@ class Company extends Model
     {
       return $this->hasMany('App\WorkingHour');
     }
+
+    public function contacts()
+    {
+      return $this->hasMany('App\Contact');
+    }
 }

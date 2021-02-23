@@ -5,12 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CompanyRequest;
 
-use App\Company;
-use App\WorkingHour;
-use App\Address;
-use App\State;
-use App\City;
-use App\User;
+use App\{Company, WorkingHour, Address, State, City, User, Contact};
 
 use DB;
 
@@ -37,8 +32,17 @@ class CompanyController extends Controller
     {
         $states = State::orderBy('state')->get();
         $cities = City::orderBy('city')->get();
+        $days = [
+          'Domingo', 
+          'Segunda-feira', 
+          'Terça-feira', 
+          'Quarta-feira',
+          'Quinta-feira',
+          'Sexta-feira',
+          'Sábado',
+        ];
 
-        return view('companies.create', compact('states', 'cities'));
+        return view('companies.create', compact('states', 'cities', 'days'));
     }
 
     /**
@@ -76,6 +80,15 @@ class CompanyController extends Controller
         $address->company_id = $company->id;
         
         $address->save();
+
+        /** Contatos */
+        foreach($request->input('contacts') as $phone_number)
+        {
+          Contact::create([
+            'phone_number' => $phone_number,
+            'company_id' => $company->id,
+          ]);
+        }
 
         /** Horário de Funcionamento */
         $hasBreakTime = $request->input('hours.has_break_time');
@@ -131,7 +144,6 @@ class CompanyController extends Controller
 
       return redirect()->back()->with($success);
 
-
     }
 
     /**
@@ -158,8 +170,19 @@ class CompanyController extends Controller
         $company = Company::findOrFail($id);
         $states = State::orderBy('state')->get();
         $cities = City::orderBy('city')->get();
+        $contacts = Contact::where('company_id', $id)->get();
+        $working_hours = WorkingHour::where('company_id', $id)->get();
+        $days = [
+          'Domingo', 
+          'Segunda-feira', 
+          'Terça-feira', 
+          'Quarta-feira',
+          'Quinta-feira',
+          'Sexta-feira',
+          'Sábado',
+        ];
 
-        return view('companies.edit', compact('company', 'states', 'cities'));
+        return view('companies.edit', compact('company', 'states', 'cities', 'contacts', 'working_hours','days'));
     }
 
     /**
@@ -169,57 +192,85 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CompanyRequest $request, $id)
+    // public function update(CompanyRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $company = Company::find($id);
 
         if (isset($company)) {
-            DB::beginTransaction();
+          DB::beginTransaction();
 
-            try {
-                $company->trade_name = $request->input('company.trade_name');
-                $company->company_name = $request->input('company.company_name');
-                $company->cnpj = $request->input('company.cnpj');
-                $company->description = $request->input('company.description');
-                    
-                $company->save();
-
-                $company->address->cep = $request->input('localization.cep');
-                $company->address->address = $request->input('localization.address');
-                $company->address->house_number = $request->input('localization.house_number');
-                $company->address->district = $request->input('localization.district');
-                $company->address->address_complement = $request->input('localization.address_complement');
-                $company->address->city_id = $request->input('localization.city_id');
+          try {
+            /** Dados da Empresa */
+            $company->trade_name = $request->input('company.trade_name');
+            $company->company_name = $request->input('company.company_name');
+            $company->cnpj = $request->input('company.cnpj');
+            $company->description = $request->input('company.description');
                 
-                $company->address->save();
+            $company->save();
+            
+            /** Localização */
+            $company->address->cep = $request->input('localization.cep');
+            $company->address->address = $request->input('localization.address');
+            $company->address->house_number = $request->input('localization.house_number');
+            $company->address->district = $request->input('localization.district');
+            $company->address->address_complement = $request->input('localization.address_complement');
+            $company->address->city_id = $request->input('localization.city_id');
+            
+            $company->address->save();
 
-                DB::commit();
+            /** Contatos */
+            $dbContactsIds = $company->contacts->pluck('id')->toArray();
+            $inputsContactsIds = array_column($request->input('contacts'), 'id');
+            
+            $contactsIdsToDelete = array_diff($dbContactsIds, $inputsContactsIds);
 
-            } catch (Exception $ex) {
-                DB::rollback();
-
-                $error = [
-                  'msg_title' => 'Falha na Edição!',
-                  'msg_error' => 'Falha ao registrar valores'
-                ];
-
-                return redirect()->back()->with($error)->withInput();
+            if (!empty($contactsIdsToDelete)) {
+              Contact::destroy($contactsIdsToDelete);
             }
             
-            $success = [
-              'msg_title' => 'Sucesso na alteração!',
-              'msg_success' => 'Dados da empresa alterados com sucesso!'
-            ];
+            foreach($request->input('contacts') as $phone)
+            {
+              if(isset($phone['id'])) {
+                $contact = Contact::find($phone['id']);
+                $contact->phone_number = $phone['phone_number'];
+                $contact->save();
+              } else {
+                Contact::create([
+                  'phone_number' => $phone['phone_number'],
+                  'company_id' => $company->id,
+                ]);
+              }
+            }
 
-            return redirect()->route('company.show', $id)->with($success);
+            /** Horário de funcionamento */
+            DB::commit();
 
-        } else {
+          } catch (Exception $ex) {
+            DB::rollback();
+
             $error = [
               'msg_title' => 'Falha na Edição!',
-              'msg_error' => 'Empresa não encontrada'
+              'msg_error' => 'Falha ao registrar valores'
             ];
 
-            return redirect()->back()->with($error);
+            return redirect()->back()->with($error)->withInput();
+          }
+          
+          $success = [
+            'msg_title' => 'Sucesso na alteração!',
+            'msg_success' => 'Dados da empresa alterados com sucesso!'
+          ];
+
+          return redirect()->route('company.show', $id)->with($success);
+
+        } else {
+          $error = [
+            'msg_title' => 'Falha na Edição!',
+            'msg_error' => 'Empresa não encontrada'
+          ];
+
+          return redirect()->back()->with($error);
         }
     }
 

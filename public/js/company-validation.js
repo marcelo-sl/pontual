@@ -46,7 +46,31 @@ $(document).ready(function() {
         equalTo: "As senhas não conferem"
       },
     },
+
+    errorPlacement: function (error, element) {
+      if (element.is(':radio') || element.is(':checkbox')) {       
+        error.appendTo(element.parents('div.form-group').first());
+      } else if(element.hasClass('sp_celphones')) {
+        error.appendTo(element.parents('div').first());
+      } else{
+        error.insertAfter(element).parents('.collapse').collapse('show');
+      }
+    },
+
+    highlight: function(element, errorClass, validClass){ 
+      $(element).parents('.form-group').addClass('has-error');
+    },
+
+    unhighlight: function(element, errorClass, validClass) {
+      if ($.trim(element.value)) {
+        $(element).parents('.form-group').removeClass('has-error');
+      }
+    }
   });
 
+  $(".sp_celphones").rules("add", { 
+    required: true,  
+    celular: true
+  });
 });
 
