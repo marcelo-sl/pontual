@@ -55,6 +55,7 @@
                   class="form-control cpf" 
                   id="inputCpf" 
                   placeholder="000.000.000-00" 
+                  disabled
                 />
               </div>
             </div>
@@ -179,28 +180,41 @@
                 <label class="form-check-label mr-1">
                   Fechado:
                 </label>
-                <input class="form-check-input" type="checkbox" name="day_hours[{{$i}}][is_closed]" id="isClosed" 
+                <input class="form-check-input isClosed" type="checkbox" name="day_hours[{{$i}}][is_closed]" id="isClosed" 
                     @if(old('day_hours.'.$i.'.is_closed'))
                         {{ old('day_hours.'.$i.'.is_closed') == 'on' ? 'checked' : ''  }}
                     @else
-                        @foreach($provider->workingHours as $item)
-                             @if($item->week_day != $i)
-                                {{ 'checked' }}
-                             @else
-                                {{ '' }}
-                             @endif
-                        @endforeach
+                      @if($workingHour[$i] != null && $workingHour[$i]->week_day == $i)
+                        {{ '' }}
+                      @else
+                        {{ 'checked' }}
+                      @endif
+                        
                     @endif 
                 >
               </div>
 
               <div class="form-group working-hour hour-day-{{$i}}">
                 <label class="my-1 mr-2" for="startHour">Entrada:<sup>*</sup></label>
-                <input type="time" name="day_hours[{{$i}}][start_hour]" class="form-control workHour" id="startHour" value={{ old('day_hours.'.$i.'.start_hour') }} >
+                <input type="time" name="day_hours[{{$i}}][start_hour]" class="form-control workHour" id="startHour" 
+                   @if(old('day_hours.'.$i.'.start_hour'))
+                      value={{ old('day_hours.'.$i.'.start_hour') }}
+                   @else 
+                      
+                    value={{$workingHour[$i] != null ? $workingHour[$i]->start_hour : ''}}
+                      
+                   @endif 
+                >
               </div>
               <div class="form-group working-hour hour-day-{{$i}}">
                 <label class="my-1 mr-2" for="endHour">Saída:<sup>*</sup></label>
-                <input type="time" name="day_hours[{{$i}}][end_hour]" class="form-control workHour" id="endHour" value={{ old('day_hours.'.$i.'.end_hour') }} >
+                <input type="time" name="day_hours[{{$i}}][end_hour]" class="form-control workHour" id="endHour" 
+                  @if(old('day_hours.'.$i.'.end_hour'))
+                    value={{ old('day_hours.'.$i.'.end_hour') }}
+                  @else
+                  value={{$workingHour[$i] != null ? $workingHour[$i]->end_hour : ''}}
+                  @endif
+                >
               </div>
               
             </div>
