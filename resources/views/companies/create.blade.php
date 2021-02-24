@@ -3,6 +3,7 @@
 @section('title', 'Cadastro de Empresas')
 
 @section('css')
+  <link href="{{ asset('plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('css/company-styles.css')}}" rel="stylesheet" />
   <link href="{{ asset('css/validation-styles.css')}}" rel="stylesheet" />
 @endsection
@@ -48,6 +49,28 @@
               <div class="form-group">
                 <label for="inputTradeName">Nome fantasia<sup>*</sup></label>
                 <input class="form-control" id="inputTradeName" type="text" name="company[trade_name]" value="{{ old('company.trade_name') }}" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row d-flex justify-center">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="inputFieldActivity">Ramo(s) de atividade(s)<sup>*</sup></label>
+                <br>
+                <select class="form-control select-multiple" id="inputFieldActivity" name="company[activities][]" multiple="multiple">
+                  @foreach($fields_activity as $activity)
+                    <option value="{{$activity->id}}"
+                      @if (old('company.activities')) 
+                            
+                        @foreach (old('company.activities') as $item) 
+                            {{ ($item == $activity->id) ? 'selected' : '' }}    
+                        @endforeach
+
+                      @endif  
+                    >{{ $activity->field }}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
           </div>
@@ -189,7 +212,7 @@
             <div class="col-6">
               <div class="form-group">
                 <label class="my-1 mr-2" for="rangeHour">
-                  Tempo entre atendimentos (em minutos): 
+                  Duração dos atendimentos (em minutos): 
                 </label>
                 <input type="number" name="hours[range_hour]" class="form-control col-3" min="15" max="120" id="rangeHour" value="{{ old('hours.range_hour') }}">
               </div>
@@ -230,8 +253,10 @@
 
 @section('js')
   <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+  <script src="{{ asset('plugins/select2/js/select2.min.js') }}"></script>
   <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js') }}"></script>
   
+  <script src="{{ asset('js/select2.js') }}"></script>
 	<script src="{{ asset('js/company-validation.js') }}"></script>
 	<script src="{{ asset('js/validation-messages.js') }}"></script>
 	<script src="{{ asset('js/mask-format.js') }}"></script>

@@ -20,13 +20,13 @@ class Company extends Model
       return $this->belongsTo('App\User');
     }
 
-    public function fieldsActivity()
+    public function fieldsActivities()
     {
       return $this->belongsToMany(
         'App\FieldActivity',
         'field_activity_company',
-        'field_activity_id',
-        'company_id'
+        'company_id',
+        'field_activity_id'
       );
     }
 

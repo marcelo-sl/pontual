@@ -223,6 +223,7 @@ class ProviderController extends Controller
             $provider->save();
             
             $provider->fieldsActivities()->sync($request->input('provider.activities'));
+            
             /** Localização do comércio */
             if (isset($address)) {
               $address->cep = $request->input('localization.cep');

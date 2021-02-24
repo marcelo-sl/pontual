@@ -174,7 +174,7 @@
             <div class="col-6">
               <div class="form-group">
                 <label class="my-1 mr-2" for="rangeHour">
-                  Tempo entre atendimentos (em minutos):<sup>*</sup> 
+                  Duração dos atendimentos (em minutos):<sup>*</sup> 
                 </label>
                 <input type="number" name="hours[range_hour]" class="form-control col-3" min="15" max="120" id="rangeHour" value="{{ old('hours.range_hour') }}">
               </div>

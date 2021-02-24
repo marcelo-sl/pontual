@@ -18,6 +18,7 @@ class CompanyRequest extends FormRequest
             'company.trade_name' => ['required', 'max:45'],
             'company.company_name' => ['required', 'max:80'],
             'company.cnpj' => ['required', 'max:18'],
+            'contacts.*' => ['required'],
             'company.description' => ['max:65530'],
             'company.user_id' => ['numeric'],
             'localization.cep' => ['required', 'max:9'],
@@ -44,7 +45,7 @@ class CompanyRequest extends FormRequest
 
     public function attributes()
     {
-        return [
+        $attributes = [
             'company.trade_name' => 'Nome fantasia',
             'company.company_name' => 'Razão Social',
             'company.cnpj' => 'CNPJ',
@@ -60,6 +61,33 @@ class CompanyRequest extends FormRequest
             'hours.start_break' => 'Início do almoço',
             'hours.end_break' => 'Fim do almoço',
         ];
+
+        $days = [
+            'Domingo', 
+            'Segunda-feira', 
+            'Terça-feira', 
+            'Quarta-feira',
+            'Quinta-feira',
+            'Sexta-feira',
+            'Sábado',
+        ];
+  
+        if ($this->request->get('contacts')) {
+            foreach($this->request->get('contacts') as $c => $contact)
+            {
+                $attributes['contacts.'.$c] = 'Contato '.($c+1);
+            }
+        }
+
+        if ($this->request->get('day_hours')) {
+            foreach($this->request->get('day_hours') as $d => $dayHour)
+            {
+                $attributes['day_hours.'.$d.'.start_hour'] = 'horário de entrada de '.$days[$d];
+                $attributes['day_hours.'.$d.'.end_hour'] = 'horário de saída de '.$days[$d];
+            }
+        }
+
+        return $attributes;
     }
 
     public function messages()

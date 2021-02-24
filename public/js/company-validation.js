@@ -7,7 +7,8 @@ $(document).ready(function() {
         required: true,
         maxlength: 18
       },
-      "company[trade_name]": "required",      
+      "company[trade_name]": "required",
+      "company[activities][]": "required",      
       "localization[cep]": {
         required: true,
         maxlength: 9

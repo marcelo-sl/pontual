@@ -5,7 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CompanyRequest;
 
-use App\{Company, WorkingHour, Address, State, City, User, Contact};
+use App\{
+  Company,
+  WorkingHour,
+  Address,
+  State,
+  City,
+  User,
+  Contact,
+  FieldActivity
+};
 
 use DB;
 
@@ -30,19 +39,20 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $states = State::orderBy('state')->get();
-        $cities = City::orderBy('city')->get();
-        $days = [
-          'Domingo', 
-          'Segunda-feira', 
-          'Terça-feira', 
-          'Quarta-feira',
-          'Quinta-feira',
-          'Sexta-feira',
-          'Sábado',
-        ];
+      $fields_activity = FieldActivity::all();
+      $states = State::orderBy('state')->get();
+      $cities = City::orderBy('city')->get();
+      $days = [
+        'Domingo', 
+        'Segunda-feira', 
+        'Terça-feira', 
+        'Quarta-feira',
+        'Quinta-feira',
+        'Sexta-feira',
+        'Sábado',
+      ];
 
-        return view('companies.create', compact('states', 'cities', 'days'));
+      return view('companies.create', compact('states', 'cities', 'days', 'fields_activity'));
     }
 
     /**
@@ -67,6 +77,8 @@ class CompanyController extends Controller
         $company->user_id = $request->input('company.user_id');
                
         $company->save();
+
+        $company->fieldsActivities()->attach($request->input('company.activities'));
         
         /** Localização da Empresa */
         $address = new Address;
@@ -92,7 +104,7 @@ class CompanyController extends Controller
 
         /** Horário de Funcionamento */
         $hasBreakTime = $request->input('hours.has_break_time');
-        $rangeHour = sprintf('%02d:%02d:00', floor($request->input('hours.range_hour') / 60), ($request->input('hours.range_hour') % 60));
+        $rangeHour = $request->input('hours.range_hour');
         
         if ($hasBreakTime === "on") {
           $startBreak = date("H:i:s", strtotime($request->input('hours.start_break')));
@@ -167,22 +179,39 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        $company = Company::findOrFail($id);
-        $states = State::orderBy('state')->get();
-        $cities = City::orderBy('city')->get();
-        $contacts = Contact::where('company_id', $id)->get();
-        $working_hours = WorkingHour::where('company_id', $id)->get();
-        $days = [
-          'Domingo', 
-          'Segunda-feira', 
-          'Terça-feira', 
-          'Quarta-feira',
-          'Quinta-feira',
-          'Sexta-feira',
-          'Sábado',
-        ];
+      $company = Company::findOrFail($id);
 
-        return view('companies.edit', compact('company', 'states', 'cities', 'contacts', 'working_hours','days'));
+      $workingHour = array(7);
+      for ($i = 0; $i < 7; $i++)
+      {
+        for ($j = 0; $j < count($company->workingHours); $j++)
+        {
+          if ($company->workingHours[$j]->week_day == $i)
+          {
+            $workingHour[$i] = $company->workingHours[$j];
+            break;
+          } else {
+            $workingHour[$i] = null;
+          }
+        }
+      }
+      
+      $fields_activity = FieldActivity::all();
+      $states = State::orderBy('state')->get();
+      $cities = City::orderBy('city')->get();
+      $contacts = Contact::where('company_id', $id)->get();
+
+      $days = [
+        'Domingo', 
+        'Segunda-feira', 
+        'Terça-feira', 
+        'Quarta-feira',
+        'Quinta-feira',
+        'Sexta-feira',
+        'Sábado',
+      ];
+
+      return view('companies.edit', compact('company', 'fields_activity', 'states', 'cities', 'contacts', 'workingHour','days'));
     }
 
     /**
@@ -192,8 +221,8 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function update(CompanyRequest $request, $id)
-    public function update(Request $request, $id)
+    public function update(CompanyRequest $request, $id)
+    // public function update(Request $request, $id)
     {
         $company = Company::find($id);
 
@@ -208,6 +237,8 @@ class CompanyController extends Controller
             $company->description = $request->input('company.description');
                 
             $company->save();
+
+            $company->fieldsActivities()->sync($request->input('company.activities'));
             
             /** Localização */
             $company->address->cep = $request->input('localization.cep');
@@ -243,7 +274,48 @@ class CompanyController extends Controller
               }
             }
 
-            /** Horário de funcionamento */
+            /** Horário de Funcionamento */
+            $hasBreakTime = $request->input('hours.has_break_time');
+            $rangeHour = $request->input('hours.range_hour');
+            
+            if ($hasBreakTime === "on") {
+              $startBreak = date("H:i:s", strtotime($request->input('hours.start_break')));
+              $endBreak = date("H:i:s", strtotime($request->input('hours.end_break')));
+            }
+            
+            foreach ($request->input('day_hours') as $weekday => $day_hours) 
+            {
+              if (!isset($day_hours['is_closed'])) {
+                $wh = WorkingHour::updateOrInsert(
+                    ['company_id' => $company->id, 'week_day' => $weekday],
+                    [
+                      'range_hour' => $rangeHour,
+                      'start_hour' => date("H:i:s", strtotime($day_hours['start_hour'])),
+                      'end_hour' => date("H:i:s", strtotime($day_hours['end_hour'])),
+                      'created_at' => \Carbon\Carbon::now(),
+                      'updated_at' => \Carbon\Carbon::now()
+                    ]
+                  );
+                
+                if ($hasBreakTime === "on") {
+                  WorkingHour::updateOrInsert(
+                    ['company_id' => $company->id, 'week_day' => $weekday],
+                    [
+                      'start_break' => $startBreak,
+                      'end_break' => $endBreak,
+                      'created_at' => \Carbon\Carbon::now(),
+                      'updated_at' => \Carbon\Carbon::now()
+                    ]
+                  );
+                } else {
+                  $company->workingHours()->update(['start_break' => null, 'end_break' => null]);
+                }
+              } else {
+                $company->workingHours()->where('week_day', $weekday)->delete();
+              }
+              
+            }
+
             DB::commit();
 
           } catch (Exception $ex) {

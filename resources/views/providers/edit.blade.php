@@ -224,7 +224,7 @@
             <div class="col-6">
               <div class="form-group">
                 <label class="my-1 mr-2" for="rangeHour">
-                  Tempo entre atendimentos (em minutos):<sup>*</sup> 
+                  Duração dos atendimentos (em minutos):<sup>*</sup> 
                 </label>
                 <input type="number" name="hours[range_hour]" class="form-control col-3" min="15" max="120" id="rangeHour" value="{{ old('hours.range_hour') ?? $provider->workingHours[0]->range_hour }}">
               </div>
@@ -275,11 +275,11 @@
   <script src="{{ asset('plugins/select2/js/select2.min.js') }}"></script>
   <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js') }}"></script>
 
+  <script src="{{ asset('js/select2.js') }}"></script>
 	<script src="{{ asset('js/validation-messages.js') }}"></script>
 	<script src="{{ asset('js/validate-methods.js') }}"></script>
   <script src="{{ asset('js/mask-format.js') }}"></script>
 	<script src="{{ asset('js/address.js') }}"></script>
-  <script src="{{ asset('js/select2.js') }}"></script>
   <script src="{{ asset('js/provider-validation.js') }}"></script>
   <script src="{{ asset('js/company-validation.js') }}"></script>
   <script src="{{ asset('js/company.js') }}"></script>
