@@ -37,6 +37,8 @@ Route::post('/register', 'AuthenticateController@store')->name('auth.store');
 Route::middleware('auth')->group(function () {
     /** Users routes  */
     Route::get('/user/choose', 'UserController@choose')->name('user.choose');
+    Route::get('/user/complete', 'UserController@completeRegistration')->name('user.complete');
+    Route::put('/user/complete/{id}', 'UserController@completeData')->name('user.completeData');
     Route::get('/user/{id}', 'UserController@show')->name('user.show');
     Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
     Route::put('/user/{id}', 'UserController@update')->name('user.update');

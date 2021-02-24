@@ -4,6 +4,13 @@ $(document).ready(function() {
     rules: {
       name: "required",
       gender: "required",
+      cpf: {
+        required: true,
+        maxlength: 14,
+        verificaCPF: true,
+      },
+      contact: "required",
+      birthday: "required",
       email: {
         required: true,
         email: true,
@@ -48,7 +55,10 @@ $(document).ready(function() {
     }
   });
 
-  
+  $('.sp_celphones').rules("add", {
+    required: true,
+    celular: true
+  });
 
 });
 

@@ -14,7 +14,7 @@
     </div>
 
     <div id="choose-content" class="d-flex justify-content-around mt-5">
-      <a href="" class="card text-white p-4" id="customer-card">
+      <a href="{{ route('user.complete') }}" class="card text-white p-4" id="customer-card">
         <img src="{{ asset('img/choose-customer.svg') }}" class="card-img" alt="Cliente">
         <div class="card-content mt-4">
           <h3 class="card-title">Sou um cliente</h3>

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use App\Http\Requests\UserRequest;
-use App\User;
+use App\{User, Contact};
 
 use DB;
 
@@ -47,6 +47,55 @@ class UserController extends Controller
     public function choose()
     {
         return view('users.choose');
+    }
+
+    public function completeRegistration()
+    {
+        return view('users.completeRegistration');
+    }
+
+    public function completeData(Request $request)
+    {
+        $user = User::find($request->id);
+
+        if (isset($user))
+        {
+            DB::beginTransaction();
+
+            try {
+
+                $user->cpf = $request->cpf;
+                $user->birthday = $request->birthday;
+                foreach ($request->input('contacts') as $phone_number)
+                {
+                    Contact::create([
+                        'phone_number' => $phone_number,
+                        'user_id' => $user->id,
+                    ]);
+                }
+
+                $user->save();
+
+                DB::commit();
+            } catch (Exception $ex) {
+                DB::rollback();
+
+                $error =  [
+                    'msg_title' => 'Falha na complementação!',
+                    'msg_error' => 'Falha ao registrar valores'
+                ];
+
+                return redirect()->back()->with($error)->withInput();
+            }
+
+            $success = [
+                'msg_title' => 'Sucesso ao complementar',
+                'msg_success' => 'Dados do usuário complementados com sucesso!'
+            ];
+
+            return redirect()->route('user.show', $user->id)->with($success);
+
+        }
     }
 
     /**
