@@ -31,6 +31,9 @@
                 <h6>E-mail:</h6> {{ $user->email }}
               </li>
               <li class="list-group-item d-flex justify-content-between">
+                <h6>Nascimento:</h6> {{ date('d/m/Y', strtotime($user->birthday)) ?? 'Não informado' }}
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
                 <h6>Sexo:</h6>
                 <p>
                   @switch($user->gender)

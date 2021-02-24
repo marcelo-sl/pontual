@@ -66,12 +66,17 @@ class UserController extends Controller
 
                 $user->cpf = $request->cpf;
                 $user->birthday = $request->birthday;
+
                 foreach ($request->input('contacts') as $phone_number)
                 {
                     Contact::create([
                         'phone_number' => $phone_number,
                         'user_id' => $user->id,
                     ]);
+                }
+
+                if(!$user->hasRole('Customer')) {
+                    $user->roles()->sync([5, 6]);
                 }
 
                 $user->save();
