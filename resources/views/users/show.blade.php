@@ -27,12 +27,21 @@
               </div>
             </div>
             <ul class="list-group list-group-flush mt-5">
+              {{-- Personal Data --}}
+              <h5><i class="fas fa-id-card"></i> Dados Pessoais</h5>
               <li class="list-group-item d-flex justify-content-between">
                 <h6>E-mail:</h6> {{ $user->email }}
               </li>
-              <li class="list-group-item d-flex justify-content-between">
-                <h6>Nascimento:</h6> {{ date('d/m/Y', strtotime($user->birthday)) ?? 'Não informado' }}
-              </li>
+              @if ($user->cpf != null)
+                <li class="list-group-item d-flex justify-content-between">
+                  <h6>CPF:</h6> {{ $user->cpf ?? 'Dado não informado' }}
+                </li>
+              @endif
+              @if ($user->birthday != null)
+                <li class="list-group-item d-flex justify-content-between">
+                  <h6>Nascimento:</h6> {{ date('d/m/Y', strtotime($user->birthday)) }}
+                </li>
+              @endif
               <li class="list-group-item d-flex justify-content-between">
                 <h6>Sexo:</h6>
                 <p>
@@ -53,6 +62,31 @@
                       Não definido
                   @endswitch
                 </p>
+              </li>
+
+              {{-- Contact --}}
+              @if (count($user->contacts()->get()) > 0)
+                <h5 class="mt-4"><i class="fas fa-phone-square-alt"></i> Contato</h5>
+                <li class="list-group-item">
+                  <div class="row">
+                    @if (count($user->contacts()->get()) == 1)
+                      <div class="col-md-12">
+                        <p class="bg-light border p-3 rounded">{{ $user->contacts()->get()[0]->phone_number }}</p>
+                      </div>
+                    @else
+                      @foreach ($user->contacts()->get() as $contact)
+                        <div class="col-md-6">
+                          <p class="bg-light border p-3 rounded">{{ $contact->phone_number }}</p>
+                        </div>
+                      @endforeach
+                    @endif
+                </div>
+                </li>
+              @endif
+
+              {{-- Account --}}
+              <li>
+                <h5 class="mt-4"><i class="fas fa-cog"></i> Conta</h5>
               </li>
               <li class="list-group-item d-flex justify-content-between">
                 <h6>Tipo:</h6>

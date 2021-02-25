@@ -1,6 +1,6 @@
 
 $(document).on('click', '#addPhone', function() {
-  let divContacts = $(this).closest( "#contacts" );
+  let divContacts = $( "#contacts" );
   let contact = divContacts.find('.contact-row').last();
 
   addPhone(contact, 3);

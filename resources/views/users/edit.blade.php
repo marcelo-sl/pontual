@@ -16,18 +16,32 @@
 								@csrf
 								@method('PUT')
 
-								<div class="form-row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label class="small mb-1" for="inputName">Nome</label>
-											<input class="form-control py-4" id="inputName" type="text" name="name" placeholder="Digite seu nome" value="{{ $user->name }}" />
-										</div>
-									</div>
-								</div>
+								<h5><i class="fas fa-id-card"></i> Dados Pessoais</h5>
 								
 								<div class="form-group">
 									<label class="small mb-1" for="inputEmail">Email</label>
 									<input class="form-control py-4" id="inputEmail" type="email" name="email" aria-describedby="emailHelp" placeholder="Digite seu e-mail" value="{{ $user->email }}" readonly/>
+								</div>
+
+								<div class="row">
+									<div class="form-group col-md-6">
+										<label class="small mb-1" for="inputName">Nome</label>
+										<input class="form-control py-4" id="inputName" type="text" name="name" placeholder="Digite seu nome" value="{{ $user->name }}" />
+									</div>
+									
+									<div class="form-group col-md-6">
+										<label class="small mb-1" for="inputEmail">CPF</label>
+										<input class="form-control py-4" id="inputCpf" type="text" name="cpf" aria-describedby="emailHelp" placeholder="Digite seu e-mail" value="{{ $user->cpf ?? 'Dado não informado' }}" readonly/>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="small mb-1" for="inputName">Nascimento</label>
+									@if ($user->birthday != null)
+										<input class="form-control py-4" id="inputBirthday" type="date" name="birthday" placeholder="Digite seu nome" value="{{ old('nascimento') ?? $user->birthday }}" />
+									@else
+										<input class="form-control py-4" type="text" value="Dado não informado" readonly/>
+									@endif
 								</div>
 
 								<div class="form-row">
@@ -51,6 +65,43 @@
 										</div>
 									</div>
 								</div>
+								
+								@if (count($user->contacts()->get()) > 0)
+									<hr>
+									<h5><i class="fas fa-phone-square-alt"></i> Contato</h5>
+									@foreach ($user->contacts()->get() as $contact)
+									<div id="contacts">
+										<div id="contacts-place">
+											<div class="row contact-row">
+											<div class="col-md-12">
+												<div class="form-inline d-flex justify-content-between my-1">
+												<label class="mr-2">Contato</label>
+												<div>
+													<input 
+														type="text" 
+														name="contacts[]" 
+														class="form-control sp_celphones" 
+														value="{{ old('contacts') ?? $contact->phone_number }}">
+													<a class="btn btn-danger ml-2 removePhone"><i class="fas fa-trash"></i></a>
+												</div>
+												</div>
+											</div>
+											</div>
+										</div>
+									</div>
+									@endforeach
+									<div class="row my-3" id="addContactDiv">
+										<div class="col-4 d-flex justify-content-start">
+										<a class="btn btn-success" id="addPhone">
+											<i class="fas fa-plus"></i>
+											Adicionar contato
+										</a>
+										</div>
+									</div>
+								@endif
+								<hr>
+
+								<h5><i class="fas fa-cog"></i> Conta</h5>
 
 								<div class="form-row">
 									<div class="col-md-12">
@@ -101,10 +152,13 @@
 
 @section('js')
 
+	<script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js') }}"></script>
 	<script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 	<script src="{{ asset('js/user-validation.js') }}"></script>
 	<script src="{{ asset('js/validation-messages.js') }}"></script>
-
+	<script src="{{ asset('js/validate-methods.js') }}"></script>
+	<script src="{{ asset('js/mask-format.js') }}"></script>
+	<script src="{{ asset('js/multiple-contacts.js') }}"></script>
 	<script>
 		$('#checkChangePass').change(function() {
 			if ($('#checkChangePass').is(':checked')) {

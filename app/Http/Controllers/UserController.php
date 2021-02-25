@@ -197,7 +197,17 @@ class UserController extends Controller
 
             try {
                 $user->name = strtoupper($request->name);
+                $user->birthday = $request->birthday;
                 $user->gender = $request->gender;
+
+                Contact::where('user_id', $user->id)->delete();
+                foreach ($request->input('contacts') as $phone_number)
+                {
+                    Contact::create([
+                        'phone_number' => $phone_number,
+                        'user_id' => $user->id,
+                    ]);
+                }
 
                 if ($request->changePassword == "on") {
                     $credentials = [
