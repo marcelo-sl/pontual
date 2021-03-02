@@ -17,3 +17,9 @@
   width: 900px;
   height: 510px;
 }
+
+div#datepicker {
+  max-width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

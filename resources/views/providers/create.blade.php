@@ -74,6 +74,15 @@
             </div>
           </div>
 
+          <div class="form-row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="descriptionArea">Descrição do negócio</label>
+                <textarea class="form-control" name="provider[description]" id="descriptionArea" rows="4">{{ old('provider.description') }}</textarea>
+              </div>
+            </div>
+          </div>
+
           <hr>
 
           <h3 class="my-4">Localização</h3>

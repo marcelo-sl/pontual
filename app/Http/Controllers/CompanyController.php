@@ -32,6 +32,23 @@ class CompanyController extends Controller
         return view('companies.index', compact('companies'));
     }
 
+     /**
+     * Get the days of week that the company is not working
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  $id = company identification
+     * @return \Illuminate\Http\Response
+     */
+    public function getDaysOfWeekDisabled(Request $request, $id) 
+    {
+      $daysOfWeek = [0, 1, 2, 3, 4, 5, 6];
+
+      $workingDays = WorkingHour::where('company_id', $id)->pluck('week_day')->toArray();
+      $daysOfWeekDisabled = array_values(array_diff($daysOfWeek, $workingDays));
+
+      return $daysOfWeekDisabled;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -19,6 +19,7 @@ class ProviderRequest extends FormRequest
         'provider.cpf' => ['required', 'unique:providers,cpf', new Cpf],
         'provider.nickname' => ['required'],
         'provider.activities' => ['required'],
+        'provider.description' => ['max:65530'],
         'provider.user_id' => ['required'],
         'localization.cep' => ['required', 'max:9'],
         'localization.address' => ['required', 'max:255'],

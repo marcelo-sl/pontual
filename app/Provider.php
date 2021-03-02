@@ -16,7 +16,7 @@ class Provider extends Model
     public $timestamps = true;
 
     protected $fillable = [
-      'cpf', 'nickname',
+      'cpf', 'nickname', 'description'
     ];
 
     public function user()

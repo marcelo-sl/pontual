@@ -59,6 +59,9 @@ Route::middleware('auth')->group(function () {
     Route::put('/provider/{id}', 'ProviderController@update')->name('provider.update');
     Route::post('/provider/{id}/inactivate', 'ProviderController@inactivate')->name('provider.inactivate');
     Route::delete('/provider/{id}', 'ProviderController@destroy')->name('provider.destroy');
+
+    /** Customer routes  */
+    Route::get('/customer', 'CustomerController@index')->name('customer.index');
     
     Route::middleware('checkRole:Admin')->group(function () {
         /** Users routes  */
@@ -77,3 +80,5 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/findCityByName/{uf}/{city}', 'FindCityByName');
 Route::get('/filterCitiesByUf/{uf}', 'FilterCitiesByUf');
+Route::get('/provider/{id}/getDaysOfWeekDisabled', 'ProviderController@getDaysOfWeekDisabled');
+Route::get('/company/{id}/getDaysOfWeekDisabled', 'CompantyController@getDaysOfWeekDisabled');

@@ -2,6 +2,7 @@
 @section('title', "Provider Name")
 
 @section('css')
+  <link href="{{ asset('plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" />
   <link href="{{ asset('css/company-styles.css')}}" rel="stylesheet" />
 @endsection
 
@@ -37,6 +38,27 @@
             <p class="text-justify">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card shadow-lg border-0 rounded mt-2 d-flex flex-row p-4">
+          <div id="localization-provider" class="col-11 ml-4">
+            <h4>Agende seu horário</h4>
+            <hr>
+            <div class="form-row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="font-weight-bold">Selecione a data</label>
+                  <!-- <input type='text' class="form-control" id='datepicker' style='width: 300px;' > -->
+                  <div id="datepicker"></div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -116,4 +138,11 @@
   </div>
 </main>
 
+@endsection
+
+@section('js')
+  <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+  <script src="{{ asset('plugins/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js')}}"></script>
+
+  <script src="{{ asset('js/datepicker.js')}}"></script>
 @endsection

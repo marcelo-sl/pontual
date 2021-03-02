@@ -32,6 +32,23 @@ class ProviderController extends Controller
       return view('providers.index', compact('providers'));
     }
 
+     /**
+     * Get the days of week that the provider is closed
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  $id = company or provider identification
+     * @return \Illuminate\Http\Response
+     */
+    public function getDaysOfWeekDisabled(Request $request, $id) 
+    {
+      $daysOfWeek = [0, 1, 2, 3, 4, 5, 6];
+
+      $workingDays = WorkingHour::where('provider_id', $id)->pluck('week_day')->toArray();
+      $daysOfWeekDisabled = array_values(array_diff($daysOfWeek, $workingDays));
+ 
+      return $daysOfWeekDisabled;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -70,6 +87,7 @@ class ProviderController extends Controller
           
           $provider->cpf = $request->input('provider.cpf');
           $provider->nickname = $request->input('provider.nickname');
+          $provider->description = $request->input('provider.description');
           $provider->user_id = $request->input('provider.user_id');
           
           $provider->save();
@@ -218,6 +236,7 @@ class ProviderController extends Controller
 
           try {
             $provider->nickname = $request->input('provider.nickname');
+            $provider->description = $request->input('provider.description');
             $provider->user_id = $request->input('provider.user_id');
             
             $provider->save();
