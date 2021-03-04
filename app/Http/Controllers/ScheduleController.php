@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use DB;
+
 use App\{Schedule, WorkingHour};
 
 class ScheduleController extends Controller
@@ -18,26 +22,56 @@ class ScheduleController extends Controller
         DB::beginTransaction();
 
         try {
-            
+          if ($request->input('schedule_date') === '' || $request->input('schedule_hour') === '') 
+          {
+            $error = [
+              'msg_title' => 'Erro no servidor',
+              'msg_error' => 'Erro ao realizar agendamento.'
+            ];
 
-            DB::commit();
+            return redirect()->back()->with($error);
+          }
+
+          $provider_id = $request->input('provider_id');
+          $concatDateTime = $request->input('schedule_date') . " " . $request->input('schedule_hour');
+          $input['date_time'] = date("Y-m-d H:i:s", strtotime($concatDateTime));
+
+          Validator::make($input, [
+            'date_time' => [
+              Rule::unique('schedules')->where(function ($query) use ($provider_id) {
+                return $query->where('provider_id', $provider_id);
+              })
+            ],
+          ])->validate();
+          
+          $schedule = new Schedule;
+          
+          $schedule->date_time = $input['date_time'];
+          $schedule->customer_id = $request->input('customer_id');
+          $schedule->provider_id = $provider_id;
+          $schedule->status_id = 1;
+          
+          $schedule->save();
+          
+          DB::commit();
+
         } catch (\Exception $exception) {
             DB::rollback();
 
             $error = [
                 'msg_title' => 'Erro no servidor',
-                'msg_error' => 'Erro ao cadastrar cliente.'
+                'msg_error' => 'Erro ao realizar agendamento.'
             ];
 
             return redirect()->back()->with($error)->withInput();
         }
 
         $success = [
-            'msg_title' => 'Sucesso ao cadastrar',
-            'msg_success' => 'Usuário cadastrado com sucesso!'
+            'msg_title' => 'Agendamento marcado!',
+            'msg_success' => 'Cheque em meus agendamentos'
         ];
 
-        return redirect()->route('')->with($success);
+        return redirect()->back()->with($success);
     }
 
 

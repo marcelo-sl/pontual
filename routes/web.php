@@ -62,6 +62,10 @@ Route::middleware('auth')->group(function () {
 
     /** Customer routes  */
     Route::get('/customer', 'CustomerController@index')->name('customer.index');
+
+    /** Schedule routes  */
+    Route::post('/schedule', 'ScheduleController@store')->name('schedule.store');
+
     
     Route::middleware('checkRole:Admin')->group(function () {
         /** Users routes  */
@@ -78,7 +82,9 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+// AJAX Requests
 Route::get('/findCityByName/{uf}/{city}', 'FindCityByName');
 Route::get('/filterCitiesByUf/{uf}', 'FilterCitiesByUf');
 Route::get('/provider/{id}/getDaysOfWeekDisabled', 'ProviderController@getDaysOfWeekDisabled');
 Route::get('/company/{id}/getDaysOfWeekDisabled', 'CompantyController@getDaysOfWeekDisabled');
+Route::get('/provider/{id}/getAvailableHours/{date}', 'ProviderController@getAvailableHours');

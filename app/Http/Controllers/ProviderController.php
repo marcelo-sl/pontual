@@ -10,7 +10,8 @@ use DB;
 use App\{
   Provider, 
   User, 
-  FieldActivity, 
+  FieldActivity,
+  Schedule,
   WorkingHour, 
   Address, 
   State, 
@@ -48,6 +49,88 @@ class ProviderController extends Controller
  
       return $daysOfWeekDisabled;
     }
+
+     /**
+     * Get the hours available in according of the date
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  $id = company or provider identification
+     * @return \Illuminate\Http\Response
+     */
+    public function getAvailableHours(Request $request, $id, $date) 
+    {
+      $dayofweek = date('w', strtotime($date));
+
+      $workingHour = WorkingHour::where('provider_id', $id)
+                      ->where('week_day', $dayofweek)
+                      ->select(
+                        'start_hour',
+                        'end_hour',
+                        'range_hour',
+                        'start_break',
+                        'end_break'
+                      )->first();
+
+      $startHour = idate('H', strtotime($workingHour['start_hour']));
+      $startMin = idate('i', strtotime($workingHour['start_hour']));
+      $startInt = $startHour * 60 + $startMin;
+      
+      $endHour = idate('H', strtotime($workingHour['end_hour']));
+      $endMin = idate('i', strtotime($workingHour['end_hour']));
+      $endInt = $endHour * 60 + $endMin;
+      
+      $startBreakHour = idate('H', strtotime($workingHour['start_break']));
+      $startBreakMin = idate('i', strtotime($workingHour['start_break']));
+      $startBreakInt = $startBreakHour * 60 + $startBreakMin;
+      
+      $endBreakHour = idate('H', strtotime($workingHour['end_break']));
+      $endBreakMin = idate('i', strtotime($workingHour['end_break']));
+      $endBreakInt = $endBreakHour * 60 + $endBreakMin;
+
+      $availableHours = [];
+      $i = 0;
+    
+      for (
+        $hour = $startInt; 
+        ($hour + $workingHour['range_hour']) < $endInt;
+        $hour += $workingHour['range_hour']
+      ) { 
+        $availableHours[$i]['hour'] = date("H:i", $hour * 60);
+
+        if (
+          ($hour + $workingHour['range_hour']) >= $startBreakInt 
+          && $hour < $endBreakInt
+        ) {
+          $availableHours[$i]['available'] = false;
+        } else {
+          $availableHours[$i]['available'] = true;
+        }
+
+        $i++;
+      }
+
+      return json_encode($availableHours);
+
+      /*
+      {
+        {
+          hour: "08:00",
+          available: true
+        },
+        {
+          hour: "09:00",
+          available: false
+        },
+        {
+          hour: "10:00",
+          available: true
+        }
+      } 
+      */
+            
+      return $startHour;
+    }
+
 
     /**
      * Show the form for creating a new resource.
