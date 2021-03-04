@@ -62,6 +62,9 @@ Route::middleware('auth')->group(function () {
 
     /** Customer routes  */
     Route::get('/customer', 'CustomerController@index')->name('customer.index');
+
+    /** Dashboard routes */ 
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
     
     Route::middleware('checkRole:Admin')->group(function () {
         /** Users routes  */

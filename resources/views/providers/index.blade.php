@@ -12,7 +12,7 @@
 
 <main>
   <div class="container-fluid">
-      <h1 class="mt-4">Prestadores de serviços</h1>
+      <h1 class="mt-4"><i class="fas fa-male text-primary"></i> Prestadores de serviços</h1>
       <ol class="breadcrumb mb-4">
           <li class="breadcrumb-item active">Prestadores de serviços</li>
       </ol>

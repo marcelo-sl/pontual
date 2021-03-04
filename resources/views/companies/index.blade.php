@@ -12,7 +12,7 @@
 
 <main>
   <div class="container-fluid">
-      <h1 class="mt-4">Empresas</h1>
+      <h1 class="mt-4"><i class="fas fa-store text-primary"></i> Empresas</h1>
       <ol class="breadcrumb mb-4">
           <li class="breadcrumb-item active">Empresas</li>
       </ol>
