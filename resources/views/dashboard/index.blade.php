@@ -9,121 +9,132 @@
 @endsection
 
 @section('main')
+    @if ($company == null && $provider == null)
 
-    <main>
-        <div class="container-fluid">
-            <h1 class="mt-4"><i class="fas fa-chart-pie text-primary"></i> Relatórios</h1>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Relatórios</li>
-            </ol>
-            
-            {{-- Chart One --}}
-            <div class="row">
-                <div class="col-xl-6">
+    <div class="alert alert-warning m-auto p-5" role="alert">
+        <i class="fas fa-exclamation-circle"></i>
+        Esta página é somente para proprietário de Empresa e Prestador de Serviço!
+    </div>
+
+    @else
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4"><i class="fas fa-chart-pie text-primary"></i> Relatórios</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">Relatórios</li>
+                </ol>
+                
+                <div class="row">
+                    {{-- Chart One --}}
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-clock"></i>
+                                Agendamentos
+                            </div>
+                            <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                        </div>
+                    </div>
+                    {{-- Chart Two --}}
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-star"></i>
+                                Satisfação
+                            </div>
+                            <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- DataTables --}}
+
+                @if (isset($company))
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fas fa-clock"></i>
-                            Agendamentos
+                            <i class="fas fa-store mr-1"></i>
+                            {{ $company->trade_name }}
                         </div>
-                        <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="companyTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Data do agendamento</th>
+                                            <th>Status do agendamento</th>
+                                            <th>Cliente</th>
+                                            <th>CPF</th>
+                                            <th>Data de criação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (count($company_schedules) > 0)
+                                            @foreach($company_schedules as $schedule)
+                                                <tr>
+                                                    <td>{{ date_format(new DateTime($schedule->date_time), 'd/m/Y H:i') }}</td>
+                                                    <td>{{ $schedule->status->status}}</td>
+                                                    <td>{{ ucwords(strtolower($schedule->customer->name)) }}</td>
+                                                    <td>{{ $schedule->customer->cpf }}</td>
+                                                    <td>{{ $schedule->created_at->format('d/m/Y') }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr><td colspan="5">Não possui agendamentos</td></tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-xl-6">
+                @endif
+
+                @if (isset($provider))
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fas fa-star"></i>
-                            Satisfação
+                            <i class="fas fa-male mr-1"></i>
+                            {{ $provider->nickname }}
                         </div>
-                        <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="providerTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Data do agendamento</th>
+                                            <th>Status do agendamento</th>
+                                            <th>Cliente</th>
+                                            <th>CPF</th>
+                                            <th>Data de criação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (count($provider_schedules) > 0)
+                                            @foreach($provider_schedules as $schedule)
+                                                <tr>
+                                                    <td>{{ date_format(new DateTime($schedule->date_time), 'd/m/Y H:i') }}</td>
+                                                    <td>{{ $schedule->status->status}}</td>
+                                                    <td>{{ ucwords(strtolower($schedule->customer->name)) }}</td>
+                                                    <td>{{ $schedule->customer->cpf }}</td>
+                                                    <td>{{ $schedule->created_at->format('d/m/Y') }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="5">Não possui agendamentos</td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
+        </main>
+    @endif
 
-            {{-- DataTable --}}
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-table mr-1"></i>
-                    Dados Gerais
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>63</td>
-                                    <td>2011/07/25</td>
-                                    <td>$170,750</td>
-                                </tr>
-                                <tr>
-                                    <td>Ashton Cox</td>
-                                    <td>Junior Technical Author</td>
-                                    <td>San Francisco</td>
-                                    <td>66</td>
-                                    <td>2009/01/12</td>
-                                    <td>$86,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Cedric Kelly</td>
-                                    <td>Senior Javascript Developer</td>
-                                    <td>Edinburgh</td>
-                                    <td>22</td>
-                                    <td>2012/03/29</td>
-                                    <td>$433,060</td>
-                                </tr>
-                                <tr>
-                                    <td>Airi Satou</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>33</td>
-                                    <td>2008/11/28</td>
-                                    <td>$162,700</td>
-                                </tr>
-                                <tr>
-                                    <td>Brielle Williamson</td>
-                                    <td>Integration Specialist</td>
-                                    <td>New York</td>
-                                    <td>61</td>
-                                    <td>2012/12/02</td>
-                                    <td>$372,000</td>
-                                </tr>
-                                <tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+@endsection
 
+@section('js')
+    <script src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dashboard-datatables.js') }}"></script>
 @endsection
