@@ -38,7 +38,8 @@ class ProviderController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  $id = company or provider identification
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
+     *    array({ hour: String, available: boolean })
      */
     public function getDaysOfWeekDisabled(Request $request, $id) 
     {
@@ -60,6 +61,8 @@ class ProviderController extends Controller
     public function getAvailableHours(Request $request, $id, $date) 
     {
       $dayofweek = date('w', strtotime($date));
+      $dateFormatted = date("Y-m-d", strtotime($date));
+      $schedules = Schedule::where('provider_id', $id)->select('date_time')->get()->toArray();
 
       $workingHour = WorkingHour::where('provider_id', $id)
                       ->where('week_day', $dayofweek)
@@ -71,6 +74,7 @@ class ProviderController extends Controller
                         'end_break'
                       )->first();
 
+      
       $startHour = idate('H', strtotime($workingHour['start_hour']));
       $startMin = idate('i', strtotime($workingHour['start_hour']));
       $startInt = $startHour * 60 + $startMin;
@@ -102,8 +106,25 @@ class ProviderController extends Controller
           && $hour < $endBreakInt
         ) {
           $availableHours[$i]['available'] = false;
-        } else {
-          $availableHours[$i]['available'] = true;
+        } 
+        else 
+        {
+          $hourFormatted = date('H:i:s' , $hour * 60);
+          $datetimeString = $dateFormatted." ".$hourFormatted;
+          $datetimeFormatted = date("Y-m-d H:i:s", strtotime($datetimeString));
+          $datetimeRegistered = in_array($datetimeFormatted, $schedules);
+          
+          foreach ($schedules as $schedule) {
+            if ($datetimeFormatted === $schedule['date_time']) {
+              $datetimeRegistered = true;
+            }
+          }
+
+          if ($datetimeRegistered) {
+            $availableHours[$i]['available'] = false;
+          } else {
+            $availableHours[$i]['available'] = true;
+          }
         }
 
         $i++;
@@ -111,24 +132,6 @@ class ProviderController extends Controller
 
       return json_encode($availableHours);
 
-      /*
-      {
-        {
-          hour: "08:00",
-          available: true
-        },
-        {
-          hour: "09:00",
-          available: false
-        },
-        {
-          hour: "10:00",
-          available: true
-        }
-      } 
-      */
-            
-      return $startHour;
     }
 
 

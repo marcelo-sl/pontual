@@ -42,7 +42,7 @@ class ScheduleController extends Controller
                 return $query->where('provider_id', $provider_id);
               })
             ],
-          ])->validate();
+          ], ['Já possui agendamento nesta mesma data e horário'])->validate();
           
           $schedule = new Schedule;
           
@@ -58,10 +58,17 @@ class ScheduleController extends Controller
         } catch (\Exception $exception) {
             DB::rollback();
 
-            $error = [
+            if (isset($exception->validator)) {
+              $error = [
+                'msg_title' => 'Agendamento inválido',
+                'msg_error' => $exception->validator->customMessages[0]
+              ];
+            } else {
+              $error = [
                 'msg_title' => 'Erro no servidor',
                 'msg_error' => 'Erro ao realizar agendamento.'
-            ];
+              ];
+            }
 
             return redirect()->back()->with($error)->withInput();
         }
