@@ -57,7 +57,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="companyTable" width="100%" cellspacing="0">
+                                <table class="table table-striped table-bordered" id="companyTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Data do agendamento</th>
@@ -89,6 +89,30 @@
                 @endif
 
                 @if (isset($provider))
+                    <h4><i class="fas fa-filter"></i> Filtros</h4>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="scheduleStatus">Status do Agendamento</label>
+                            <input type="text" id="scheduleStatus" class="form-control" placeholder="Status do Agendamento">
+                        </div>
+                        <div class="col">
+                            <label for="scheduleStatus">Cliente</label>
+                            <input id="scheduleCustomer" list="scheduleCustomerList" class="js-example-basic-single form-control" placeholder="Selecione...">
+                            <datalist id="scheduleCustomerList">
+                                @if (count($provider_schedules) > 0)
+                                    @foreach ($provider_schedules as $schedule)
+                                        <option value="{{ $schedule->customer->name }}">
+                                    @endforeach
+                                @else
+                                @endif
+                            </datalist>
+                        </div>
+                        <div class="col">
+                            <label for="scheduleCPF">CPF</label>
+                            <input type="text" id="scheduleStatus" class="form-control" placeholder="CPF">
+                        </div>
+                    </div>
+
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-male mr-1"></i>
@@ -96,7 +120,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="providerTable" width="100%" cellspacing="0">
+                                <table class="table table-striped table-bordered" id="providerTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Data do agendamento</th>
