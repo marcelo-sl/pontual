@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', "Provider Name")
+@section('title', $provider->nickname)
 
 @section('css')
   <link href="{{ asset('plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" />

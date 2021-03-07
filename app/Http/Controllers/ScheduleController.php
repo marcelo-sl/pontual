@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ScheduleRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use DB;
@@ -11,13 +12,18 @@ use App\{Schedule, WorkingHour};
 
 class ScheduleController extends Controller
 {
+    public function filterBy(Request $request)
+    {
+
+    }
+
      /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ScheduleRequest $request)
     {
         DB::beginTransaction();
 
@@ -32,24 +38,43 @@ class ScheduleController extends Controller
             return redirect()->back()->with($error);
           }
 
-          $provider_id = $request->input('provider_id');
+          $isProvider = isset($request['provider_id']);
+
           $concatDateTime = $request->input('schedule_date') . " " . $request->input('schedule_hour');
           $input['date_time'] = date("Y-m-d H:i:s", strtotime($concatDateTime));
-
-          Validator::make($input, [
-            'date_time' => [
-              Rule::unique('schedules')->where(function ($query) use ($provider_id) {
-                return $query->where('provider_id', $provider_id);
-              })
-            ],
-          ], ['Já possui agendamento nesta mesma data e horário'])->validate();
+          
+          if ($isProvider) {
+            $provider_id = $request->input('provider_id');
+          
+            Validator::make($input, [
+              'date_time' => [
+                Rule::unique('schedules')->where(function ($query) use ($provider_id) {
+                  return $query->where('provider_id', $provider_id);
+                })
+              ],
+            ], ['Já possui agendamento nesta mesma data e horário'])->validate();
+          } else {
+            $company_id = $request->input('company_id');
+          
+            Validator::make($input, [
+              'date_time' => [
+                Rule::unique('schedules')->where(function ($query) use ($company_id) {
+                  return $query->where('company_id', $company_id);
+                })
+              ],
+            ], ['Já possui agendamento nesta mesma data e horário'])->validate();
+          }
           
           $schedule = new Schedule;
           
           $schedule->date_time = $input['date_time'];
           $schedule->customer_id = $request->input('customer_id');
-          $schedule->provider_id = $provider_id;
           $schedule->status_id = 1;
+          
+          $isProvider 
+            ? $schedule->provider_id = $provider_id 
+            : $schedule->company_id = $company_id;
+          
           
           $schedule->save();
           
@@ -104,5 +129,19 @@ class ScheduleController extends Controller
       }
 
       return $daysOfWeekDisabled;
+    }
+
+    public function cancel($id)
+    {
+      $schedule = Schedule::findOrFail($id);
+      $schedule->status_id = 4;
+      $schedule->save();
+
+      $success = [
+        'msg_title' => 'Agendamento cancelado!',
+        'msg_success' => 'Agora este agendamento se encontra cancelado.'
+      ];
+
+      return redirect()->back()->with($success);
     }
 }

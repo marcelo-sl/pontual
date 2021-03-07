@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/{id}', 'UserController@show')->name('user.show');
     Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
     Route::put('/user/{id}', 'UserController@update')->name('user.update');
+    Route::get('/user/{id}/schedules', 'UserController@getSchedules')->name('user.schedules');
     
     /** Companies routes  */
     Route::get('/company/create', 'CompanyController@create')->name('company.create');
@@ -72,6 +73,7 @@ Route::middleware('auth')->group(function () {
     
     /** Schedule routes  */
     Route::post('/schedule', 'ScheduleController@store')->name('schedule.store');
+    Route::post('/schedule/{id}/cancel', 'ScheduleController@cancel')->name('schedule.cancel');
 
     
     Route::middleware('checkRole:Admin')->group(function () {
@@ -93,5 +95,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/findCityByName/{uf}/{city}', 'FindCityByName');
 Route::get('/filterCitiesByUf/{uf}', 'FilterCitiesByUf');
 Route::get('/provider/{id}/getDaysOfWeekDisabled', 'ProviderController@getDaysOfWeekDisabled');
-Route::get('/company/{id}/getDaysOfWeekDisabled', 'CompantyController@getDaysOfWeekDisabled');
+Route::get('/company/{id}/getDaysOfWeekDisabled', 'CompanyController@getDaysOfWeekDisabled');
 Route::get('/provider/{id}/getAvailableHours/{date}', 'ProviderController@getAvailableHours');
+Route::get('/company/{id}/getAvailableHours/{date}', 'CompanyController@getAvailableHours');

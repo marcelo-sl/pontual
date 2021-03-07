@@ -15,10 +15,11 @@ class ScheduleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'min:6', 'confirmed'],
-            'gender' => ['required', 'max:1']
+            'customer_id' => ['required','numeric'],
+            'schedule_date' => ['required'],
+            'schedule_hour' => ['required'],
+            'company_id' => ['numeric'],
+            'provider_id' => ['numeric']
         ];
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
 
 use App\Http\Requests\UserRequest;
 use App\{User, Contact};
@@ -108,9 +109,21 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function getSchedules($id)
+    {
+        $schedules = User::findOrFail($id)->schedules()->orderBy('date_time', 'ASC')->get();
+        // dd($schedules);
+        return view('users.schedules', compact('schedules'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
-        return view('user.create');
+        return view('users.create');
     }
 
     /**
@@ -154,6 +167,8 @@ class UserController extends Controller
 
         return redirect()->route('auth.login')->with($success);
     }
+
+
 
     /**
      * Display the specified resource.

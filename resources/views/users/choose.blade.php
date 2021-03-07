@@ -13,8 +13,8 @@
       <h1 class="mt-4">Escolha seu tipo de perfil:</h1>
     </div>
 
-    <div id="choose-content" class="d-flex justify-content-around mt-5">
-      <a href="{{ route('user.complete') }}" class="card text-white p-4" id="customer-card">
+    <div id="choose-content" class="d-flex justify-content-around mt-5 flex-wrap">
+      <a href="{{ route('user.complete') }}" class="card text-white my-3 p-4" id="customer-card">
         <img src="{{ asset('img/choose-customer.svg') }}" class="card-img" alt="Cliente">
         <div class="card-content mt-4">
           <h3 class="card-title">Sou um cliente</h3>
@@ -22,7 +22,7 @@
         </div>
       </a>
       
-      <a href="{{ route('provider.create') }}" class="card text-dark p-4" id="provider-card">
+      <a href="{{ route('provider.create') }}" class="card text-dark my-3 p-4" id="provider-card">
         <img src="{{ asset('img/choose-provider.svg') }}" class="card-img" alt="Prestador de serviços">
         <div class="card-content mt-4">
           <h3 class="card-title">Sou um prestador de serviços</h3>
@@ -30,7 +30,7 @@
         </div>
       </a>
 
-      <a href="{{ route('company.create') }}" class="card p-4" id="owner-card">
+      <a href="{{ route('company.create') }}" class="card my-3 p-4" id="owner-card">
         <img src="{{ asset('img/choose-owner.svg') }}" class="card-img" alt="Proprietário">
         <div class="card-content mt-4">
           <h3 class="card-title">Sou um proprietário</h3>

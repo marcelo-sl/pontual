@@ -2,6 +2,15 @@
   <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
       <div class="nav">
+      
+        <a class="nav-link" href="{{ route('customer.index') }}">
+          <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+          Home
+        </a>
+        <a class="nav-link" href="{{ route('user.schedules', Auth::user()->id) }}">
+          <div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
+          Meus agendamentos
+        </a>
         <div class="sb-sidenav-menu-heading">Negócio</div>
         <a class="nav-link" href="{{ route('dashboard.index') }}">
           <div class="sb-nav-link-icon"><i class="fas fa-chart-pie"></i></div>

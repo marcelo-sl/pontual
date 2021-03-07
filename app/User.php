@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Contact');
     }
+
+    public function schedules()
+    {
+        return $this->hasMany('App\Schedule', 'customer_id');
+    }
 }

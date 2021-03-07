@@ -74,7 +74,7 @@ class ProviderController extends Controller
                         'end_break'
                       )->first();
 
-      
+      // Convertendo hora para minutos
       $startHour = idate('H', strtotime($workingHour['start_hour']));
       $startMin = idate('i', strtotime($workingHour['start_hour']));
       $startInt = $startHour * 60 + $startMin;
