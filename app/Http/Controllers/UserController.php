@@ -104,11 +104,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function getSchedules($id)
     {
         $schedules = User::findOrFail($id)->schedules()->orderBy('date_time', 'ASC')->get();

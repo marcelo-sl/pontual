@@ -134,6 +134,13 @@ class ProviderController extends Controller
 
     }
 
+    public function getSchedules($id)
+    {
+      $schedules = Provider::findOrFail($id)->schedules()->orderBy('date_time', 'ASC')->get();
+
+      return view('users.schedules', compact('schedules'));
+    }
+
 
     /**
      * Show the form for creating a new resource.

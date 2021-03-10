@@ -43,4 +43,9 @@ class Provider extends Model
           'field_activity_id'
         );
     }
+
+    public function schedules()
+    {
+        return $this->hasMany('App\Schedule', 'customer_id');
+    }
 }

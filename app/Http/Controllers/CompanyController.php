@@ -132,6 +132,13 @@ class CompanyController extends Controller
       return json_encode($availableHours);
     }
 
+    public function getSchedules($id)
+    {
+      $schedules = Company::findOrFail($id)->schedules()->orderBy('date_time', 'ASC')->get();
+
+      return view('users.schedules', compact('schedules'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
