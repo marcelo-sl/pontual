@@ -69,6 +69,7 @@
                                     <label for="status">Status do Agendamento</label>
                                     <select id="status" name="status" class="custom-select">
                                         <option disabled hidden selected>Selecione...</option>
+                                        <option>Todos</option>
                                         @foreach($status as $item) 
                                             <option value="{{ $item->id }}">{{ $item->status }}</option>
                                         @endforeach
