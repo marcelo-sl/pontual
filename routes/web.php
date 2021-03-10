@@ -68,7 +68,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/customer', 'CustomerController@index')->name('customer.index');
 
     /** Dashboard routes */ 
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
+    Route::get('/dashboard/company', 'DashboardController@companyIndex')->name('dashboard.company');
+    Route::get('/dashboard/provider', 'DashboardController@providerIndex')->name('dashboard.provider');
     
     /** Schedule routes  */
     Route::post('/schedule', 'ScheduleController@store')->name('schedule.store');
