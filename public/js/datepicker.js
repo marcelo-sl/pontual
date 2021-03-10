@@ -13,6 +13,7 @@ $(document).ready(function() {
 
   function getDaysOfWeekDisabled() {
     let { classParam, id } = getUrlParams();
+    console.log(id);
     let complementUrl = '/' + classParam + '/' + id + '/getDaysOfWeekDisabled';
 
     $.get({

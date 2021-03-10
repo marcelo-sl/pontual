@@ -57,6 +57,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Token');
     }
 
+    public function company()
+    {
+      return $this->hasOne('App\Company');
+    }
+
     public function provider()
     {
         return $this->hasOne('App\Provider');
@@ -66,4 +71,11 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Contact');
     }
+
+    public function schedules()
+    {
+        return $this->hasMany('App\Schedule', 'customer_id');
+    }
+
+    
 }

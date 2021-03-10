@@ -16,9 +16,26 @@
   <!-- Navbar-->
   <ul class="navbar-nav ml-auto ml-md-0">
       <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+          <a 
+            class="nav-link dropdown-toggle d-flex flex-row  align-items-center" 
+            id="userDropdown" 
+            href="#" 
+            role="button" 
+            data-toggle="dropdown" 
+            aria-haspopup="true" 
+            aria-expanded="false"
+          >
+          {{ Auth::user()->name }}
+
+            @if (Auth::user()->avatar_url == '')
+              <i class="fas fa-user-circle"></i>
+            @else 
+              <img class="rounded-circle w-10 ml-2 mr-1" src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}">
+            @endif 
+            <!-- <i class="fas fa-user fa-fw"></i> -->
+          </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="{{ route('user.show', Auth::user()->id) }}"><i class="fas fa-user-circle"></i> Minha conta</a>
+              <a class="dropdown-item" href="{{ route('user.show', Auth::user()->id) }}">Meu perfil</a>
               <a class="dropdown-item" href="#">Activity Log</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item text-danger" href="{{ route('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> Sair</a>

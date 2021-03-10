@@ -74,7 +74,7 @@ class ProviderController extends Controller
                         'end_break'
                       )->first();
 
-      
+      // Convertendo hora para minutos
       $startHour = idate('H', strtotime($workingHour['start_hour']));
       $startMin = idate('i', strtotime($workingHour['start_hour']));
       $startInt = $startHour * 60 + $startMin;
@@ -132,6 +132,13 @@ class ProviderController extends Controller
 
       return json_encode($availableHours);
 
+    }
+
+    public function getSchedules($id)
+    {
+      $schedules = Provider::findOrFail($id)->schedules()->orderBy('date_time', 'ASC')->get();
+
+      return view('users.schedules', compact('schedules'));
     }
 
 

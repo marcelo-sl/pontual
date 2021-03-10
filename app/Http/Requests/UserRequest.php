@@ -15,8 +15,8 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'schedule_date' => ['required'],
-            'schedule_hour' => ['required'],
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'min:6', 'confirmed'],
             'gender' => ['required', 'max:1']
         ];

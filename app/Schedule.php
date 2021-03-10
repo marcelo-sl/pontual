@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'date_time' => 'datetime',
+    ];
+
     protected $fillable = [
         'date_time', 'status_id', 'customer_id', 'provider_id', 'company_id'
     ];

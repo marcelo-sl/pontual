@@ -85,7 +85,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered" id="companyTable" width="100%" cellspacing="0">
+                                <table class="table table-striped table-bordered" id="datatable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Data do agendamento</th>

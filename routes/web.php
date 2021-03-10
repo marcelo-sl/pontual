@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/{id}', 'UserController@show')->name('user.show');
     Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
     Route::put('/user/{id}', 'UserController@update')->name('user.update');
+    Route::get('/user/{id}/schedules', 'UserController@getSchedules')->name('user.schedules');
     
     /** Companies routes  */
     Route::get('/company/create', 'CompanyController@create')->name('company.create');
@@ -53,6 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/company/{id}', 'CompanyController@show')->name('company.show');
     Route::get('/company/{id}/edit', 'CompanyController@edit')->name('company.edit');
     Route::put('/company/{id}', 'CompanyController@update')->name('company.update');
+    Route::get('/company/{id}/schedules', 'CompanyController@getSchedules')->name('company.schedules');
+
 
     /** Providers routes  */
     Route::get('/provider', 'ProviderController@index')->name('provider.index'); //mudar para admin
@@ -63,9 +66,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/provider/{id}', 'ProviderController@update')->name('provider.update');
     Route::post('/provider/{id}/inactivate', 'ProviderController@inactivate')->name('provider.inactivate');
     Route::delete('/provider/{id}', 'ProviderController@destroy')->name('provider.destroy');
+    Route::get('/provider/{id}/schedules', 'ProviderController@getSchedules')->name('provider.schedules');
+
 
     /** Customer routes  */
     Route::get('/customer', 'CustomerController@index')->name('customer.index');
+    Route::post('/customer/search', 'CustomerController@search')->name('customer.search');
 
     /** Dashboard routes */ 
     Route::get('/dashboard/company', 'DashboardController@companyIndex')->name('dashboard.company');
@@ -73,6 +79,7 @@ Route::middleware('auth')->group(function () {
     
     /** Schedule routes  */
     Route::post('/schedule', 'ScheduleController@store')->name('schedule.store');
+    Route::post('/schedule/{id}/cancel', 'ScheduleController@cancel')->name('schedule.cancel');
 
     
     Route::middleware('checkRole:Admin')->group(function () {
@@ -94,5 +101,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/findCityByName/{uf}/{city}', 'FindCityByName');
 Route::get('/filterCitiesByUf/{uf}', 'FilterCitiesByUf');
 Route::get('/provider/{id}/getDaysOfWeekDisabled', 'ProviderController@getDaysOfWeekDisabled');
-Route::get('/company/{id}/getDaysOfWeekDisabled', 'CompantyController@getDaysOfWeekDisabled');
+Route::get('/company/{id}/getDaysOfWeekDisabled', 'CompanyController@getDaysOfWeekDisabled');
 Route::get('/provider/{id}/getAvailableHours/{date}', 'ProviderController@getAvailableHours');
+Route::get('/company/{id}/getAvailableHours/{date}', 'CompanyController@getAvailableHours');
+// Route::get('/customer?search={search}', 'CustomerController@search');

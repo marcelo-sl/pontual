@@ -8,6 +8,7 @@ use App\Http\Requests\CompanyRequest;
 use App\{
   Company,
   WorkingHour,
+  Schedule,
   Address,
   State,
   City,
@@ -47,6 +48,95 @@ class CompanyController extends Controller
       $daysOfWeekDisabled = array_values(array_diff($daysOfWeek, $workingDays));
 
       return $daysOfWeekDisabled;
+    }
+
+     /**
+     * Get the hours available in according of the date
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  $id = company or provider identification
+     * @return \Illuminate\Http\Response
+     */
+    public function getAvailableHours(Request $request, $id, $date) 
+    {
+      $dayofweek = date('w', strtotime($date));
+      $dateFormatted = date("Y-m-d", strtotime($date));
+      $schedules = Schedule::where('company_id', $id)->select('date_time')->get()->toArray();
+
+      $workingHour = WorkingHour::where('company_id', $id)
+                      ->where('week_day', $dayofweek)
+                      ->select(
+                        'start_hour',
+                        'end_hour',
+                        'range_hour',
+                        'start_break',
+                        'end_break'
+                      )->first();
+
+      // Convertendo hora para minutos
+      $startHour = idate('H', strtotime($workingHour['start_hour']));
+      $startMin = idate('i', strtotime($workingHour['start_hour']));
+      $startInt = $startHour * 60 + $startMin;
+      
+      $endHour = idate('H', strtotime($workingHour['end_hour']));
+      $endMin = idate('i', strtotime($workingHour['end_hour']));
+      $endInt = $endHour * 60 + $endMin;
+      
+      $startBreakHour = idate('H', strtotime($workingHour['start_break']));
+      $startBreakMin = idate('i', strtotime($workingHour['start_break']));
+      $startBreakInt = $startBreakHour * 60 + $startBreakMin;
+      
+      $endBreakHour = idate('H', strtotime($workingHour['end_break']));
+      $endBreakMin = idate('i', strtotime($workingHour['end_break']));
+      $endBreakInt = $endBreakHour * 60 + $endBreakMin;
+
+      $availableHours = [];
+      $i = 0;
+    
+      for (
+        $hour = $startInt; 
+        ($hour + $workingHour['range_hour']) < $endInt;
+        $hour += $workingHour['range_hour']
+      ) { 
+        $availableHours[$i]['hour'] = date("H:i", $hour * 60);
+
+        if (
+          ($hour + $workingHour['range_hour']) >= $startBreakInt 
+          && $hour < $endBreakInt
+        ) {
+          $availableHours[$i]['available'] = false;
+        } 
+        else 
+        {
+          $hourFormatted = date('H:i:s' , $hour * 60);
+          $datetimeString = $dateFormatted." ".$hourFormatted;
+          $datetimeFormatted = date("Y-m-d H:i:s", strtotime($datetimeString));
+          $datetimeRegistered = in_array($datetimeFormatted, $schedules);
+          
+          foreach ($schedules as $schedule) {
+            if ($datetimeFormatted === $schedule['date_time']) {
+              $datetimeRegistered = true;
+            }
+          }
+
+          if ($datetimeRegistered) {
+            $availableHours[$i]['available'] = false;
+          } else {
+            $availableHours[$i]['available'] = true;
+          }
+        }
+
+        $i++;
+      }
+
+      return json_encode($availableHours);
+    }
+
+    public function getSchedules($id)
+    {
+      $schedules = Company::findOrFail($id)->schedules()->orderBy('date_time', 'ASC')->get();
+
+      return view('users.schedules', compact('schedules'));
     }
 
     /**
