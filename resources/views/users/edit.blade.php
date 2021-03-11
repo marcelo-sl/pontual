@@ -31,17 +31,13 @@
 									
 									<div class="form-group col-md-6">
 										<label class="small mb-1" for="inputEmail">CPF</label>
-										<input class="form-control py-4" id="inputCpf" type="text" name="cpf" aria-describedby="emailHelp" placeholder="Digite seu e-mail" value="{{ $user->cpf ?? 'Dado não informado' }}" readonly/>
+										<input class="form-control py-4 cpf" id="inputCpf" type="text" name="cpf" value="{{ $user->cpf ?? '' }}"/>
 									</div>
 								</div>
 
 								<div class="form-group">
 									<label class="small mb-1" for="inputName">Nascimento</label>
-									@if ($user->birthday != null)
-										<input class="form-control py-4" id="inputBirthday" type="date" name="birthday" placeholder="Digite seu nome" value="{{ old('nascimento') ?? $user->birthday }}" />
-									@else
-										<input class="form-control py-4" type="text" value="Dado não informado" readonly/>
-									@endif
+									<input class="form-control py-4" id="inputBirthday" type="date" name="birthday" placeholder="Digite seu nome" value="{{ old('nascimento') ?? $user->birthday }}" />
 								</div>
 
 								<div class="form-row">
@@ -66,10 +62,11 @@
 									</div>
 								</div>
 								
-								@if (count($user->contacts()->get()) > 0)
-									<hr>
-									<h5><i class="fas fa-phone-square-alt"></i> Contato</h5>
-									@foreach ($user->contacts()->get() as $contact)
+								<hr>
+								<h5><i class="fas fa-phone-square-alt"></i> Contato</h5>
+								
+								@forelse ($user->contacts as $contact)
+								
 									<div id="contacts">
 										<div id="contacts-place">
 											<div class="row contact-row">
@@ -89,16 +86,40 @@
 											</div>
 										</div>
 									</div>
-									@endforeach
-									<div class="row my-3" id="addContactDiv">
-										<div class="col-4 d-flex justify-content-start">
-										<a class="btn btn-success" id="addPhone">
-											<i class="fas fa-plus"></i>
-											Adicionar contato
-										</a>
+								
+								@empty
+
+									<div id="contacts">
+										<div id="contacts-place">
+											<div class="row contact-row">
+											<div class="col-md-12">
+												<div class="form-inline d-flex justify-content-between my-1">
+												<label class="mr-2">Contato</label>
+												<div>
+													<input 
+														type="text" 
+														name="contacts[]" 
+														class="form-control sp_celphones" 
+														value="{{ old('contacts') }}">
+													<a class="btn btn-danger ml-2 removePhone"><i class="fas fa-trash"></i></a>
+												</div>
+												</div>
+											</div>
+											</div>
 										</div>
 									</div>
-								@endif
+									
+								@endforelse
+
+								<div class="row my-3" id="addContactDiv">
+									<div class="col-4 d-flex justify-content-start">
+									<a class="btn btn-success" id="addPhone">
+										<i class="fas fa-plus"></i>
+										Adicionar contato
+									</a>
+									</div>
+								</div>
+
 								<hr>
 
 								<h5><i class="fas fa-cog"></i> Conta</h5>

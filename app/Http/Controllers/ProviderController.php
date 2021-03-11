@@ -232,7 +232,7 @@ class ProviderController extends Controller
           $user = User::find($request->input('provider.user_id'));
 
           if(!$user->hasRole('Employee')) {
-            $user->roles()->sync([2, 3, 4, 5, 6]);
+            $user->roles()->sync([4, 5, 6]);
           }
 
           DB::commit();

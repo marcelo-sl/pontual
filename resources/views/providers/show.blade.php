@@ -21,6 +21,17 @@
               width="200"
               height="200"
             >
+
+            <h6 class="mt-4"><i class="fas fa-phone-square"></i> Contatos</h6>
+            <ul>
+              @forelse($provider->user->contacts as $contact)
+                <li>{{ $contact->phone_number }}</li>
+              @empty
+                <li>Não possui contatos</li>
+              @endforelse
+            </ul>
+            
+
           </div>
           <div id="main-provider" class="col-8 ml-4">
             <h2>{{ $provider->nickname }}</h2>
@@ -28,10 +39,6 @@
             <h6>Avaliações</h6>
             <p>
               <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
               4.5/5
             </p>
             <h6>Descrição</h6>

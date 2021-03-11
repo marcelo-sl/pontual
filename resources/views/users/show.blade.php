@@ -5,10 +5,6 @@
 
 <main>
   <div class="container-fluid">
-      <h1 class="mt-4">Usuários</h1>
-      <ol class="breadcrumb">
-          <li class="breadcrumb-item active">Usuários</li>
-      </ol>
       <div class="card-body d-flex justify-content-center">
 
         <div class="card" style="width: 38rem;">
