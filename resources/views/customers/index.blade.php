@@ -8,8 +8,10 @@
 @section('main')
 <main>
   <div class="container">
+
     <div class="row justify-content-center">
-      <div class="col-6">
+      
+      <div class="col-12 col-lg-8 col-xl-6 my-4">
         <form action="{{ route('customer.search') }}" method="post">
           @csrf
           <div class="input-group mt-4">
@@ -30,7 +32,7 @@
       </div>
 
       <div class="col-12">
-        <div class="card shadow-lg border-0 rounded-lg mt-5 p-5">
+        <div class="card shadow-lg border-0 rounded-lg p-5">
           @foreach($list as $item)
             <a 
               href="{{ 

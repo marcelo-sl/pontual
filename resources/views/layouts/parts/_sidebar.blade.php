@@ -2,24 +2,47 @@
   <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
       <div class="nav">
-        <div class="sb-sidenav-menu-heading"><span class="sidebar-title"><i class="fas fa-calendar"></i> Agendamentos</span></div>
-        <a class="nav-link" href="{{ route('customer.index') }}">
-          <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
-          Home
-        </a>
-        <a class="nav-link" href="{{ route('user.schedules', Auth::user()->id) }}">
-          <div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
-          Meus agendamentos
-        </a>
-        
-        <div class="sb-sidenav-menu-heading"><span class="sidebar-title"><i class="fa fa-cog"></i> Configurações</span></div>
-          <a class="nav-link" href="{{ route('user.edit', Auth::id()) }}">
-            <div class="sb-nav-link-icon"><i class="fa fa-user-edit"></i></div>
-            Editar minha conta
+
+        @if(!Auth::user()->hasRole('Employee'))
+          <div class="sb-sidenav-menu-heading"><span class="sidebar-title"><i class="fas fa-calendar"></i> Agendamentos</span></div>
+          <a class="nav-link" href="{{ route('customer.index') }}">
+            <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
+            Home
           </a>
+          <a class="nav-link" href="{{ route('user.schedules', Auth::user()->id) }}">
+            <div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
+            Meus agendamentos
+          </a>
+        @endif
 
         @if(Auth::user()->hasRole('Employee'))
           <div class="sb-sidenav-menu-heading"><span class="sidebar-title"><i class="fas fa-business-time"></i> Negócio</span></div>
+          <a class="nav-link" href="{{ route('provider.show', Auth::user()->provider->id) }}">
+          <div class="sb-nav-link-icon"><i class="fas fa-store-alt"></i></div>
+            Perfil comercial
+          </a>
+          
+          
+
+          @if(Auth::user()->hasRole('Owner'))
+            <a
+              class="nav-link"
+              href="{{ route('company.schedules', Auth::user()->company->id) }}"
+            >
+              <div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
+              Agendamentos da empresa
+            </a>
+          @endif
+          @if(Auth::user()->provider)
+            <a
+              class="nav-link" 
+              href="{{ route('provider.schedules', Auth::user()->provider->id) }}"
+            >
+              <div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
+              Meus agendamentos
+            </a>
+          @endif
+
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
             <div class="sb-nav-link-icon"><i class="fas fa-chart-pie"></i></div>
               Relatórios
@@ -32,24 +55,21 @@
             </nav>
           </div>
 
-          @if(Auth::user()->hasRole('Owner'))
-            <a 
-              class="nav-link" 
-              href="{{ route('company.schedules', Auth::user()->company->id) }}"
-            >
-              <div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
-              Agendamentos da empresa
-            </a>
-          @else
-            <a 
-              class="nav-link" 
-              href="{{ route('provider.schedules', Auth::user()->provider->id) }}"
-            >
-              <div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
-              Meus agendamentos
-            </a>
-          @endif
         @endif
+        
+        <div class="sb-sidenav-menu-heading"><span class="sidebar-title"><i class="fa fa-cog"></i> Configurações</span></div>
+        <a class="nav-link" href="{{ route('user.edit', Auth::id()) }}">
+          <div class="sb-nav-link-icon"><i class="fa fa-user-edit"></i></div>
+          Editar minha conta
+        </a>
+
+        @if(Auth::user()->provider)
+          <a class="nav-link" href="{{ route('provider.edit', Auth::user()->provider->id) }}">
+            <div class="sb-nav-link-icon"><i class="fas fa-edit"></i></div>
+            Editar dados comerciais
+          </a>
+        @endif
+        
                
         @if(Auth::user()->hasRole('Admin'))
           <div class="sb-sidenav-menu-heading"><span class="sidebar-title"><i class="fas fa-user-lock"></i> Administrador</span></div>
