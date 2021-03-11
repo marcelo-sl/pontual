@@ -2,7 +2,7 @@
   <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
       <div class="nav">
-        <div class="sb-sidenav-menu-heading"><i class="fas fa-calendar"></i> Agendamentos</div>
+        <div class="sb-sidenav-menu-heading"><span class="sidebar-title"><i class="fas fa-calendar"></i> Agendamentos</span></div>
         <a class="nav-link" href="{{ route('customer.index') }}">
           <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
           Home
@@ -12,14 +12,14 @@
           Meus agendamentos
         </a>
         
-        <div class="sb-sidenav-menu-heading"><i class="fa fa-cog"></i> Configurações</div>
+        <div class="sb-sidenav-menu-heading"><span class="sidebar-title"><i class="fa fa-cog"></i> Configurações</span></div>
           <a class="nav-link" href="{{ route('user.edit', Auth::id()) }}">
             <div class="sb-nav-link-icon"><i class="fa fa-user-edit"></i></div>
             Editar minha conta
           </a>
 
         @if(Auth::user()->hasRole('Employee'))
-          <div class="sb-sidenav-menu-heading"><i class="fas fa-business-time"></i> Negócio</div>
+          <div class="sb-sidenav-menu-heading"><span class="sidebar-title"><i class="fas fa-business-time"></i> Negócio</span></div>
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
             <div class="sb-nav-link-icon"><i class="fas fa-chart-pie"></i></div>
               Relatórios
@@ -52,7 +52,7 @@
         @endif
                
         @if(Auth::user()->hasRole('Admin'))
-          <div class="sb-sidenav-menu-heading">Administrador</div>
+          <div class="sb-sidenav-menu-heading"><span class="sidebar-title"><i class="fas fa-user-lock"></i> Administrador</span></div>
             <a class="nav-link" href="{{ route('user.index') }}">
               <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
               Usuários
