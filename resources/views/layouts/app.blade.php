@@ -11,6 +11,10 @@
       @notifyCss
       <link href="{{ asset('plugins/start-bootstrap/css/styles.css') }}" rel="stylesheet" />
       <link href="{{ asset('css/app-styles.css') }}" rel="stylesheet" />
+
+      {{-- Datatable --}}
+      <link rel="stylesheet" href="{{ asset('plugins/datatables/DataTables-1.10.24/css/dataTables.bootstrap4.min.css') }}">
+
       @yield('css')
       
       <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -84,6 +88,14 @@
       
       <!-- Scripts -->
       <script src="{{ asset('plugins/jquery/jquery-3.5.1.min.js') }}"></script>
+      <!-- Datatables -->
+      <script src="{{ asset('plugins/datatables/datatables.min.js') }}"></script>
+      <script src="{{ asset('plugins/datatables/Buttons-1.7.0/js/dataTables.buttons.min.js') }}"></script>
+      <script src="{{ asset('plugins/datatables/JSZip-2.5.0/jszip.min.js') }}"></script>
+      <script scr="{{ asset('plugins/datatables/pdfmake-0.1.36/pdfmake.min.js') }}"></script>
+      <script scr="{{ asset('plugins/datatables/pdfmake-0.1.36/vfs_fonts.js') }}"></script>
+      <script scr="{{ asset('plugins/datatables/Buttons-1.7.0/js/buttons.html5.min.js') }}"></script>
+
       <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
       <script src="{{ asset('plugins/start-bootstrap/js/scripts.js') }}"></script>
       @notifyJs

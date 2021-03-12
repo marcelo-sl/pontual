@@ -1,13 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Usuários')
 
-@section('css')
-
-<link href="{{ asset('plugins/datatables/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" crossorigin="anonymous" />
-<link href="{{ asset('plugins/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet" crossorigin="anonymous" />
-
-@endsection
-
 @section('main')
 
 <main>
@@ -111,7 +104,6 @@
 
 @section('js')
 
-<script src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/user-datatables.js') }}"></script>
 
 @endsection
