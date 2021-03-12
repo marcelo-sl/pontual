@@ -30,9 +30,8 @@
             @if (Auth::user()->avatar_url == '')
               <i class="fas fa-user-circle"></i>
             @else 
-              <img class="rounded-circle w-10 ml-2 mr-1" src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}">
+              <img class="rounded-circle w-10 ml-2 mr-1 nav-perfil" src="{{ url('storage/'.Auth::user()->avatar_url) }}" alt="{{ Auth::user()->name }}">
             @endif 
-            <!-- <i class="fas fa-user fa-fw"></i> -->
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
               <a class="dropdown-item" href="{{ route('user.show', Auth::user()->id) }}">Meu perfil</a>

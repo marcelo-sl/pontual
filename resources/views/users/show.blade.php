@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('title', 'Perfil')
 
+
+@section('css')
+	<link href="{{ asset('css/show-styles.css')}}" rel="stylesheet" />
+@endsection
+
 @section('main')
 
 <main>
@@ -12,7 +17,7 @@
             @if ($user->avatar_url == '')
               <i class="fas fa-user-circle fa-9x"></i>
             @else 
-              <img class="rounded-circle w-50 border" src="{{ $user->avatar_url }}" alt="{{ $user->name }}">
+              <img class="rounded-circle w-50 border avatar" src="{{ url('storage/'.$user->avatar_url) }}" alt="{{ $user->name }}">
             @endif                
           </div>
           <div class="card-body">

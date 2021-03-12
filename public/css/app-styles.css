@@ -15,3 +15,8 @@
 .sidebar-title {
   color: #bebebe;
 }
+
+img.nav-perfil{
+  height:5.418vh;
+  object-fit: cover;
+}

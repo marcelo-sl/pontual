@@ -11,12 +11,20 @@
 							<h3 class="text-center font-weight-light my-4"><i class="fas fa-user-edit"></i> Edite sua conta</h3>
 						</div>
 						<div class="card-body">
-							<form id="userForm" action="{{ route('user.update', $user->id) }}" method="POST">
+							<form id="userForm" action="{{ route('user.update', $user->id) }}" method="POST"  enctype="multipart/form-data">
 								
 								@csrf
 								@method('PUT')
 
+								
+
 								<h5><i class="fas fa-id-card"></i> Dados Pessoais</h5>
+
+								<div class="form-group">
+									<label class="small mb-1" for="inputEmail">Foto de perfil</label>
+									<br>
+									<input type="file" class="form-control-file" id="avatar" name="avatar" accept="image/png, image/jpeg">
+								</div>
 								
 								<div class="form-group">
 									<label class="small mb-1" for="inputEmail">Email</label>
