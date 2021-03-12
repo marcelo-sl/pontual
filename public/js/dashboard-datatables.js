@@ -30,6 +30,28 @@ $(document).ready( function () {
               }
           }
         },
+        "respnsive": "true",
+        "dom": "Bfrtilp",
+        "buttons": [
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fas fa-file-excel"></i>',
+                titleAttr: 'Exportar em Excel',
+                className: 'btn btn-success mr-2'
+            },
+            {
+                extend: 'pdfHtml5',
+                text: '<i class="fas fa-file-pdf"></i>',
+                titleAttr: 'Exportar em PDF',
+                className: 'btn btn-danger mr-2'
+            },
+            {
+                extend: 'print',
+                text: '<i class="fas fa-print"></i>',
+                titleAttr: 'Imprimir',
+                className: 'btn btn-dark'
+            },
+        ],
         // "bFilter": false,
         "bInfo": false,
         "bPaginate": false
@@ -75,9 +97,9 @@ $.fn.dataTable.ext.search.push(
                 break;
         }
  
-        if ( data[1].toLowerCase().includes(status.toLowerCase()) &&
-             data[2].toLowerCase().includes(client.toLowerCase()) &&             
-             data[3].includes(clientCPF))
+        if ( data[2].toLowerCase().includes(status.toLowerCase()) &&
+             data[3].toLowerCase().includes(client.toLowerCase()) &&             
+             data[4].includes(clientCPF))
         {
             return true;
         }

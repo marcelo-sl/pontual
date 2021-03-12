@@ -15,3 +15,8 @@
 .sidebar-title {
   color: #bebebe;
 }
+
+table th {
+  background-color: #212529;
+  color: #fff;
+}
