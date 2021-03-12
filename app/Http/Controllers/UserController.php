@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests\UserRequest;
 use App\{User, Contact};
@@ -218,6 +219,7 @@ class UserController extends Controller
                 $user->name = strtoupper($request->name);
                 $user->birthday = $request->birthday;
                 $user->gender = $request->gender;
+                $user->cpf = $request->cpf;
 
                 Contact::where('user_id', $user->id)->delete();
                 foreach ($request->input('contacts') as $phone_number)
@@ -243,6 +245,18 @@ class UserController extends Controller
                         ];
                         return redirect()->back()->with($error)->withInput();
                     }
+                }
+                
+                
+                if ($request->hasFile('avatar') && $request->avatar->isValid()) {
+                  
+                  if ($user->avatar_url && Storage::exists($user->avatar_url)) {
+                    Storage::delete($user->avatar_url);                    
+                  }
+                  
+                  $avatarUrl = $request->avatar->store('users');
+    
+                  $user->avatar_url = $avatarUrl;
                 }
 
                 $user->save();
