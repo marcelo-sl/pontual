@@ -47,7 +47,16 @@ class UserController extends Controller
      */
     public function choose()
     {
-        return view('users.choose');
+        $user = User::find(Auth::id());
+        
+        if (count($user->roles()->get()) == 1) 
+        {
+            if ($user->roles()->get()->first()->role_name == "Common User");
+                return view('users.choose');
+        }
+
+        return redirect()->route('user.show', Auth::id());
+
     }
 
     public function completeRegistration()

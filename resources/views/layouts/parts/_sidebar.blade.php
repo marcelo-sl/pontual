@@ -17,11 +17,13 @@
 
         @if(Auth::user()->hasRole('Employee'))
           <div class="sb-sidenav-menu-heading"><span class="sidebar-title"><i class="fas fa-business-time"></i> Negócio</span></div>
-          <a class="nav-link" href="{{ route('provider.show', Auth::user()->provider->id) }}">
-          <div class="sb-nav-link-icon"><i class="fas fa-store-alt"></i></div>
-            Perfil comercial
-          </a>
           
+          @if(Auth::user()->provider)
+            <a class="nav-link" href="{{ route('provider.show', Auth::user()->provider->id) }}">
+            <div class="sb-nav-link-icon"><i class="fas fa-store-alt"></i></div>
+              Perfil comercial
+            </a>
+          @endif
           
 
           @if(Auth::user()->hasRole('Owner'))
