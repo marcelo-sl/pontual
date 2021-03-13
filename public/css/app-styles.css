@@ -22,7 +22,7 @@ img.nav-perfil{
   object-fit: cover;
 }
 
-table th {
+.table th {
   background-color: #212529;
   color: #fff;
 }
