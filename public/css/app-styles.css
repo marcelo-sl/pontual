@@ -16,13 +16,19 @@
   color: #bebebe;
 }
 
-img.nav-perfil{
-  height:2.5em;
-  width:2.5em;
+img.nav-perfil {
+  height: 2.5em;
+  width: 2.5em;
   object-fit: cover;
 }
 
 .table th {
   background-color: #212529;
   color: #fff;
+}
+
+.customer-card-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
 }

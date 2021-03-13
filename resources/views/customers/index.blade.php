@@ -44,15 +44,19 @@
             >
               <div class="row no-gutters py-2">
                 <div class="col-md-2">
+                  @if ($item->nickname)
+                    <img 
+                      class="border customer-card-img" 
+                      src="{{ url('storage/' .$item->user->avatar_url) }}" 
+                      alt="{{ $item->nickname }}"
+                    >
+                  @else
                   <img 
-                    class="rounded-circle border" 
-                    src="{{
-                      $item->nickname 
-                      ? $item->user->avatar_url 
-                      : $item->logo_url
-                    }}" 
-                    alt="Card image cap"
-                  >
+                      class="border customer-card-img" 
+                      src="{{ url('storage/' .$item->logo_url) }}" 
+                      alt="{{ $item->trade_name }}"
+                    >
+                  @endif
                 </div>
                 <div class="col-md-10">
                   <div class="card-body">

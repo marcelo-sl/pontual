@@ -12,7 +12,7 @@
             <div class="col-lg-5">
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header">
-                      <h3 class="text-center font-weight-light my-4" style="font-size: 24px">Entre com seu usuário</h3>
+                      <h3 class="text-center font-weight-light my-4" style="font-size: 24px"><i class="fas fa-user"></i> Entre com seu usuário</h3>
                     </div>
                     <div class="card-body">
                         <form id="userForm" action="{{ route('auth.login') }}" method="POST">
@@ -33,8 +33,8 @@
                                 </div>
                             </div> -->
                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                <a class="small" href={{ route('auth.resetPass') }}>Esqueci minha senha</a>
-                                <button type="submit" class="btn btn-primary">Entrar</button>
+                                <a class="small" href={{ route('auth.resetPass') }}><i class="fas fa-question-circle"></i> Esqueci minha senha</a>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Entrar</button>
                             </div>
                         </form>
                     </div>

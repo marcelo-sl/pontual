@@ -52,8 +52,12 @@
           </a>
           <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
             <nav class="sb-sidenav-menu-nested nav">
-              <a class="nav-link" href="{{ route('dashboard.company') }}"><i class="fas fa-store mr-2"></i> Empresa</a>
-              <a class="nav-link" href="{{ route('dashboard.provider') }}"><i class="fas fa-male mr-2"></i> Prestador de Serviço</a>
+              @if (Auth::user()->company)
+                <a class="nav-link" href="{{ route('dashboard.company') }}"><i class="fas fa-store mr-2"></i> {{ Auth::user()->company->trade_name }}</a>
+              @endif
+              @if (Auth::user()->provider)
+                <a class="nav-link" href="{{ route('dashboard.provider') }}"><i class="fas fa-male mr-2"></i> {{ Auth::user()->provider->nickname }}</a>
+              @endif
             </nav>
           </div>
 
@@ -72,7 +76,7 @@
           </a>
         @endif
 
-        @if(Auth::user()->provider)
+        @if(Auth::user()->company)
           <a class="nav-link" href="{{ route('company.edit', Auth::user()->company->id) }}">
             <div class="sb-nav-link-icon"><i class="fas fa-edit"></i></div>
             Editar dados da empresa

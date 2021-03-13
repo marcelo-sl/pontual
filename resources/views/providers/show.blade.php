@@ -15,7 +15,7 @@
         <div class="card shadow-lg border-0 rounded mt-5 d-flex flex-row p-4">
           <div id="logo-provider" class="col-3">
             <img 
-              src="{{ $provider->user->avatar_url }}"
+              src="{{ url('storage/'.$provider->user->avatar_url) }}" alt="{{ $provider->nickname }}"
               class="border border-secondary rounded"
               alt="Prestador de Serviços Logo"
               width="200"
@@ -43,7 +43,7 @@
             </p>
             <h6>Descrição</h6>
             <p class="text-justify">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              {{ $provider->description }}
             </p>
           </div>
         </div>
