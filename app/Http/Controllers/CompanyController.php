@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CompanyRequest;
+use Illuminate\Support\Facades\Storage;
 
 use App\{
   Company,
@@ -237,6 +238,13 @@ class CompanyController extends Controller
             $workingHour->save();
           }
         }
+
+        if ($request->hasFile('logo') && $request->logo->isValid()) {          
+          $logoUrl = $request->logo->store('companies');
+          
+          $company->logo_url = $logoUrl;
+          $company->save();
+        }
         
         $user = User::find($request->input('company.user_id'));
 
@@ -421,6 +429,18 @@ class CompanyController extends Controller
                 $company->workingHours()->where('week_day', $weekday)->delete();
               }
               
+            }
+
+            if ($request->hasFile('logo') && $request->logo->isValid()) {
+                  
+              if ($company->logo_url && Storage::exists($company->logo_url)) {
+                Storage::delete($company->logo_url);                    
+              }
+              
+              $logoUrl = $request->logo->store('companies');
+              
+              $company->logo_url = $logoUrl;
+              $company->save();
             }
 
             DB::commit();

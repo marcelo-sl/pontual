@@ -17,6 +17,7 @@ class CompanyRequest extends FormRequest
         $rules = [
             'company.trade_name' => ['required', 'max:45'],
             'company.company_name' => ['required', 'max:80'],
+            'logo' => ['image'],
             'company.cnpj' => ['required', 'max:18'],
             'contacts.*' => ['required'],
             'company.description' => ['max:65530'],

@@ -17,7 +17,8 @@
 }
 
 img.nav-perfil{
-  height:5.418vh;
+  height:2.5em;
+  width:2.5em;
   object-fit: cover;
 }
 

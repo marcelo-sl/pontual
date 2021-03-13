@@ -16,12 +16,20 @@
         <div class="card shadow-lg border-0 rounded mt-5 d-flex flex-row p-4">
           <div id="logo-company" class="col-3">
             <img 
-              src="https://image.freepik.com/free-vector/generic-arrow-premium-logo-template_9569-147.jpg"
-              class="border border-secondary rounded"
-              alt="Company Logo"
-              width="200"
-              height="200"
+              src="{{ url('storage/'.$company->logo_url) }}"
+              class="border border-secondary rounded logo-company"
+              alt="{{ $company->trade_name }}"
             >
+
+            <h6 class="mt-4"><i class="fas fa-phone-square"></i> Contatos</h6>
+            <ul>
+              @forelse($company->contacts as $contact)
+                <li>{{ $contact->phone_number }}</li>
+              @empty
+                <li>Não possui contatos</li>
+              @endforelse
+            </ul>
+            
           </div>
           <div id="main-company" class="col-8 ml-4">
             <h2>{{ $company->trade_name }}</h2>
@@ -37,7 +45,7 @@
 
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <div class="card shadow-lg border-0 rounded mt-2 p-4">
+        <div class="card shadow-lg border-0 rounded mt-3 p-4">
           <h4>Agende seu horário</h4>
           <hr>
 
@@ -97,38 +105,8 @@
     </div>
 
     <div class="row justify-content-center">
-
-      <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw=&ixlib=rb-1.2.1&auto=format&fit=crop&w=1953&q=80" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1598887142487-3c854d51eabb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw=&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1596362601603-b74f6ef166e4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw=&ixlib=rb-1.2.1&auto=format&fit=crop&w=926&q=80" class="d-block w-100" alt="...">
-          </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="row justify-content-center">
       <div class="col-lg-10">
-        <div class="card shadow-lg border-0 rounded mt-4 d-flex flex-row p-4">
+        <div class="card shadow-lg border-0 rounded mt-3 d-flex flex-row p-4">
           <div id="localization-company" class="col-11 ml-4">
             <h4>Informações</h4>
             <hr>

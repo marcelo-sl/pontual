@@ -71,6 +71,13 @@
             Editar dados comerciais
           </a>
         @endif
+
+        @if(Auth::user()->provider)
+          <a class="nav-link" href="{{ route('company.edit', Auth::user()->company->id) }}">
+            <div class="sb-nav-link-icon"><i class="fas fa-edit"></i></div>
+            Editar dados da empresa
+          </a>
+        @endif
         
                
         @if(Auth::user()->hasRole('Admin'))

@@ -16,7 +16,7 @@
         <li class="breadcrumb-item active">Empresas/Edição</li>
       </ol>
       <div class="card-body">
-        <form id="companyForm" action="{{ route('company.update', $company->id) }}" method="POST">
+        <form id="companyForm" action="{{ route('company.update', $company->id) }}" method="POST" enctype="multipart/form-data">
           @method('PUT')
 
           @csrf
@@ -28,6 +28,12 @@
           </div>
 
           <h3 class="mb-4">Sobre a empresa</h3>
+
+          <div class="form-group">
+            <label class="small mb-1" for="inputEmail">Logotipo da empresa</label>
+            <br>
+            <input type="file" class="form-control-file" id="logo" name="logo" accept="image/png, image/jpeg">
+          </div>
 
           <div class="form-row">
             <div class="col-md-12">

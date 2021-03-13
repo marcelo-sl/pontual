@@ -29,6 +29,12 @@
 
           <h3 class="mb-4">Sobre a empresa</h3>
 
+          <div class="form-group">
+            <label class="small mb-1" for="inputEmail">Logotipo da empresa</label>
+            <br>
+            <input type="file" class="form-control-file" id="logo" name="logo" accept="image/png, image/jpeg">
+          </div>
+
           <div class="form-row">
             <div class="col-md-12">
               <div class="form-group">
