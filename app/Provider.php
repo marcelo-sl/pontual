@@ -46,6 +46,6 @@ class Provider extends Model
 
     public function schedules()
     {
-        return $this->hasMany('App\Schedule', 'customer_id');
+        return $this->hasMany('App\Schedule', 'provider_id');
     }
 }
