@@ -22,7 +22,7 @@
                   <th>Para o dia</th>
                   <th>Status</th>
                   <th>Realizado em</th>
-                  <th></th>
+                  <th>Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -63,6 +63,13 @@
                       >
                         <i class="fas fa-calendar-times"></i>
                       </a>
+                      <button
+                        onclick="rate({{ $schedule->id }})"
+                        class="btn btn-primary" 
+                        data-tooltip="tooltip" data-placement="top" title="Avaliar agendamento"                        
+                      >
+                        <i class="fas fa-thumbs-up"></i>
+                    </button>
                     @endif                  
                   </td>
                 </tr>
@@ -89,5 +96,20 @@
 
 <script src="{{ asset('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/user-datatables.js') }}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+  function rate(schedule_id) {
+    $.ajax({
+      method: "GET",
+      url: `http://192.168.100.51/?schedule_id=${schedule_id}`
+    }).done(function(){
+      swal({
+        title: "Muito obrigado!",
+        text: "Agradecemos por avaliar seu atendimento, assim podemos sempre melhorar!",
+        icon: "success"
+      });
+    });
+  }
+</script>
 
 @endsection
