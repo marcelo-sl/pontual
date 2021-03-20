@@ -42,11 +42,15 @@ class DashboardController extends Controller
         $status = Status::all();
 
         $provider = Provider::firstWhere('user_id', Auth::id());
-        if ($provider != null) 
+        
+        if ($provider != null) {
             $provider_schedules = Schedule::where('provider_id', $provider->id)->get();
-        else
+        } else {
             $provider_schedules = [];
+        }
 
+        //dd($provider->schedules()->with('ratings')->get());
+        
         return view(
             'dashboard.provider.index', 
             compact(

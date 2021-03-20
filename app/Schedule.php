@@ -38,4 +38,9 @@ class Schedule extends Model
     {
         return $this->belongsTo('App\Company');
     }
+
+    public function ratings()
+    {
+        return $this->hasOne('App\ScheduleRating');
+    }
 }

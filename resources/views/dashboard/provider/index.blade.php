@@ -17,7 +17,7 @@
                     <li class="breadcrumb-item active">Relatórios</li>
                 </ol>
                 
-                {{-- <div class="row"> --}}
+                <div class="row">
                     {{-- Chart One --}}
                     {{-- <div class="col-xl-6">
                         <div class="card mb-4">
@@ -31,18 +31,16 @@
                         </div>
                     </div> --}}
                     {{-- Chart Two --}}
-                    {{-- <div class="col-xl-6">
+                    <div class="col-xl-6">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5>
-                                    <i class="fas fa-star"></i>
-                                    Satisfação
-                                </h5>
+                                <i class="fas fa-chart-bar mr-1"></i>
+                                Avaliações
                             </div>
                             <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
 
                 {{-- DataTables --}}
                 @if (isset($provider))
@@ -122,4 +120,6 @@
     <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js')}}"></script>
     <script src="{{ asset('js/mask-format.js') }}"></script>
     <script src="{{ asset('js/dashboard-datatables.js') }}"></script>
+    <script src="{{ asset('plugins/charts/chart.min.js') }}"></script>
+    <script src="{{ asset('js/chart-bar-dashboard.js') }}"></script>
 @endsection
