@@ -10,6 +10,11 @@
     </div>
 
     @else
+        <input type="hidden" id="starOne" value={{$stars[0]}}>
+        <input type="hidden" id="starTwo" value={{$stars[1]}}>
+        <input type="hidden" id="starThree" value={{$stars[2]}}>
+        <input type="hidden" id="starFour" value={{$stars[3]}}>
+        <input type="hidden" id="starFive" value={{$stars[4]}}>
         <main>
             <div class="container-fluid">
                 <h1 class="mt-4"><i class="fas fa-chart-pie text-primary"></i> Relatórios</h1>
@@ -17,32 +22,17 @@
                     <li class="breadcrumb-item active">Relatórios</li>
                 </ol>
                 
-                {{-- <div class="row"> --}}
-                    {{-- Chart One --}}
-                    {{-- <div class="col-xl-6">
+                <div class="row">
+                    <div class="col-xl-6">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5>
-                                    <i class="fas fa-clock"></i>
-                                    Agendamentos
-                                </h5>
-                            </div>
-                            <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                        </div>
-                    </div> --}}
-                    {{-- Chart Two --}}
-                    {{-- <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h5>
-                                    <i class="fas fa-star"></i>
-                                    Satisfação
-                                </h5>
+                                <i class="fas fa-chart-bar mr-1"></i>
+                                Avaliações
                             </div>
                             <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
 
                 {{-- DataTables --}}
 
@@ -121,4 +111,6 @@
     <script src="{{ asset('plugins/jquery-mask/jquery.mask.min.js')}}"></script>
     <script src="{{ asset('js/mask-format.js') }}"></script>
     <script src="{{ asset('js/dashboard-datatables.js') }}"></script>
+    <script src="{{ asset('plugins/charts/chart.min.js') }}"></script>
+    <script src="{{ asset('js/chart-bar-dashboard.js') }}"></script>
 @endsection

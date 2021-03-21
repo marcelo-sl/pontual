@@ -1,3 +1,11 @@
+let starOne = parseInt($('#starOne').val());
+let starTwo = parseInt($('#starTwo').val());
+let starThree = parseInt($('#starThree').val());
+let starFour = parseInt($('#starFour').val());
+let starFive = parseInt($('#starFive').val());
+
+console.log([starOne, starTwo, starThree, starFour, starFive]);
+
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
@@ -12,7 +20,7 @@ var myLineChart = new Chart(ctx, {
       label: "Avaliações",
       backgroundColor: "rgba(2,117,216,1)",
       borderColor: "rgba(2,117,216,1)",
-      data: [4215, 5312, 6251, 7841, 9821, 14984],
+      data: [starOne, starTwo, starThree, starFour, starFive],
     }],
   },
   options: {
@@ -25,13 +33,13 @@ var myLineChart = new Chart(ctx, {
           display: false
         },
         ticks: {
-          maxTicksLimit: 6
+          maxTicksLimit: 5
         }
       }],
       yAxes: [{
         ticks: {
           min: 0,
-          max: 14000,
+          max: 10,
           maxTicksLimit: 10
         },
         gridLines: {

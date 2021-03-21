@@ -24,6 +24,28 @@ class DashboardController extends Controller
         else
             $company_schedules = [];
 
+        $stars[0] = 0;
+        $stars[1] = 0;
+        $stars[2] = 0;
+        $stars[3] = 0;
+        $stars[4] = 0;
+
+        foreach($company->schedules()->with('ratings')->get() as $schedule) {
+            if ($schedule->ratings != null) {
+                if ($schedule->ratings->rate == 1) {
+                    $stars[0] = $stars[0] + 1;
+                } else if ($schedule->ratings->rate == 2) {
+                    $stars[1] = $stars[1] + 1;
+                } else if ($schedule->ratings->rate == 3) {
+                    $stars[2] = $stars[2] + 1;
+                } else if ($schedule->ratings->rate == 4) {
+                    $stars[3] = $stars[3] + 1;
+                } else if ($schedule->ratings->rate == 5) {
+                    $stars[4] = $stars[4] + 1;
+                }
+            }
+        }
+
         return view(
             'dashboard.company.index', 
             compact(
@@ -32,6 +54,7 @@ class DashboardController extends Controller
 
                     'company', 
                     'company_schedules', 
+                    'stars'
                 ]
             )
         );
@@ -49,8 +72,28 @@ class DashboardController extends Controller
             $provider_schedules = [];
         }
 
-        //dd($provider->schedules()->with('ratings')->get());
-        
+        $stars[0] = 0;
+        $stars[1] = 0;
+        $stars[2] = 0;
+        $stars[3] = 0;
+        $stars[4] = 0;
+
+        foreach($provider->schedules()->with('ratings')->get() as $schedule) {
+            if ($schedule->ratings != null) {
+                if ($schedule->ratings->rate == 1) {
+                    $stars[0] = $stars[0] + 1;
+                } else if ($schedule->ratings->rate == 2) {
+                    $stars[1] = $stars[1] + 1;
+                } else if ($schedule->ratings->rate == 3) {
+                    $stars[2] = $stars[2] + 1;
+                } else if ($schedule->ratings->rate == 4) {
+                    $stars[3] = $stars[3] + 1;
+                } else if ($schedule->ratings->rate == 5) {
+                    $stars[4] = $stars[4] + 1;
+                }
+            }
+        }
+
         return view(
             'dashboard.provider.index', 
             compact(
@@ -58,7 +101,8 @@ class DashboardController extends Controller
                     'status',
                     
                     'provider', 
-                    'provider_schedules'
+                    'provider_schedules',
+                    'stars'
                 ]
             )
         );

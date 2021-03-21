@@ -105,7 +105,7 @@
     }).done(function(){
       swal({
         title: "Muito obrigado!",
-        text: "Agradecemos por avaliar seu atendimento, assim podemos sempre melhorar!",
+        text: "Agradecemos por avaliar nosso atendimento, assim podemos sempre melhorar!",
         icon: "success"
       });
     });
